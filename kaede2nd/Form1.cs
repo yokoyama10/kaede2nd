@@ -42,6 +42,7 @@ namespace kaede2nd
                 }
             }
 
+            GlobalData.Instance.mainForm = this;
             //GlobalDataセット完了
 
             IOperatorDao opDao = (IOperatorDao)GlobalData.Instance.container.GetComponent(typeof(IOperatorDao));
@@ -181,6 +182,16 @@ namespace kaede2nd
         private void button1_Click(object sender, EventArgs e)
         {
             this.renewReceipts();
+        }
+
+        public void DoRefresh()
+        {
+            System.Threading.Thread t = new System.Threading.Thread(
+                (delegate() {
+                    System.Threading.Thread.Sleep(300);
+                    this.Invoke((MethodInvoker)delegate() { this.renewReceipts(); });
+                }));
+            t.Start();
         }
 
         //[Receipts]

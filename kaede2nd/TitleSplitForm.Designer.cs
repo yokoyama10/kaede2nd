@@ -31,6 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.text_moto = new System.Windows.Forms.TextBox();
             this.button_cancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -42,7 +43,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Location = new System.Drawing.Point(1, 57);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(471, 304);
+            this.panel1.Size = new System.Drawing.Size(471, 283);
             this.panel1.TabIndex = 0;
             // 
             // text_moto
@@ -68,12 +69,25 @@
             this.button_cancel.UseVisualStyleBackColor = true;
             this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 347);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(172, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "上下キーで選択、Enterキーで決定";
+            // 
             // TitleSplitForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_cancel;
             this.ClientSize = new System.Drawing.Size(473, 363);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.text_moto);
             this.Controls.Add(this.panel1);
@@ -91,5 +105,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox text_moto;
         private System.Windows.Forms.Button button_cancel;
+        private System.Windows.Forms.Label label1;
     }
 }

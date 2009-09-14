@@ -19,7 +19,7 @@ namespace kaede2nd
 
             if (this.isViewOnlyDB == false)
             {
-                text_host.Text = "chihaya";
+                text_host.Text = "halfed-note";
                 text_port.Text = "3306";
                 text_user.Text = "ennichi";
                 text_pass.Text = "itsuki";

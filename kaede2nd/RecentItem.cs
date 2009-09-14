@@ -61,6 +61,8 @@ namespace kaede2nd
         {
             InitializeComponent();
 
+            this.Text += "(" + GlobalData.Instance.bumonName + ")";
+
             this.button_print.Text = "最古" + this.countPerPage.ToString() + "件印刷 (Ctrl+P)";
 
             this.dataGridView1.AutoGenerateColumns = false;

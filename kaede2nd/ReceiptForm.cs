@@ -195,6 +195,10 @@ namespace kaede2nd
             this.SetReceipt(rs[0]);
         }
 
+        public Receipt GetReceipt()
+        {
+            return this.receipt;
+        }
 
         private void SetReceipt(kaede2nd.Entity.Receipt r)
         {
@@ -493,6 +497,8 @@ namespace kaede2nd
 
                 //this.combo_operator.SelectedValue =
                 //    (r.receipt__Operator != null ? r.receipt__Operator.operator_id : 0);
+
+                GlobalData.Instance.mainForm.DoRefresh();
 
 
             }

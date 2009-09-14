@@ -28,7 +28,8 @@ namespace kaede2nd
             {
                 
                 this.ProcessEnterKey(e.KeyData);
-                if (this.CurrentCell.IsInEditMode) { return true; }
+                if (this.CurrentCell is DataGridViewTextBoxCell &&
+                    this.CurrentCell.IsInEditMode) { return true; }
 
                 if ( this.ColumnCount >=2 && this.SelectedCells.Count >= 1 )
                 {
@@ -296,8 +297,26 @@ namespace kaede2nd
             if (dgv.Columns[e.ColumnIndex].Name != ColumnName.hyouBan) { return; }
             if (e.RowIndex < 0) { return; }
 
+            uint receiptid = (uint)dgv[ColumnName.hyouBan, e.RowIndex].Value;
+
             try
             {
+                foreach (Form f in Application.OpenForms)
+                {
+                    if (f is ReceiptForm)
+                    {
+                        Receipt r = ((ReceiptForm)f).GetReceipt();
+                        if (r != null)
+                        {
+                            if (r.receipt_id == receiptid)
+                            {
+                                f.Activate();
+                                return;
+                            }
+                        }
+                    }
+                }
+
                 ReceiptForm rf = new ReceiptForm((UInt32)dgv[ColumnName.hyouBan, e.RowIndex].Value);
                 rf.Show();
             }
@@ -618,6 +637,8 @@ namespace kaede2nd
 
         public RecentItem recentItemForm;
 
+        public Form1 mainForm;
+
         public System.Drawing.Printing.PageSettings pageSettings;
         public System.Drawing.Printing.PrinterSettings printerSettings;
 
@@ -693,7 +714,7 @@ namespace kaede2nd
                 });
 
                 instance.recentItemForm = new RecentItem();
-
+                instance.mainForm = null;
 
 
                 instance.pageSettings = new System.Drawing.Printing.PageSettings();
