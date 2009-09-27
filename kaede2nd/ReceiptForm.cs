@@ -261,6 +261,8 @@ namespace kaede2nd
                 this.setRowValue(row, it);
             }
 
+            this.dataGridView1.VirtualMode = true;
+            this.dataGridView1.VirtualMode = false;
             this.dataGridView1.Enabled = true;
         }
 
