@@ -196,6 +196,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "最近追加された商品リスト";
             this.TopMost = true;
+            this.Shown += new System.EventHandler(this.RecentItem_Shown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RecentItem_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RecentItem_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

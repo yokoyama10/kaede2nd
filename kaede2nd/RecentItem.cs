@@ -61,8 +61,6 @@ namespace kaede2nd
         {
             InitializeComponent();
 
-            this.Text += "(" + GlobalData.Instance.bumonName + ")";
-
             this.button_print.Text = "最古" + this.countPerPage.ToString() + "件印刷 (Ctrl+P)";
 
             this.dataGridView1.AutoGenerateColumns = false;
@@ -271,6 +269,11 @@ namespace kaede2nd
             ItemsPrintDocument.PrintItems(items);
 
             this.ReDraw();
+        }
+
+        private void RecentItem_Shown(object sender, EventArgs e)
+        {
+            this.Text = "最近追加された商品リスト (" + GlobalData.Instance.bumonName + ")";
         }
     }
 
