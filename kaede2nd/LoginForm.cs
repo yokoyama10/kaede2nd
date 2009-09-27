@@ -94,6 +94,7 @@ namespace kaede2nd
             }
             else if (this.comboBox1.SelectedIndex == 2)
             {
+                text_host.Text = "localhost";
                 text_dbname.Text = "en_test";
             }
         }
