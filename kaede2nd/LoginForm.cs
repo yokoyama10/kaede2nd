@@ -65,7 +65,7 @@ namespace kaede2nd
             {
                 GlobalData.Instance.itemNameImeOn = true;
                 GlobalData.Instance.enterToTab = false;
-                GlobalData.Instance.bumonName = "試験データ";
+                GlobalData.Instance.bumonName = "松代実験場";
             }
 
             GlobalData.Instance.windowTitle = deity + "萌え萌えソフトウェア";

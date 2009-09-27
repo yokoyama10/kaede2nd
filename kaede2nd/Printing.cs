@@ -42,7 +42,19 @@ namespace kaede2nd
             */
         }
 
-        private readonly List<Item> items;
+        public class PrintItem
+        {
+            public Item item;
+            public uint volumeNum; /* 0...分冊なし 1...分冊あり、1冊目 2以降...分冊あり、n冊目 */
+
+            public PrintItem(Item item, uint volumenum)
+            {
+                this.item = item;
+                this.volumeNum = volumenum;
+            }
+        }
+
+        private readonly List<PrintItem> pitems;
         
         private const int cellwidth = 90; //mm
         private const int cellheight = 36; //mm
@@ -57,7 +69,22 @@ namespace kaede2nd
             this.barcode.PrintChar = false;
             this.barcode.AddChechDigit = true;
 
-            this.items = items;
+            //this.items = items;
+            this.pitems = new List<PrintItem>();
+            foreach (Item i in items)
+            {
+                if (i.item_volumes.HasValue && i.item_volumes.Value != 0)
+                {
+                    for (uint vn = 1; vn <= i.item_volumes.Value; vn++)
+                    {
+                        this.pitems.Add(new PrintItem(i, vn));
+                    }
+                }
+                else
+                {
+                    this.pitems.Add(new PrintItem(i, 0));
+                }
+            }
 
             this.BeginPrint += new PrintEventHandler(ItemsPrintDocument_BeginPrint);
             this.PrintPage += new PrintPageEventHandler(ItemsPrintDocument_PrintPage);
@@ -73,7 +100,7 @@ namespace kaede2nd
             colpp = (int)((this.printArea.Width) / cellwidth);
             rowpp = (int)((this.printArea.Height) / cellheight);
 
-            double allpages = Math.Ceiling((double)items.Count / (colpp * rowpp));
+            double allpages = Math.Ceiling((double)this.pitems.Count / (colpp * rowpp));
 
             this.DocumentName = GlobalData.Instance.bumonName + " 全 " + ((int)allpages).ToString() + " ページ";
 
@@ -103,9 +130,9 @@ namespace kaede2nd
             {
                 for (int yoko = 0; yoko < colpp; yoko++)
                 {
-                    this.DrawItem(this.items[count], e, wmargin + cellwidth * yoko, hmargin + cellheight * tate);
+                    this.DrawItem(this.pitems[count], e, wmargin + cellwidth * yoko, hmargin + cellheight * tate);
 
-                    if (this.items.Count - 1 <= count)
+                    if (this.pitems.Count - 1 <= count)
                     {
                         e.HasMorePages = false;
                         return;
@@ -118,8 +145,12 @@ namespace kaede2nd
             e.HasMorePages = true;
         }
 
-        private void DrawItem(Item it, PrintPageEventArgs e, int x, int y)
+
+        /* volumeNum: 0...分冊なし 1...分冊あり、1冊目 2以降...分冊あり、n冊目 */
+        private void DrawItem(PrintItem printit, PrintPageEventArgs e, int x, int y)
         {
+
+            Item it = printit.item;
 
             bool isan = false;
 
@@ -203,8 +234,6 @@ namespace kaede2nd
                 e.Graphics.DrawString(s, new Font("MS Gothic", 3.0f, FontStyle.Italic, GraphicsUnit.Millimeter),
                     Brushes.Black, x + 30, y + 3.5f + (5.25f) * 3 + 10.0f + 0.4f);
 
-                this.barcode.WriteBar("58" + it.item_id.ToString("00000"), x + 50, y + 17, 25, 12, e.Graphics);
-
             }
 
 
@@ -212,16 +241,35 @@ namespace kaede2nd
                 Brushes.Black, x + 46, y + 3.5f + (5.25f) * 3 + 10.9f);
 
 
-            //販売価格
+            if (printit.volumeNum < 2)
+            {
+                if (printit.volumeNum == 1)
+                {
+                    e.Graphics.DrawString("分売不可 1 / " + it.item_volumes.ToString(), fnt, Brushes.Red, x + 50, y + 3.5f + (5.25f) * 2);
 
-            Pen nedanPen = new Pen(Color.Black, 0.2f);
-            nedanPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            nedanPen.DashOffset = 1.0f;
-            e.Graphics.DrawLine(nedanPen, new PointF(x + 3.0f, y + 27.0f), new PointF(x + 35.0f, y + 27.0f));
-            e.Graphics.DrawString("円", new Font("MS Gothic", 6.0f, FontStyle.Regular, GraphicsUnit.Millimeter),
-                           Brushes.Black, x + 36.0f, y + 21.0f);
-            e.Graphics.DrawString("販売価格", new Font("MS Gothic", 2.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black, x + 3, y + 3.5f + (5.25f) * 3);
+                    //バーコード
+                    this.barcode.WriteBar("58" + it.item_id.ToString("00000"), x + 50, y + 19, 25, 10, e.Graphics);
+                }
+                else
+                {
+                    //バーコード
+                    this.barcode.WriteBar("58" + it.item_id.ToString("00000"), x + 50, y + 17, 25, 12, e.Graphics);
+                }
 
+                //販売価格
+                Pen nedanPen = new Pen(Color.Black, 0.2f);
+                nedanPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                nedanPen.DashOffset = 1.0f;
+                e.Graphics.DrawLine(nedanPen, new PointF(x + 3.0f, y + 27.0f), new PointF(x + 35.0f, y + 27.0f));
+                e.Graphics.DrawString("円", new Font("MS Gothic", 5.5f, FontStyle.Regular, GraphicsUnit.Millimeter),
+                               Brushes.Black, x + 36.0f, y + 21.5f);
+                e.Graphics.DrawString("販売価格", new Font("MS Gothic", 2.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black, x + 3, y + 3.5f + (5.25f) * 3);
+            }
+            else
+            {
+                e.Graphics.DrawString("分売不可  " + printit.volumeNum.ToString() + " / " + it.item_volumes.ToString(),
+                    new Font("MS Gothic", 5.5f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Red, x + 19.0f, y + 20.25f);
+            }
         }
     }
 
@@ -268,6 +316,7 @@ namespace kaede2nd
 
             this.DocumentName = GlobalData.Instance.bumonName + " 全 " + allpages.ToString() + " ページ";
 
+            this.pagecount = 1;
             this.count = 0;
         }
 

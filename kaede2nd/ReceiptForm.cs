@@ -103,7 +103,7 @@ namespace kaede2nd
             ((DataGridViewCheckBoxColumn)col).TrueValue = Globals.check_trueVal;
             ((DataGridViewCheckBoxColumn)col).FalseValue = Globals.check_falseVal;
             //((DataGridViewCheckBoxColumn)col).IndeterminateValue = Globals.check_unkVal;
-            col.Width = GlobalData.moziWidth * 8;
+            col.Width = GlobalData.moziWidth * 4;
             col.SortMode = DataGridViewColumnSortMode.Automatic;
             this.dataGridView1.Columns.Add(col);
 
@@ -118,6 +118,20 @@ namespace kaede2nd
             col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             col.ValueType = typeof(string);
             col.Width = GlobalData.moziWidth * 18;
+            this.dataGridView1.Columns.Add(col);
+
+
+            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.bunsatsu);
+            colinfo.imeMode = ImeMode.Off;
+            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_volumes = Globals.convToUInt32(val); };
+            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
+            {
+                cell.Value = ((Item)obj).item_volumes;
+            };
+            col = colinfo.col;
+            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col.ValueType = typeof(UInt32);
+            col.Width = GlobalData.moziWidth * 6;
             this.dataGridView1.Columns.Add(col);
 
 

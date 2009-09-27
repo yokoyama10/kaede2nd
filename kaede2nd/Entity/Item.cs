@@ -11,6 +11,10 @@ namespace kaede2nd.Entity
     public class Item
     {
         /*
+         * ALTER TABLE item ADD COLUMN item_volumes INT(10) UNSIGNED DEFAULT NULL AFTER item_isbn;
+         */
+
+        /*
         CREATE TABLE `item` (
        `item_id` int(10) unsigned,
        `item_receipt_id` int(10) unsigned,
@@ -26,6 +30,7 @@ namespace kaede2nd.Entity
        `item_selltime` datetime,
        `item_adjust` int(11),
        `item_isbn` bigint(20) unsigned,
+       `item_volumes` int(10) unsigned DEFAULT NULL,
        `item_comment` varchar(255),
        `item_sellcomment` text,
        `item_userspace` text,
@@ -53,6 +58,7 @@ namespace kaede2nd.Entity
         public DateTime? item_selltime { get; set; }
         public Int32? item_adjust { get; set; }
         public Decimal? item_isbn { get; set; }
+        public UInt32? item_volumes { get; set; }
         public string item_comment { get; set; }
         public string item_sellcomment { get; set; }
         public string item_userspace { get; set; }

@@ -608,6 +608,7 @@ namespace kaede2nd
         public readonly static string henpin = "返品";
         public readonly static string comment = "コメント";
         public readonly static string baika = "売価";
+        public readonly static string bunsatsu = "分冊";
         public readonly static string hanbaiNitizi = "販売日時";
         public readonly static string hanbaiComment = "販売コメント";
 
