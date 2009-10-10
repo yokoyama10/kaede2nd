@@ -329,5 +329,36 @@ namespace kaede2nd
                 this.dgv_DeleteSelectedRow();
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (this.itemReturner == null) { return; }
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = GlobalData.Instance.bumonName + "_allItems.csv";
+            sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+            sfd.Filter = "CSVファイル (*.csv)|*.csv";
+            sfd.RestoreDirectory = true;
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using ( Stream st = sfd.OpenFile() )
+                {
+                    using (StreamWriter stw = new StreamWriter(st, Encoding.GetEncoding(932)))
+                    {
+                        stw.WriteLine(Item.GetCSVHeader());
+
+                        List<Item> its = this.itemReturner();
+                        foreach (Item i in its)
+                        {
+                            stw.WriteLine(i.GetCSVLine());
+                        }
+
+                        stw.Close();
+                    }
+                    st.Close();
+                }
+            }
+        }
     }
 }

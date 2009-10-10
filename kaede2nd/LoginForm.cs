@@ -98,5 +98,11 @@ namespace kaede2nd
                 text_dbname.Text = "en_test";
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            text_host.Text = "ma.hocha.org";
+            text_port.Text = "3307";
+        }
     }
 }

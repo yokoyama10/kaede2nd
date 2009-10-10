@@ -547,6 +547,12 @@ namespace kaede2nd
             return (UInt32)(dt.ToFileTimeUtc() / 10000000 - 11644506000L);
         }
 
+        public static string ToCSVString(this string str)
+        {
+            if (str == null) { return "\"\""; /* "" */ }
+            return "\"" + str.Replace("\"", "\"\"") + "\"";
+        }
+
     }
 
     public static class ControlUtil

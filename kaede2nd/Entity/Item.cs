@@ -63,5 +63,26 @@ namespace kaede2nd.Entity
         public string item_sellcomment { get; set; }
         public string item_userspace { get; set; }
 
+        public static string GetCSVHeader()
+        {
+            return "id,出品者,商品名,定価,売価,返す?,売れた?,コメント";
+        }
+
+        public string GetCSVLine()
+        {
+            List<string> rets = new List<string>();
+
+            rets.Add(this.item_id.ToString("00000"));
+            rets.Add(this.item__Receipt.getSellerString().ToCSVString());
+            rets.Add(this.item_name.ToCSVString());
+            rets.Add(this.item_tagprice.ToString());
+            rets.Add((this.item_sellprice ?? 0).ToString());
+            rets.Add(this.item_return ? "返" : "不返");
+            rets.Add(this.item_sellprice.HasValue ? "既売" : "未売");
+            rets.Add(this.item_comment.ToCSVString());
+
+            return string.Join(",",rets.ToArray());
+        }
+
     }
 }
