@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecentItem));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button_print = new System.Windows.Forms.Button();
             this.text_kensuu = new System.Windows.Forms.TextBox();
@@ -43,7 +42,6 @@
             this.選択した商品を印刷SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.最後に印刷した商品をリストに復活ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.選択した商品をリストから除去ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -114,8 +112,7 @@
             this.表示商品全てを印刷PToolStripMenuItem,
             this.選択した商品を印刷SToolStripMenuItem,
             this.toolStripSeparator2,
-            this.最後に印刷した商品をリストに復活ToolStripMenuItem,
-            this.選択した商品をリストから除去ToolStripMenuItem});
+            this.最後に印刷した商品をリストに復活ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(255, 148);
             // 
@@ -151,10 +148,10 @@
             // 
             // 選択した商品を印刷SToolStripMenuItem
             // 
-            this.選択した商品を印刷SToolStripMenuItem.Enabled = false;
             this.選択した商品を印刷SToolStripMenuItem.Name = "選択した商品を印刷SToolStripMenuItem";
             this.選択した商品を印刷SToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.選択した商品を印刷SToolStripMenuItem.Text = "選択した商品を印刷 (&S)...";
+            this.選択した商品を印刷SToolStripMenuItem.Click += new System.EventHandler(this.選択した商品を印刷SToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -167,13 +164,6 @@
             this.最後に印刷した商品をリストに復活ToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.最後に印刷した商品をリストに復活ToolStripMenuItem.Text = "最後に印刷した商品をリストに復活 (&F)";
             this.最後に印刷した商品をリストに復活ToolStripMenuItem.Click += new System.EventHandler(this.最後に印刷した商品をリストに復活ToolStripMenuItem_Click);
-            // 
-            // 選択した商品をリストから除去ToolStripMenuItem
-            // 
-            this.選択した商品をリストから除去ToolStripMenuItem.Enabled = false;
-            this.選択した商品をリストから除去ToolStripMenuItem.Name = "選択した商品をリストから除去ToolStripMenuItem";
-            this.選択した商品をリストから除去ToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.選択した商品をリストから除去ToolStripMenuItem.Text = "選択した商品をリストから除去 (&D)";
             // 
             // RecentItem
             // 
@@ -216,7 +206,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 常に手前に表示AToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 選択した商品をリストから除去ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 最後に印刷した商品をリストに復活ToolStripMenuItem;
     }
 }

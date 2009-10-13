@@ -246,6 +246,20 @@ namespace kaede2nd
 
             if (this.itemList == null) { throw new InvalidOperationException(); }
 
+            if (dgv.Columns[e.ColumnIndex].Name == ColumnName.shouhinMei)
+            {
+                string val = (string)dgv[e.ColumnIndex, e.RowIndex].Value;
+                if (val != null && val.Length == 13)
+                {
+                    if (val.StartsWith("978") || val.StartsWith("９７８"))
+                    {
+                        System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvIsbnThread);
+                        t.Start(dgv[e.ColumnIndex, e.RowIndex]);
+                    }
+
+                }
+            }
+
             var itemDao = GlobalData.getIDao<IItemDao>();
             Item it;
 

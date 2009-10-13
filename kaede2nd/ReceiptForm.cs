@@ -371,7 +371,6 @@ namespace kaede2nd
 
             if (this.itemList == null) { throw new InvalidOperationException(); }
 
-
             if (dgv.Columns[e.ColumnIndex].Name == ColumnName.shouhinMei)
             {
                 string val = (string)dgv[e.ColumnIndex, e.RowIndex].Value;
@@ -609,14 +608,7 @@ namespace kaede2nd
 
             if (e.KeyCode == Keys.D && e.Control && !e.Shift && !e.Alt)
             {
-                if (dgv.SelectedRows.Count == 0)
-                {
-                    DataGridViewSelectedCellCollection cells = dgv.SelectedCells;
-                    for (int i = 0; i < cells.Count; i++)
-                    {
-                        dgv.Rows[cells[i].RowIndex].Selected = true;
-                    }
-                }
+                dgv.ExtendSelection();
                 this.contextMenuStrip_rowHeader.Show(dgv, 0, 0);
                 return;
             }

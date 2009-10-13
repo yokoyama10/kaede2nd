@@ -23,6 +23,9 @@ namespace kaede2nd
         private List<RecentItemSet> recentList = new List<RecentItemSet>();
         public void AddRecentItemId(UInt32 iid)
         {
+
+            if (this.GetItemSetFromId(iid) != null) { return; }
+
             this.recentList.Add(new RecentItemSet(iid));
             this.ReDraw();
         }
@@ -274,6 +277,45 @@ namespace kaede2nd
         private void RecentItem_Shown(object sender, EventArgs e)
         {
             this.Text = "最近追加された商品リスト (" + GlobalData.Instance.bumonName + ")";
+        }
+
+        private void 選択した商品を印刷SToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.dataGridView1.ExtendSelection();
+
+            List<Item> items = new List<Item>();
+
+            kaede2nd.Dao.IItemDao idao = GlobalData.getIDao<kaede2nd.Dao.IItemDao>();
+            for (int i = 0; i < this.dataGridView1.SelectedRows.Count; i++)
+            {
+                var itl = idao.GetItemById(this.recentList[i].item_id);
+                if (itl.Count == 0) { continue; }
+                items.Add(itl[0]);
+            }
+
+            items.Sort(delegate(Item a, Item b) { return a.item_id.CompareTo(b.item_id); });
+
+            foreach (Item it in items)
+            {
+                RecentItemSet ris = this.GetItemSetFromId(it.item_id);
+                if (ris != null)
+                {
+                    ris.printed = true;
+                }
+            }
+
+            ItemsPrintDocument.PrintItems(items);
+            this.ReDraw();
+        }
+
+        private RecentItemSet GetItemSetFromId(uint iid)
+        {
+            foreach (RecentItemSet ris in this.recentList)
+            {
+                if (ris.item_id == iid) { return ris; }
+            }
+
+            return null;
         }
     }
 

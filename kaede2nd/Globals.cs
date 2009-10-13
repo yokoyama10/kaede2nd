@@ -296,6 +296,17 @@ namespace kaede2nd
             return "\"" + str.Replace("\"", "\"\"") + "\"";
         }
 
+        public static void ExtendSelection(this DataGridView dgv)
+        {
+            if (dgv.SelectedRows.Count == 0)
+            {
+                DataGridViewSelectedCellCollection cells = dgv.SelectedCells;
+                for (int i = 0; i < cells.Count; i++)
+                {
+                    dgv.Rows[cells[i].RowIndex].Selected = true;
+                }
+            }
+        }
     }
 
     public static class ControlUtil

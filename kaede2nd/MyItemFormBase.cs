@@ -145,7 +145,37 @@ namespace kaede2nd
                 }
             }
 
+            items.Sort(delegate(Item a, Item b) { return a.item_id.CompareTo(b.item_id); });
+
             ItemsPrintDocument.PrintItems(items);
+        }
+
+        private void タグ印刷リストに追加ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.IsEditable() == false) { return; }
+
+            List<uint> itemids = new List<uint>();
+
+            for (int i = 0; i < this.formDGV.SelectedRows.Count; i++)
+            {
+                DataGridViewRow row = this.formDGV.SelectedRows[i];
+
+                if (row.Cells[ColumnName.shinaBan].Value == null)
+                {
+                }
+                else
+                {
+                    itemids.Add((UInt32)row.Cells[ColumnName.shinaBan].Value);
+                }
+            }
+
+            itemids.Sort();
+
+            for (int i = 0; i < itemids.Count; i++)
+            {
+                GlobalData.Instance.recentItemForm.AddRecentItemId(itemids[i]);
+            }
+
         }
 
 
@@ -331,6 +361,7 @@ namespace kaede2nd
         }
 
 #endregion
+
 
 
     }
