@@ -48,10 +48,6 @@
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // webc
-            // 
-            this.webc.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webc.Headers")));
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;

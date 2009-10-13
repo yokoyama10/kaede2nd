@@ -56,10 +56,6 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // webc
-            // 
-            this.webc.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webc.Headers")));
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(12, 31);

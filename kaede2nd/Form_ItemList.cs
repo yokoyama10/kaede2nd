@@ -35,8 +35,6 @@ namespace kaede2nd
 
             InitializeComponent();
 
-            this.formDGV = this.dataGridView1;
-
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
             this.dataGridView1.RowTemplate.Height = 20;
@@ -301,6 +299,10 @@ namespace kaede2nd
             if (e.KeyCode == Keys.Delete)
             {
                 this.dgv_DeleteSelectedRow();
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                this.renewItemList();
             }
         }
 

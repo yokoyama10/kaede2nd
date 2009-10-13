@@ -42,10 +42,6 @@
             this.contextMenuStrip_rowHeader.SuspendLayout();
             this.SuspendLayout();
             // 
-            // webc
-            // 
-            this.webc.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webc.Headers")));
-            // 
             // contextMenuStrip_rowHeader
             // 
             this.contextMenuStrip_rowHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {

@@ -22,8 +22,6 @@ namespace kaede2nd
         {
             InitializeComponent();
 
-            this.formDGV = this.dataGridView1;
-
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
 
@@ -587,22 +585,6 @@ namespace kaede2nd
             }
         }
 
-        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            DataGridView dgv = (DataGridView)sender;
-
-            if (e.Button == MouseButtons.Right)
-            {
-                if (dgv.Rows[e.RowIndex].Selected == false)
-                {
-                    dgv.ClearSelection();
-                    dgv.Rows[e.RowIndex].Selected = true;
-                }
-
-                Rectangle r = dgv.GetCellDisplayRectangle(e.ColumnIndex,e.RowIndex,true);
-                this.contextMenuStrip_rowHeader.Show(dgv, e.X + r.X, e.Y + r.Y);
-            }
-        }
 
         protected override bool IsEditableImpl()
         {
