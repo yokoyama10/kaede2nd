@@ -30,6 +30,7 @@ namespace kaede2nd
         {
             base.addDGVEvents(dgv);
             dgv.RowHeaderMouseClick += this.dgv_RowHeaderMouseClick;
+            dgv.UserDeletingRow += this.dgv_UserDeletingRow;
 
             this.formDGV = dgv;
         }
@@ -173,6 +174,7 @@ namespace kaede2nd
 
             for (int i = 0; i < itemids.Count; i++)
             {
+
                 GlobalData.Instance.recentItemForm.AddRecentItemId(itemids[i]);
             }
 
@@ -217,7 +219,7 @@ namespace kaede2nd
         }
 
 
-        protected void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        protected void dgv_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             if (this.IsEditable() == false) { return; }
 

@@ -12,6 +12,7 @@ using Seasar.Framework.Container;
 
 using kaede2nd.Entity;
 using kaede2nd.Dao;
+using System.Text.RegularExpressions;
 
 namespace kaede2nd
 {
@@ -20,6 +21,8 @@ namespace kaede2nd
         public delegate List<Item> ItemReturnDelegate();
 
         private ItemReturnDelegate itemReturner;
+        private string searchText;
+        public bool useRegex;
 
         public Form_ItemList(ItemReturnDelegate returner, string windowTitle)
             : this()
@@ -32,6 +35,9 @@ namespace kaede2nd
         {
             this.itemList = null;
             this.itemReturner = null;
+
+            this.searchText = null;
+            this.useRegex = false;
 
             InitializeComponent();
 
@@ -227,13 +233,34 @@ namespace kaede2nd
 
             this.itemList = this.itemReturner();
 
+            Regex reg = null;
+            if (this.searchText != null) { reg = new Regex(this.searchText); }
+
             foreach (Item it in this.itemList)
             {
+                if (this.searchText != null)
+                {
+                    if (this.useRegex)
+                    {
+                        if (!reg.IsMatch(it.item_name)) { continue; }
+                    }
+                    else
+                    {
+                        if (!it.item_name.Contains(this.searchText))
+                        {
+                            continue;
+                        }
+                    }
+                }
+
                 DataGridViewRow row = this.dataGridView1.Rows[this.dataGridView1.Rows.Add()];
                 this.setRowValue(row, it);
             }
 
-            dataGridView1.Enabled = true;
+            this.dataGridView1.VirtualMode = true;
+            this.dataGridView1.VirtualMode = false;
+            this.dataGridView1.Enabled = true;
+            this.dataGridView1.Focus();
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -288,16 +315,7 @@ namespace kaede2nd
         private void Form_ItemList_Load(object sender, EventArgs e)
         {
             this.renewItemList();
-            this.Form_ItemList_Resize(sender, e);
         }
-
-        private void Form_ItemList_Resize(object sender, EventArgs e)
-        {
-            Size s = this.ClientSize;
-            s.Height -= 60;
-            this.dataGridView1.Size = s;
-        }
-
 
         protected override bool IsEditableImpl()
         {
@@ -314,9 +332,18 @@ namespace kaede2nd
             {
                 this.dgv_DeleteSelectedRow();
             }
-            else if (e.KeyCode == Keys.F5)
+        }
+
+
+        private void Form_ItemList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
             {
                 this.renewItemList();
+            }
+            else if (e.KeyCode == Keys.F && e.Control)
+            {
+                this.textBox1.Focus();
             }
         }
 
@@ -350,6 +377,37 @@ namespace kaede2nd
                 }
             }
         }
+
+        private void button_search_Click(object sender, EventArgs e)
+        {
+            this.searchText = this.textBox1.Text;
+            if (string.IsNullOrEmpty(this.searchText)) { this.searchText = null; }
+
+            this.useRegex = this.checkBox_regex.Checked;
+
+            this.renewItemList();
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            TextBox tbx = (TextBox)sender;
+
+            if (tbx.ForeColor == SystemColors.InactiveCaptionText)
+            {
+                tbx.ForeColor = SystemColors.WindowText;
+                tbx.Text = "";
+            }
+            else
+            {
+                tbx.SelectAll();
+            }
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { this.button_search.PerformClick(); }
+        }
+
 
     }
 }
