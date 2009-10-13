@@ -191,6 +191,7 @@ namespace kaede2nd
 
             this.receipt = null;
 
+            this.商品リストを表示LToolStripMenuItem.Enabled = false;
             this.dataGridView1.Enabled = false;
             this.dataGridView1.Rows.Clear();
             this.itemList = null;
@@ -278,6 +279,7 @@ namespace kaede2nd
             this.dataGridView1.VirtualMode = true;
             this.dataGridView1.VirtualMode = false;
             this.dataGridView1.Enabled = true;
+            this.商品リストを表示LToolStripMenuItem.Enabled = true;
         }
 
         private void RefreshShowing()
@@ -411,7 +413,16 @@ namespace kaede2nd
             {
                 it = this.GetItemFromList((UInt32)dgv[ColumnName.shinaBan, e.RowIndex].Value);
                 this.changeDBdata(dgv.Columns[e.ColumnIndex].Name, it, dgv[e.ColumnIndex, e.RowIndex].Value);
-                itemDao.Update(it);
+
+                try
+                {
+                    itemDao.Update(it);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("更新できませんでした: " + ex.ToString());
+                    return;
+                }
             }
 
         }
@@ -548,7 +559,15 @@ namespace kaede2nd
             }
             else
             {
-                receiptDao.Update(receipt);
+                try
+                {
+                    receiptDao.Update(receipt);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("更新できませんでした: " + ex.ToString());
+                    return;
+                }
                 this.SetReceipt(receipt);
             }
         }
@@ -869,6 +888,25 @@ namespace kaede2nd
         private void 最新の情報に更新RToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.RefreshShowing();
+        }
+
+        private void 商品リストを表示LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ( this.receipt == null ) { return; }
+            uint rid = this.receipt.receipt_id;
+            try
+            {
+                Form_ItemList f = new Form_ItemList(delegate()
+                {
+                    var itemDao = GlobalData.getIDao<IItemDao>();
+                    return itemDao.GetReceiptItem(rid);
+                }, "R" + rid.ToString("0000") + " " + this.receipt.getSellerString() + " の商品リスト");
+                f.Show();
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show("商品一覧ウィンドウが生成できませんでした: " + excep.Message);
+            }
         }
 
         

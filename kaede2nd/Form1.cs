@@ -267,8 +267,7 @@ namespace kaede2nd
                 {
                     var itemDao = GlobalData.getIDao<IItemDao>();
                     return itemDao.GetAll();
-                });
-                f.Text = "全商品リスト";
+                }, "全商品リスト");
                 f.Show();
             }
             catch (Exception excep)
@@ -295,7 +294,17 @@ namespace kaede2nd
 
 
             IReceiptDao receiptDao = GlobalData.getIDao<IReceiptDao>();
-            receiptDao.Update(r);
+
+            try
+            {
+                receiptDao.Update(r);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("更新できませんでした: " + ex.ToString());
+                return;
+            }
+
             System.Diagnostics.Debug.WriteLine
                 ("Receipt: (index: " + r.receipt_id.ToString() + ") Updated.");
         }

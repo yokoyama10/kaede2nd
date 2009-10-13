@@ -22,9 +22,10 @@ namespace kaede2nd
         private ItemReturnDelegate itemReturner;
         private List<Item> itemList;
 
-        public Form_ItemList(ItemReturnDelegate returner)
+        public Form_ItemList(ItemReturnDelegate returner, string windowTitle)
             : this()
         {
+            this.Text = windowTitle;
             this.itemReturner = returner;
         }
 
@@ -257,7 +258,16 @@ namespace kaede2nd
             {
                 it = this.GetItemFromList((UInt32)dgv[ColumnName.shinaBan, e.RowIndex].Value);
                 this.changeDBdata(dgv.Columns[e.ColumnIndex].Name, it, dgv[e.ColumnIndex, e.RowIndex].Value);
-                itemDao.Update(it);
+
+                try
+                {
+                    itemDao.Update(it);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("更新できませんでした: " + ex.ToString());
+                    return;
+                }
             }
 
         }
@@ -358,6 +368,28 @@ namespace kaede2nd
                     }
                     st.Close();
                 }
+            }
+        }
+
+        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (!dgv.Enabled) { return; }
+            if (this.itemList == null) { throw new InvalidOperationException(); }
+
+            //if (dgv.RowCount <= e.RowIndex) { return; } //新規行のキャンセル
+
+            if (e.Row.Cells[ColumnName.shinaBan].Value == null)
+            {
+            }
+            else
+            {
+
+                Item it = this.GetItemFromList((UInt32)e.Row.Cells[ColumnName.shinaBan].Value);
+
+                var itemDao = GlobalData.getIDao<IItemDao>();
+                //this.itemList.Remove(it);
+                itemDao.Delete(it);
             }
         }
     }

@@ -49,15 +49,6 @@
             this.text_zai_ban = new System.Windows.Forms.TextBox();
             this.label_external = new System.Windows.Forms.Label();
             this.label_sakini = new System.Windows.Forms.Label();
-            this.contextMenuStrip_rowHeader = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.行メニューToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.まとめて返品設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.タグを印刷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.アイテムを削除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.キャンセルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.check_payback = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.contextMenuStrip_temp = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -65,10 +56,10 @@
             this.商品名編集Enterで右移動ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.商品リストを表示LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.受付票を印刷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.text_external = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuStrip_rowHeader.SuspendLayout();
             this.contextMenuStrip_temp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,6 +84,7 @@
             this.label2.Size = new System.Drawing.Size(67, 12);
             this.label2.TabIndex = 6;
             this.label2.Text = "パスワード(&P)";
+            this.label2.Visible = false;
             // 
             // dataGridView1
             // 
@@ -132,6 +124,7 @@
             this.text_pass.Size = new System.Drawing.Size(69, 19);
             this.text_pass.TabIndex = 7;
             this.text_pass.Text = "password";
+            this.text_pass.Visible = false;
             this.text_pass.Enter += new System.EventHandler(this.text_Enter_SelectAll);
             // 
             // radio_zaigaku
@@ -276,77 +269,6 @@
             this.label_sakini.TabIndex = 79;
             this.label_sakini.Text = "先に↑の情報を確定させてください";
             // 
-            // contextMenuStrip_rowHeader
-            // 
-            this.contextMenuStrip_rowHeader.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.行メニューToolStripLabel,
-            this.ToolStripMenuItem2,
-            this.タグを印刷ToolStripMenuItem,
-            this.アイテムを削除ToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.キャンセルToolStripMenuItem});
-            this.contextMenuStrip_rowHeader.Name = "contextMenuStrip_rowHeader";
-            this.contextMenuStrip_rowHeader.ShowImageMargin = false;
-            this.contextMenuStrip_rowHeader.Size = new System.Drawing.Size(138, 113);
-            // 
-            // 行メニューToolStripLabel
-            // 
-            this.行メニューToolStripLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.行メニューToolStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.行メニューToolStripLabel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.行メニューToolStripLabel.Name = "行メニューToolStripLabel";
-            this.行メニューToolStripLabel.Size = new System.Drawing.Size(97, 12);
-            this.行メニューToolStripLabel.Text = "行メニュー (Ctrl+D)";
-            // 
-            // ToolStripMenuItem2
-            // 
-            this.ToolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.まとめて返品設定ToolStripMenuItem});
-            this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
-            this.ToolStripMenuItem2.Size = new System.Drawing.Size(137, 22);
-            this.ToolStripMenuItem2.Text = "まとめて設定";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem1.Text = "まとめて定価設定...";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.まとめて定価設定ToolStripMenuItem_Click);
-            // 
-            // まとめて返品設定ToolStripMenuItem
-            // 
-            this.まとめて返品設定ToolStripMenuItem.Name = "まとめて返品設定ToolStripMenuItem";
-            this.まとめて返品設定ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.まとめて返品設定ToolStripMenuItem.Text = "まとめて返品設定...";
-            this.まとめて返品設定ToolStripMenuItem.Click += new System.EventHandler(this.まとめて返品設定ToolStripMenuItem_Click);
-            // 
-            // タグを印刷ToolStripMenuItem
-            // 
-            this.タグを印刷ToolStripMenuItem.Name = "タグを印刷ToolStripMenuItem";
-            this.タグを印刷ToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.タグを印刷ToolStripMenuItem.Text = "タグを印刷...";
-            this.タグを印刷ToolStripMenuItem.Click += new System.EventHandler(this.タグを印刷ToolStripMenuItem_Click);
-            // 
-            // アイテムを削除ToolStripMenuItem
-            // 
-            this.アイテムを削除ToolStripMenuItem.Name = "アイテムを削除ToolStripMenuItem";
-            this.アイテムを削除ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.アイテムを削除ToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.アイテムを削除ToolStripMenuItem.Text = "アイテムを削除";
-            this.アイテムを削除ToolStripMenuItem.Click += new System.EventHandler(this.アイテムを削除ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
-            // 
-            // キャンセルToolStripMenuItem
-            // 
-            this.キャンセルToolStripMenuItem.Name = "キャンセルToolStripMenuItem";
-            this.キャンセルToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.キャンセルToolStripMenuItem.Text = "キャンセル";
-            // 
             // check_payback
             // 
             this.check_payback.AutoSize = true;
@@ -361,11 +283,11 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(536, 39);
+            this.button2.Location = new System.Drawing.Point(518, 39);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(41, 19);
+            this.button2.Size = new System.Drawing.Size(59, 19);
             this.button2.TabIndex = 80;
-            this.button2.Text = "temp";
+            this.button2.Text = "メニュー";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -376,6 +298,7 @@
             this.商品名編集Enterで右移動ToolStripMenuItem,
             this.toolStripSeparator2,
             this.最新の情報に更新RToolStripMenuItem,
+            this.商品リストを表示LToolStripMenuItem,
             this.受付票を印刷ToolStripMenuItem});
             this.contextMenuStrip_temp.Name = "contextMenuStrip_temp";
             this.contextMenuStrip_temp.ShowCheckMargin = true;
@@ -412,6 +335,13 @@
             this.最新の情報に更新RToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.最新の情報に更新RToolStripMenuItem.Text = "最新の情報に更新 (&R)";
             this.最新の情報に更新RToolStripMenuItem.Click += new System.EventHandler(this.最新の情報に更新RToolStripMenuItem_Click);
+            // 
+            // 商品リストを表示LToolStripMenuItem
+            // 
+            this.商品リストを表示LToolStripMenuItem.Name = "商品リストを表示LToolStripMenuItem";
+            this.商品リストを表示LToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.商品リストを表示LToolStripMenuItem.Text = "商品リストを表示 (&L)";
+            this.商品リストを表示LToolStripMenuItem.Click += new System.EventHandler(this.商品リストを表示LToolStripMenuItem_Click);
             // 
             // 受付票を印刷ToolStripMenuItem
             // 
@@ -462,7 +392,6 @@
             this.Load += new System.EventHandler(this.ReceiptForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReceiptForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuStrip_rowHeader.ResumeLayout(false);
             this.contextMenuStrip_temp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -490,15 +419,7 @@
         private System.Windows.Forms.Label label_external;
         private System.Windows.Forms.Label label_sakini;
         private MyDataGridView dataGridView1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_rowHeader;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem アイテムを削除ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem キャンセルToolStripMenuItem;
         private System.Windows.Forms.CheckBox check_payback;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem まとめて返品設定ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripLabel 行メニューToolStripLabel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_temp;
         private System.Windows.Forms.ToolStripMenuItem 商品名でIMEオンToolStripMenuItem;
@@ -506,7 +427,7 @@
         private System.Windows.Forms.ComboBox text_external;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 受付票を印刷ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem タグを印刷ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 最新の情報に更新RToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 商品リストを表示LToolStripMenuItem;
     }
 }

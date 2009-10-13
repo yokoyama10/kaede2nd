@@ -40,6 +40,7 @@
             this.cSVで出力CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.楓ちゃん形式で出力KToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.最近追加された商品リストLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ページ設定UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.選択中の票を印刷PToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -51,7 +52,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.品番カウンタをセットしなおすToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
-            this.最近追加された商品リストLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -74,19 +74,19 @@
             // 
             this.button4.Location = new System.Drawing.Point(236, 31);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(81, 23);
             this.button4.TabIndex = 5;
-            this.button4.Text = "Print";
+            this.button4.Text = "タグ印刷";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(317, 31);
+            this.button5.Location = new System.Drawing.Point(337, 31);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(86, 23);
             this.button5.TabIndex = 6;
-            this.button5.Text = "AllItems";
+            this.button5.Text = "全ての商品";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -164,6 +164,13 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(216, 6);
+            // 
+            // 最近追加された商品リストLToolStripMenuItem
+            // 
+            this.最近追加された商品リストLToolStripMenuItem.Name = "最近追加された商品リストLToolStripMenuItem";
+            this.最近追加された商品リストLToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.最近追加された商品リストLToolStripMenuItem.Text = "最近追加された商品リスト (&L)";
+            this.最近追加された商品リストLToolStripMenuItem.Click += new System.EventHandler(this.最近追加された商品リストLToolStripMenuItem_Click);
             // 
             // ページ設定UToolStripMenuItem
             // 
@@ -246,13 +253,6 @@
             this.button1.Text = "更新 (F5)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // 最近追加された商品リストLToolStripMenuItem
-            // 
-            this.最近追加された商品リストLToolStripMenuItem.Name = "最近追加された商品リストLToolStripMenuItem";
-            this.最近追加された商品リストLToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.最近追加された商品リストLToolStripMenuItem.Text = "最近追加された商品リスト (&L)";
-            this.最近追加された商品リストLToolStripMenuItem.Click += new System.EventHandler(this.最近追加された商品リストLToolStripMenuItem_Click);
             // 
             // Form1
             // 

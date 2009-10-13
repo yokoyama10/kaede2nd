@@ -104,5 +104,6 @@ namespace kaede2nd
             text_host.Text = "ma.hocha.org";
             text_port.Text = "3307";
         }
+
     }
 }
