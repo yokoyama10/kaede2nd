@@ -389,7 +389,6 @@
             this.KeyPreview = true;
             this.Name = "ReceiptForm";
             this.Text = "ReceiptForm";
-            this.Load += new System.EventHandler(this.ReceiptForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReceiptForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip_temp.ResumeLayout(false);

@@ -12,16 +12,17 @@ using kaede2nd.Dao;
 
 namespace kaede2nd
 {
-    public partial class ReceiptForm : MyForm
+    public partial class ReceiptForm : MyItemFormBase
     {
         private Receipt receipt;
-        private List<Item> itemList;
 
         private bool isNewReceipt;
 
         public ReceiptForm()
         {
             InitializeComponent();
+
+            this.formDGV = this.dataGridView1;
 
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
@@ -427,43 +428,6 @@ namespace kaede2nd
 
         }
 
-        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            if (this.receipt == null) { return; }
-            DataGridView dgv = (DataGridView)sender;
-            if (!dgv.Enabled) { return; }
-            if (this.itemList == null) { throw new InvalidOperationException(); }
-
-            //if (dgv.RowCount <= e.RowIndex) { return; } //新規行のキャンセル
-
-            if (e.Row.Cells[ColumnName.shinaBan].Value == null)
-            {
-            }
-            else
-            {
-
-                Item it = this.GetItemFromList((UInt32)e.Row.Cells[ColumnName.shinaBan].Value);
-
-                var itemDao = GlobalData.getIDao<IItemDao>();
-                //this.itemList.Remove(it);
-                itemDao.Delete(it);
-            }
-
-        }
-
-        private Item GetItemFromList(UInt32 id)
-        {
-            return (from ites in this.itemList
-             where ites.item_id == id
-             select ites)
-                    .Single();
-        }
-
-        private void ReceiptForm_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -640,50 +604,16 @@ namespace kaede2nd
             }
         }
 
-        private void アイテムを削除ToolStripMenuItem_Click(object sender, EventArgs e)
+        protected override bool IsEditableImpl()
         {
-            this.dgv_DeleteSelectedRow();
-        }
-
-        private void dgv_DeleteSelectedRow()
-        {
-            if (this.receipt == null) { return; }
-            DataGridView dgv = this.dataGridView1;
-            if (!dgv.Enabled) { return; }
+            if (this.receipt == null) { return false; }
+            if (!this.dataGridView1.Enabled) { return false; }
             if (this.itemList == null) { throw new InvalidOperationException(); }
 
-            if (dgv.SelectedRows.Count == 0) { return; }
-
-            if (MessageBox.Show("選択した " + dgv.SelectedRows.Count.ToString() + "行を削除しますか？", "削除確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                for (int i = this.dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
-                {
-                    DataGridViewRow row = this.dataGridView1.SelectedRows[i];
-
-                    //if (dgv.RowCount <= e.RowIndex) { return; } //新規行のキャンセル
-
-                    if (row.Cells[ColumnName.shinaBan].Value == null)
-                    {
-                    }
-                    else
-                    {
-
-                        Item it = this.GetItemFromList((UInt32)row.Cells[ColumnName.shinaBan].Value);
-
-                        var itemDao = GlobalData.getIDao<IItemDao>();
-                        this.itemList.Remove(it);
-                        itemDao.Delete(it);
-                    }
-
-                    if (!row.IsNewRow)
-                    {
-                        this.dataGridView1.Rows.Remove(row);
-                    }
-                }
-
-               
-            }
+            return true;
         }
+
+
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -730,78 +660,7 @@ namespace kaede2nd
             }
         }
 
-        private void まとめて定価設定ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.receipt == null) { return; }
-            DataGridView dgv = this.dataGridView1;
-            if (!dgv.Enabled) { return; }
-            if (this.itemList == null) { throw new InvalidOperationException(); }
 
-            if (dgv.SelectedRows.Count == 0) { return; }
-
-            string res;
-            DialogResult dres = InputBox.ShowIntDialog("選択した " + dgv.SelectedRows.Count.ToString() + "件の商品に設定する定価を入力してください", "まとめて定価設定", "ここに入力", out res);
-
-            if (dres == DialogResult.OK)
-            {
-                UInt32 teika;
-                if (UInt32.TryParse(res, out teika))
-                {
-                    for (int i = this.dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
-                    {
-                        DataGridViewRow row = this.dataGridView1.SelectedRows[i];
-
-                        if (row.Cells[ColumnName.shinaBan].Value == null)
-                        {
-                        }
-                        else
-                        {
-                            row.Cells[ColumnName.teika].Value = teika;
-                        }
-                    }
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("正しい数値が入力されませんでした", "まとめて定価設定", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-        }
-
-        private void まとめて返品設定ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.receipt == null) { return; }
-            DataGridView dgv = this.dataGridView1;
-            if (!dgv.Enabled) { return; }
-            if (this.itemList == null) { throw new InvalidOperationException(); }
-
-            DialogResult dres = MessageBox.Show(
-                "選択した " + dgv.SelectedRows.Count.ToString() + "件の商品に返品フラグを設定します。\n"
-                + "[はい] 返品希望にする\n"
-                + "[いいえ] 返品希望しないにする", "まとめて返品設定",
-                MessageBoxButtons.YesNoCancel, MessageBoxIcon.None, MessageBoxDefaultButton.Button3);
-
-            if (dres == DialogResult.Cancel)
-            { return;  }
-            else
-            {
-                bool isHenpin = (dres == DialogResult.Yes);
-                for (int i = this.dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
-                {
-                    DataGridViewRow row = this.dataGridView1.SelectedRows[i];
-
-                    if (row.Cells[ColumnName.shinaBan].Value == null)
-                    {
-                    }
-                    else
-                    {
-                        row.Cells[ColumnName.henpin].Value = Globals.getCheckboxString(isHenpin);
-                    }
-                }
-                return;
-            }
-        }
 
         private void 商品名でIMEオンToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -847,42 +706,17 @@ namespace kaede2nd
 
             if (pdres != DialogResult.OK) { return; }
 
-            PrintPreviewDialog pprediag = new PrintPreviewDialog();
-            pprediag.Document = prid.Document;
+            PrintDialog pdiag = new PrintDialog();
+            pdiag.Document = prid.Document;
 
             try
             {
-                pprediag.ShowDialog();
+                pdiag.ShowDialog();
             }
             catch (Exception iex)
             {
                 MessageBox.Show("印刷が実行できませんでした: " + iex.ToString());
             }
-        }
-
-        private void タグを印刷ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.receipt == null) { return; }
-            DataGridView dgv = this.dataGridView1;
-            if (!dgv.Enabled) { return; }
-            if (this.itemList == null) { throw new InvalidOperationException(); }
-
-            List<Item> items = new List<Item>();
-
-            for (int i = 0; i < dgv.SelectedRows.Count; i++)
-            {
-                DataGridViewRow row = dgv.SelectedRows[i];
-
-                if (row.Cells[ColumnName.shinaBan].Value == null)
-                {
-                }
-                else
-                {
-                    items.Add(this.GetItemFromList((UInt32)row.Cells[ColumnName.shinaBan].Value));
-                }
-            }
-
-            ItemsPrintDocument.PrintItems(items);
         }
 
         private void 最新の情報に更新RToolStripMenuItem_Click(object sender, EventArgs e)

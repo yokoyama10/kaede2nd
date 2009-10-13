@@ -15,12 +15,11 @@ using kaede2nd.Dao;
 
 namespace kaede2nd
 {
-    public partial class Form_ItemList : MyForm
+    public partial class Form_ItemList : MyItemFormBase
     {
         public delegate List<Item> ItemReturnDelegate();
 
         private ItemReturnDelegate itemReturner;
-        private List<Item> itemList;
 
         public Form_ItemList(ItemReturnDelegate returner, string windowTitle)
             : this()
@@ -35,6 +34,8 @@ namespace kaede2nd
             this.itemReturner = null;
 
             InitializeComponent();
+
+            this.formDGV = this.dataGridView1;
 
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
@@ -272,14 +273,6 @@ namespace kaede2nd
 
         }
 
-        private Item GetItemFromList(UInt32 id)
-        {
-            return (from ites in this.itemList
-                    where ites.item_id == id
-                    select ites)
-                    .Single();
-        }
-
         private void Form_ItemList_Load(object sender, EventArgs e)
         {
             this.renewItemList();
@@ -294,41 +287,12 @@ namespace kaede2nd
         }
 
 
-        private void dgv_DeleteSelectedRow()
+        protected override bool IsEditableImpl()
         {
-            DataGridView dgv = this.dataGridView1;
-            if (!dgv.Enabled) { return; }
+            if (!this.dataGridView1.Enabled) { return false; }
             if (this.itemList == null) { throw new InvalidOperationException(); }
 
-            if (MessageBox.Show("選択した " + dgv.SelectedRows.Count.ToString() + "行を削除しますか？", "削除確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-            {
-                for (int i = this.dataGridView1.SelectedRows.Count - 1; i >= 0; i--)
-                {
-                    DataGridViewRow row = this.dataGridView1.SelectedRows[i];
-
-                    //if (dgv.RowCount <= e.RowIndex) { return; } //新規行のキャンセル
-
-                    if (row.Cells[ColumnName.shinaBan].Value == null)
-                    {
-                    }
-                    else
-                    {
-
-                        Item it = this.GetItemFromList((UInt32)row.Cells[ColumnName.shinaBan].Value);
-
-                        var itemDao = GlobalData.getIDao<IItemDao>();
-                        this.itemList.Remove(it);
-                        itemDao.Delete(it);
-                    }
-
-                    if (!row.IsNewRow)
-                    {
-                        this.dataGridView1.Rows.Remove(row);
-                    }
-                }
-
-
-            }
+            return true;
         }
 
 
@@ -371,26 +335,5 @@ namespace kaede2nd
             }
         }
 
-        private void dataGridView1_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            DataGridView dgv = (DataGridView)sender;
-            if (!dgv.Enabled) { return; }
-            if (this.itemList == null) { throw new InvalidOperationException(); }
-
-            //if (dgv.RowCount <= e.RowIndex) { return; } //新規行のキャンセル
-
-            if (e.Row.Cells[ColumnName.shinaBan].Value == null)
-            {
-            }
-            else
-            {
-
-                Item it = this.GetItemFromList((UInt32)e.Row.Cells[ColumnName.shinaBan].Value);
-
-                var itemDao = GlobalData.getIDao<IItemDao>();
-                //this.itemList.Remove(it);
-                itemDao.Delete(it);
-            }
-        }
     }
 }
