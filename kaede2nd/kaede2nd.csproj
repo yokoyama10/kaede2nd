@@ -171,6 +171,9 @@
     <EmbeddedResource Include="TitleSplitForm.resx">
       <DependentUpon>TitleSplitForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Version.resx">
+      <DependentUpon>Version.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,6 +195,12 @@
     </Compile>
     <Compile Include="TitleSplitForm.Designer.cs">
       <DependentUpon>TitleSplitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Version.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Version.Designer.cs">
+      <DependentUpon>Version.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

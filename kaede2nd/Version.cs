@@ -1,0 +1,68 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace kaede2nd
+{
+    public partial class Version : Form
+    {
+        Timer tim;
+        public Version()
+        {
+            InitializeComponent();
+            this.label_ver.Text = @"$Rev$";
+            this.tim_Tick(null, EventArgs.Empty);
+
+            tim = new Timer();
+            tim.Interval = 1000;
+            tim.Tick += new EventHandler(tim_Tick);
+            tim.Enabled = true;
+
+            
+        }
+
+        void tim_Tick(object sender, EventArgs e)
+        {
+            DateTime d = DateTime.Now;
+
+            //date
+            this.label_date.Text = string.Format("王国歴{0}年{1}月{2}日", d.Year - 1975, d.Month, d.Day);
+
+            //yukari
+            if (d.Month == 2 && d.Day == 27)
+            {
+                this.label_yukari.Text = "田村ゆかりさん、御誕生日おめでとう！";
+            }
+            else
+            {
+                DateTime d1 = new DateTime(d.Year, 2, 27, 0, 0, 0);
+                DateTime d2 = new DateTime(d.Year + 1, 2, 27, 0, 0, 0);
+
+                TimeSpan ts = d1 - d;
+                if (ts.Milliseconds < 0) { ts = d2 - d; }
+                this.label_yukari.Text = string.Format("ゆかり姫の誕生日まで、あと{0}日と{1:00}:{2:00}:{3:00}", ts.Days, ts.Hours, ts.Minutes, ts.Seconds);
+            }
+
+            //kaede
+            if (d.Month == 11 && d.Day == 15)
+            {
+                this.label_kaede.Text = "柏木楓さん、御誕生日おめでとう！";
+            }
+            else
+            {
+                DateTime d1 = new DateTime(d.Year, 11, 15, 0, 0, 0);
+                DateTime d2 = new DateTime(d.Year + 1, 11, 15, 0, 0, 0);
+
+                TimeSpan ts = d1 - d;
+                if (ts.Milliseconds < 0) { ts = d2 - d; }
+                this.label_yukari.Text = string.Format("楓ちゃんの誕生日まで、あと{0}日と{1:00}:{2:00}:{3:00}", ts.Days, ts.Hours, ts.Minutes, ts.Seconds);
+            }
+        }
+
+    }
+}

@@ -117,10 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>95, 17</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
-  </metadata>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>ゆかり姫萌え萌えソフトウェア
+製作：第58期縁日班長 横山 秀
+ <filtered>
+ <filtered>
+
+前身
+楓ちゃん萌え萌えソフトウェア
+http://ripjohn.s28.xrea.com/highschool/kaede/index.html
+rosa gigantea 005
+製作：第51期縁日班 宮川 拓
+  ripjohn@s28.xrea.com
+  <filtered></value>
+  </data>
 </root>

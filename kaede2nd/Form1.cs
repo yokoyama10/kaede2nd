@@ -616,6 +616,11 @@ namespace kaede2nd
             GlobalData.Instance.recentItemForm.Show();
         }
 
+        private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new Version()).ShowDialog();
+        }
+
         /*
         private void button3_Click(object sender, EventArgs e)
         {
