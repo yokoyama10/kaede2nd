@@ -7,6 +7,8 @@ namespace kaede2nd
 {
     static class Program
     {
+        public const string 御名 = "\u7530\u6751\u3086\u304b\u308a";
+
 
         public static bool continueProg;
 

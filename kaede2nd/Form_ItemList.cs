@@ -20,15 +20,17 @@ namespace kaede2nd
     {
         public delegate List<Item> ItemReturnDelegate();
 
+        private string csvname;
         private ItemReturnDelegate itemReturner;
         private string searchText;
         public bool useRegex;
 
-        public Form_ItemList(ItemReturnDelegate returner, string windowTitle)
+        public Form_ItemList(ItemReturnDelegate returner, string windowTitle, string csvName)
             : this()
         {
             this.Text = windowTitle;
             this.itemReturner = returner;
+            this.csvname = csvName;
         }
 
         public Form_ItemList()
@@ -228,13 +230,24 @@ namespace kaede2nd
         {
             if (this.itemReturner == null) { return; }
 
+            Regex reg = null;
+            if (this.searchText != null && this.useRegex)
+            {
+                try
+                {
+                    reg = new Regex(this.searchText);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("正規表現がおかしいです: " + e.ToString());
+                    return;
+                }
+            }
+
             dataGridView1.Enabled = false;
             this.dataGridView1.Rows.Clear();
 
             this.itemList = this.itemReturner();
-
-            Regex reg = null;
-            if (this.searchText != null) { reg = new Regex(this.searchText); }
 
             foreach (Item it in this.itemList)
             {
@@ -347,12 +360,17 @@ namespace kaede2nd
             }
         }
 
+        public void outCSV()
+        {
+            this.button2_Click(null, EventArgs.Empty);
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (this.itemReturner == null) { return; }
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = GlobalData.Instance.bumonName + "_allItems.csv";
+            sfd.FileName = GlobalData.Instance.bumonName + "_" + csvname + ".csv";
             sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
             sfd.Filter = "CSVファイル (*.csv)|*.csv";
             sfd.RestoreDirectory = true;

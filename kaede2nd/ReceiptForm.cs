@@ -708,7 +708,7 @@ namespace kaede2nd
                 {
                     var itemDao = GlobalData.getIDao<IItemDao>();
                     return itemDao.GetReceiptItem(rid);
-                }, "R" + rid.ToString("0000") + " " + this.receipt.getSellerString() + " の商品リスト");
+                }, "R" + rid.ToString("0000") + " " + this.receipt.getSellerString() + " の商品リスト", "R" + rid.ToString("0000"));
                 f.Show();
             }
             catch (Exception excep)

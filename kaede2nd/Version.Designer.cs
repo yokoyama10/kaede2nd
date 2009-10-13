@@ -34,8 +34,9 @@
             this.label_ver = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label_date = new System.Windows.Forms.Label();
-            this.label_yukari = new System.Windows.Forms.Label();
+            this.label_hime = new System.Windows.Forms.Label();
             this.label_kaede = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -43,9 +44,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(70, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 24);
+            this.label1.Size = new System.Drawing.Size(149, 24);
             this.label1.TabIndex = 0;
-            this.label1.Text = "ゆかり姫萌え萌えソフトウェア\r\n  -\"Kaede\" 2nd Generation\r\n";
+            this.label1.Text = "ゆかり姫萌え萌えソフトウェア\r\n  --\"Kaede\" 2nd Generation\r\n";
             this.label1.UseMnemonic = false;
             // 
             // label2
@@ -80,20 +81,21 @@
             // label_date
             // 
             this.label_date.AutoSize = true;
+            this.label_date.ForeColor = System.Drawing.Color.DeepPink;
             this.label_date.Location = new System.Drawing.Point(12, 143);
             this.label_date.Name = "label_date";
-            this.label_date.Size = new System.Drawing.Size(98, 12);
+            this.label_date.Size = new System.Drawing.Size(142, 12);
             this.label_date.TabIndex = 4;
-            this.label_date.Text = "王国歴n年m月n日";
+            this.label_date.Text = "王国歴n年m月n日 00:00:00";
             // 
-            // label_yukari
+            // label_hime
             // 
-            this.label_yukari.AutoSize = true;
-            this.label_yukari.Location = new System.Drawing.Point(12, 164);
-            this.label_yukari.Name = "label_yukari";
-            this.label_yukari.Size = new System.Drawing.Size(202, 12);
-            this.label_yukari.TabIndex = 5;
-            this.label_yukari.Text = "ゆかり姫の誕生日まで、あとn日と00:00:00";
+            this.label_hime.AutoSize = true;
+            this.label_hime.Location = new System.Drawing.Point(12, 164);
+            this.label_hime.Name = "label_hime";
+            this.label_hime.Size = new System.Drawing.Size(202, 12);
+            this.label_hime.TabIndex = 5;
+            this.label_hime.Text = "ゆかり姫の誕生日まで、あとn日と00:00:00";
             // 
             // label_kaede
             // 
@@ -104,13 +106,23 @@
             this.label_kaede.TabIndex = 6;
             this.label_kaede.Text = "楓ちゃんの誕生日まで、あとn日と00:00:00";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(171, 132);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(0, 0);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Version
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(258, 349);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label_kaede);
-            this.Controls.Add(this.label_yukari);
+            this.Controls.Add(this.label_hime);
             this.Controls.Add(this.label_date);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label_ver);
@@ -133,7 +145,8 @@
         private System.Windows.Forms.Label label_ver;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label_date;
-        private System.Windows.Forms.Label label_yukari;
+        private System.Windows.Forms.Label label_hime;
         private System.Windows.Forms.Label label_kaede;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -267,7 +267,7 @@ namespace kaede2nd
                 {
                     var itemDao = GlobalData.getIDao<IItemDao>();
                     return itemDao.GetAll();
-                }, "全商品リスト");
+                }, "全商品リスト", "allItems");
                 f.Show();
             }
             catch (Exception excep)
@@ -620,6 +620,18 @@ namespace kaede2nd
         {
             (new Version()).ShowDialog();
         }
+
+        private void cSVで出力CToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form_ItemList f = new Form_ItemList(delegate()
+            {
+                var itemDao = GlobalData.getIDao<IItemDao>();
+                return itemDao.GetAll();
+            }, "全商品", "allItems");
+
+            f.outCSV();
+        }
+
 
         /*
         private void button3_Click(object sender, EventArgs e)

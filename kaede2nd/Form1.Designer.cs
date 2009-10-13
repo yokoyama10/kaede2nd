@@ -50,9 +50,12 @@
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.品番カウンタをセットしなおすToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.機能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.売却ウィンドウSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.監査ウィンドウWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.バージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -150,6 +153,7 @@
             this.cSVで出力CToolStripMenuItem.Name = "cSVで出力CToolStripMenuItem";
             this.cSVで出力CToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.cSVで出力CToolStripMenuItem.Text = "CSVで出力(&C)...";
+            this.cSVで出力CToolStripMenuItem.Click += new System.EventHandler(this.cSVで出力CToolStripMenuItem_Click);
             // 
             // 楓ちゃん形式で出力KToolStripMenuItem
             // 
@@ -242,6 +246,41 @@
             this.品番カウンタをセットしなおすToolStripMenuItem.Text = "品番カウンタをセットしなおす(&C)";
             this.品番カウンタをセットしなおすToolStripMenuItem.Click += new System.EventHandler(this.品番カウンタをセットしなおすToolStripMenuItem_Click);
             // 
+            // 機能ToolStripMenuItem
+            // 
+            this.機能ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.売却ウィンドウSToolStripMenuItem,
+            this.監査ウィンドウWToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.バージョン情報ToolStripMenuItem});
+            this.機能ToolStripMenuItem.Name = "機能ToolStripMenuItem";
+            this.機能ToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.機能ToolStripMenuItem.Text = "機能(&O)";
+            // 
+            // 売却ウィンドウSToolStripMenuItem
+            // 
+            this.売却ウィンドウSToolStripMenuItem.Name = "売却ウィンドウSToolStripMenuItem";
+            this.売却ウィンドウSToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.売却ウィンドウSToolStripMenuItem.Text = "売却ウィンドウ (&S)";
+            // 
+            // 監査ウィンドウWToolStripMenuItem
+            // 
+            this.監査ウィンドウWToolStripMenuItem.Name = "監査ウィンドウWToolStripMenuItem";
+            this.監査ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.監査ウィンドウWToolStripMenuItem.Text = "監査ウィンドウ (&W)";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(156, 6);
+            // 
+            // バージョン情報ToolStripMenuItem
+            // 
+            this.バージョン情報ToolStripMenuItem.Name = "バージョン情報ToolStripMenuItem";
+            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.バージョン情報ToolStripMenuItem.Text = "バージョン情報 (&A)";
+            this.バージョン情報ToolStripMenuItem.Click += new System.EventHandler(this.バージョン情報ToolStripMenuItem_Click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(141, 31);
@@ -251,21 +290,6 @@
             this.button1.Text = "更新 (F5)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // 機能ToolStripMenuItem
-            // 
-            this.機能ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.バージョン情報ToolStripMenuItem});
-            this.機能ToolStripMenuItem.Name = "機能ToolStripMenuItem";
-            this.機能ToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.機能ToolStripMenuItem.Text = "機能(&O)";
-            // 
-            // バージョン情報ToolStripMenuItem
-            // 
-            this.バージョン情報ToolStripMenuItem.Name = "バージョン情報ToolStripMenuItem";
-            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.バージョン情報ToolStripMenuItem.Text = "バージョン情報 (&A)";
-            this.バージョン情報ToolStripMenuItem.Click += new System.EventHandler(this.バージョン情報ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -317,6 +341,9 @@
         private System.Windows.Forms.ToolStripMenuItem 最近追加された商品リストLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 機能ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem バージョン情報ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 売却ウィンドウSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 監査ウィンドウWToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 
