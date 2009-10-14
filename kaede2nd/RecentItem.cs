@@ -24,7 +24,12 @@ namespace kaede2nd
         public void AddRecentItemId(UInt32 iid)
         {
 
-            if (this.GetItemSetFromId(iid) != null) { return; }
+            RecentItemSet ris = this.GetItemSetFromId(iid);
+            if (ris != null)
+            {
+                if (ris.printed == false) { return; }
+                else { this.recentList.Remove(ris); }
+            }
 
             this.recentList.Add(new RecentItemSet(iid));
             this.ReDraw();
@@ -33,7 +38,7 @@ namespace kaede2nd
         public void ReDraw()
         {
             this.dataGridView1.Rows.Clear();
-            int kensuu = 0;
+            uint kensuu = 0;
 
             kaede2nd.Dao.IItemDao idao = GlobalData.getIDao<kaede2nd.Dao.IItemDao>();
             for ( int cnt = this.recentList.Count-1; cnt >= 0; cnt-- )
@@ -44,7 +49,7 @@ namespace kaede2nd
 
                 DataGridViewRow row = this.dataGridView1.Rows[this.dataGridView1.Rows.Add()];
                 this.setRowValue(row, itl[0]);
-                kensuu++;
+                kensuu += itl[0].GetTagPrintCount();
             }
 
             this.text_kensuu.Text = kensuu.ToString();
@@ -147,13 +152,27 @@ namespace kaede2nd
             this.dataGridView1.Columns.Add(col);
 
 
+            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.bunsatsu);
+            colinfo.imeMode = ImeMode.Off;
+            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_volumes = Globals.convToUInt32(val); };
+            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
+            {
+                cell.Value = ((Item)obj).item_volumes;
+            };
+            col = colinfo.col;
+            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            col.ValueType = typeof(UInt32);
+            col.Width = GlobalData.moziWidth * 6;
+            this.dataGridView1.Columns.Add(col);
+
+
 
             colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.uketsukeNitizi);
             colinfo.sortComparison = ColumnInfo.DateTimeCellComp;
 
             colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
             {
-                Globals.setCellByDateTimeN(cell, ((Item)obj).item_selltime, "不明");
+                Globals.setCellByDateTimeN(cell, ((Item)obj).item_receipt_time, "不明");
             };
             col = colinfo.col;
             col.ValueType = typeof(string);
@@ -253,6 +272,7 @@ namespace kaede2nd
             this.DeleteOldPrinted();
 
             List<Item> items = new List<Item>();
+            uint printCount = 0;
 
             kaede2nd.Dao.IItemDao idao = GlobalData.getIDao<kaede2nd.Dao.IItemDao>();
             for (int cnt = 0; cnt < this.recentList.Count; cnt++)
@@ -262,10 +282,11 @@ namespace kaede2nd
 
                 items.Add(itl[0]);
                 this.recentList[cnt].printed = true;
-
+                printCount += itl[0].GetTagPrintCount();
+                
                 if (printAll == false)
                 {
-                    if (items.Count >= this.countPerPage) { break; }
+                    if (printCount >= this.countPerPage) { break; }
                 }
             }
 

@@ -84,5 +84,17 @@ namespace kaede2nd.Entity
             return string.Join(",",rets.ToArray());
         }
 
+        public uint GetTagPrintCount()
+        {
+            if (this.item_volumes.HasValue && this.item_volumes.Value != 0)
+            {
+                return this.item_volumes.Value;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
     }
 }

@@ -618,6 +618,7 @@ namespace kaede2nd
 
         private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            return;
             (new Version()).ShowDialog();
         }
 

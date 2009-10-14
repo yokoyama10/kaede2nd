@@ -462,6 +462,13 @@ namespace kaede2nd
                         throw new Exception("学年の値が不正です");
                     }
 
+
+                    if (string.IsNullOrEmpty(this.text_zai_kumi.Text))
+                    {
+                        this.text_zai_kumi.Focus();
+                        throw new Exception("組の値が空です");
+                    }
+
                     string kumi = this.text_zai_kumi.Text.ToUpperInvariant().Substring(0, 1);
                     if (kumi != "1" && kumi != "2" && kumi != "3" && kumi != "4"
                         && kumi != "A" && kumi != "B" && kumi != "C")
@@ -548,6 +555,7 @@ namespace kaede2nd
                         break;
                     }
 
+                    if (string.IsNullOrEmpty(this.text_zai_kumi.Text)) { break; }
                     string kumi = this.text_zai_kumi.Text.ToUpperInvariant().Substring(0, 1);
                     if (kumi != "1" && kumi != "2" && kumi != "3" && kumi != "4"
                         && kumi != "A" && kumi != "B" && kumi != "C")
@@ -618,6 +626,8 @@ namespace kaede2nd
                 DataGridViewSelectedCellCollection cells = dgv.SelectedCells;
                 if (cells.Count > 0)
                 {
+                    if (dgv[ColumnName.shinaBan, cells[0].RowIndex].Value == null) { return; }
+
                     string res;
                     if (TitleSplitForm.Show_Dialog((string)dgv[ColumnName.shouhinMei, cells[0].RowIndex].Value, out res)
                          == DialogResult.OK)
@@ -680,12 +690,9 @@ namespace kaede2nd
 
             if (pdres != DialogResult.OK) { return; }
 
-            PrintDialog pdiag = new PrintDialog();
-            pdiag.Document = prid.Document;
-
             try
             {
-                pdiag.ShowDialog();
+                prid.Document.Print();
             }
             catch (Exception iex)
             {
