@@ -312,6 +312,15 @@ namespace kaede2nd
 
         private void kaedeOutput(object sender, EventArgs e)
         {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = GlobalData.Instance.bumonName + ".kae";
+            sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+            sfd.Filter = "楓ちゃん萌え萌え filez (*.kae)|*.kae";
+            sfd.RestoreDirectory = true;
+
+            if (sfd.ShowDialog() != DialogResult.OK) { return; }
+
+
             const string kae_header = "Kaede chan moemoe software by 51st. ennichi han";
             const int kae_file_version = 1003;
             const int kae_version = 1005; //kaede_rg005
@@ -333,166 +342,174 @@ namespace kaede2nd
                     }
                 }
             }
-            
 
-            using (FileStream fs = new FileStream("output.kae", FileMode.Create, FileAccess.Write))
+            try
             {
-                BinaryWriter bw = new BinaryWriter(fs);
 
-                bw.Write(Encoding.ASCII.GetBytes(kae_header));
-                bw.Write(kae_file_version);
-                bw.Write(kae_version);
-
-                //OB
-                bw.Write(exSellers.Count);
-                foreach (var exs in exSellers)
+                using (Stream fs = sfd.OpenFile())
                 {
-                    bw.WriteStringSJIS(exs.Key);
-                }
+                    BinaryWriter bw = new BinaryWriter(fs);
 
-                //teacher
-                bw.Write(0);
+                    bw.Write(Encoding.ASCII.GetBytes(kae_header));
+                    bw.Write(kae_file_version);
+                    bw.Write(kae_version);
 
-                //genre
-                bw.Write(0);
-
-                //shape
-                bw.Write(0);
-
-                //item
-                bw.Write(items.Count);
-
-                foreach (Item it in items)
-                {
-                    //ID
-                    bw.Write((Int32)it.item_id);
-
-
-                    //Seller
-                    Int32 seller;
-
-                    string sellerstr = it.item__Receipt.receipt_seller;
-
-                    switch (sellerstr)
+                    //OB
+                    bw.Write(exSellers.Count);
+                    foreach (var exs in exSellers)
                     {
-                        case Receipt.seller_EXT:
-                            {
-                                seller = 0x10000000 + exSellers[it.item__Receipt.receipt_seller_exname];
-                                break;
-                            }
-                        case Receipt.seller_LAGACY:
-                            {
-                                seller = 0x30000000;
-                                break;
-                            }
-                        case Receipt.seller_DONATE:
-                            {
-                                seller = 0x40000000;
-                                break;
-                            }
-                        default:
-                            {
-                                int nen = int.Parse(sellerstr.Substring(0, 1));
-                                string kumi = sellerstr.Substring(1, 1);
-                                int kumi_i;
-                                if (Globals.isChugaku(kumi))
+                        bw.WriteStringSJIS(exs.Key);
+                    }
+
+                    //teacher
+                    bw.Write(0);
+
+                    //genre
+                    bw.Write(0);
+
+                    //shape
+                    bw.Write(0);
+
+                    //item
+                    bw.Write(items.Count);
+
+                    foreach (Item it in items)
+                    {
+                        //ID
+                        bw.Write((Int32)it.item_id);
+
+
+                        //Seller
+                        Int32 seller;
+
+                        string sellerstr = it.item__Receipt.receipt_seller;
+
+                        switch (sellerstr)
+                        {
+                            case Receipt.seller_EXT:
                                 {
-                                    kumi_i = Globals.getChugakuClassNum(kumi);
+                                    seller = 0x10000000 + exSellers[it.item__Receipt.receipt_seller_exname];
+                                    break;
                                 }
-                                else
+                            case Receipt.seller_LAGACY:
                                 {
-                                    nen += 3;
-                                    kumi_i = int.Parse(kumi);
+                                    seller = 0x30000000;
+                                    break;
                                 }
-                                int ban = int.Parse(sellerstr.Substring(2, 2));
+                            case Receipt.seller_DONATE:
+                                {
+                                    seller = 0x40000000;
+                                    break;
+                                }
+                            default:
+                                {
+                                    int nen = int.Parse(sellerstr.Substring(0, 1));
+                                    string kumi = sellerstr.Substring(1, 1);
+                                    int kumi_i;
+                                    if (Globals.isChugaku(kumi))
+                                    {
+                                        kumi_i = Globals.getChugakuClassNum(kumi);
+                                    }
+                                    else
+                                    {
+                                        nen += 3;
+                                        kumi_i = int.Parse(kumi);
+                                    }
+                                    int ban = int.Parse(sellerstr.Substring(2, 2));
 
-                                seller = 0x01000000 * nen + 0x00100000 * kumi_i + ban;
-                                break;
-                            }
+                                    seller = 0x01000000 * nen + 0x00100000 * kumi_i + ban;
+                                    break;
+                                }
+                        }
+
+                        bw.Write(seller);
+
+                        bw.WriteStringSJIS(it.item_name);
+                        bw.WriteStringSJIS(it.item_comment);
+
+                        bw.Write(it.item_tagprice);
+                        bw.Write(it.item_sellprice.ToKaedeInt());
+
+                        //Genre
+                        bw.Write((Int16)0);
+                        bw.Write((Int16)0);
+                        bw.Write((Int16)0);
+                        //Shape
+                        bw.Write((Int16)0);
+
+                        //is_sold
+                        bw.Write(it.item_sellprice.HasValue.ToKaedeBool());
+                        //is_returned
+                        bw.Write((SByte)0);
+                        //to_be_return
+                        bw.Write(it.item_return.ToKaedeBool());
+                        //to_be_discount
+                        bw.Write(it.item_tataki.ToKaedeBool());
+
+                        if (it.item__Receipt.receipt_time.HasValue)
+                        {
+                            bw.Write(it.item__Receipt.receipt_time.Value.ToUnixTime());
+                        }
+                        else
+                        {
+                            bw.Write((UInt32)0);
+                        }
+
+                        if (it.item_selltime.HasValue)
+                        {
+                            bw.Write(it.item_selltime.Value.ToUnixTime());
+                        }
+                        else
+                        {
+                            bw.Write((UInt32)0);
+                        }
+
+                        //Item_scheduled_date
+                        bw.Write((SByte)0);
+                        //is_by_auction
+                        bw.Write((SByte)0);
+
+                        //refund_rate
+                        bw.Write((Int32)(-1));
+
                     }
 
-                    bw.Write(seller);
-
-                    bw.WriteStringSJIS(it.item_name);
-                    bw.WriteStringSJIS(it.item_comment);
-
-                    bw.Write(it.item_tagprice);
-                    bw.Write(it.item_sellprice.ToKaedeInt());
-
-                    //Genre
-                    bw.Write((Int16)0);
-                    bw.Write((Int16)0);
-                    bw.Write((Int16)0);
-                    //Shape
-                    bw.Write((Int16)0);
-
-                    //is_sold
-                    bw.Write(it.item_sellprice.HasValue.ToKaedeBool());
-                    //is_returned
-                    bw.Write((SByte)0);
-                    //to_be_return
-                    bw.Write(it.item_return.ToKaedeBool());
-                    //to_be_discount
-                    bw.Write(it.item_tataki.ToKaedeBool());
-
-                    if (it.item__Receipt.receipt_time.HasValue)
-                    {
-                        bw.Write(it.item__Receipt.receipt_time.Value.ToUnixTime());
-                    }
-                    else
-                    {
-                        bw.Write((UInt32)0);
-                    }
-
-                    if (it.item_selltime.HasValue)
-                    {
-                        bw.Write(it.item_selltime.Value.ToUnixTime());
-                    }
-                    else
-                    {
-                        bw.Write((UInt32)0);
-                    }
-
-                    //Item_scheduled_date
-                    bw.Write((SByte)0);
-                    //is_by_auction
-                    bw.Write((SByte)0);
+                    //cash
+                    bw.Write(888);
 
                     //refund_rate
-                    bw.Write((Int32)(-1));
+                    bw.Write(100);
+
+                    bw.Flush();
+                    fs.Close();
 
                 }
 
-                //cash
-                bw.Write(888);
+                using (FileStream fs = new FileStream(sfd.FileName, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    uint not_crc = 0xffffffff;
 
-                //refund_rate
-                bw.Write(100);
+                    BinaryReader br = new BinaryReader(fs);
 
-                bw.Flush();
-                fs.Close();
+                    while (fs.Position < fs.Length)
+                    {
+                        byte data = br.ReadByte();
+                        not_crc = GlobalData.Instance.crcTable[((not_crc) ^ (data)) & 0xff] ^ ((not_crc) >> 8);
+                    }
+
+
+                    BinaryWriter bw = new BinaryWriter(fs);
+                    bw.Write(~not_crc);
+                    bw.Flush();
+
+
+                    fs.Close();
+                }
 
             }
-
-            using (FileStream fs = new FileStream("output.kae", FileMode.Open, FileAccess.ReadWrite))
+            catch (Exception ex)
             {
-                uint not_crc = 0xffffffff;
-
-                BinaryReader br = new BinaryReader(fs);
-
-                while (fs.Position < fs.Length)
-                {
-                    byte data = br.ReadByte();
-                    not_crc = GlobalData.Instance.crcTable[((not_crc) ^ (data)) & 0xff] ^ ((not_crc) >> 8);
-                }
-
-
-                BinaryWriter bw = new BinaryWriter(fs);
-                bw.Write(~not_crc);
-                bw.Flush();
-
-
-                fs.Close();
+                MessageBox.Show("kaeファイルの作成エラー: " + ex.ToString());
             }
         }
 

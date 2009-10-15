@@ -46,6 +46,8 @@ namespace kaede2nd
 
             GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
 
+            GlobalData.Instance.barcodePrefix = "58";
+
             string deity = "ゆかり姫";
             if (this.comboBox1.SelectedIndex == 0)
             {

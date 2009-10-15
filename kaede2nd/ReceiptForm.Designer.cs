@@ -351,6 +351,7 @@
             // text_external
             // 
             this.text_external.FormattingEnabled = true;
+            this.text_external.ImeMode = System.Windows.Forms.ImeMode.On;
             this.text_external.Location = new System.Drawing.Point(349, 38);
             this.text_external.Name = "text_external";
             this.text_external.Size = new System.Drawing.Size(149, 20);

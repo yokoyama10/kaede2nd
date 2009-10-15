@@ -409,6 +409,7 @@ namespace kaede2nd
         public string bumonName = "不明な部門";
         public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
         public string windowTitle = "ゆかり姫萌え萌えソフトウェア";
+        public string barcodePrefix = "00"; //数字二文字 \d\d
 
         public bool itemNameImeOn = true;
         public bool enterToTab = false;

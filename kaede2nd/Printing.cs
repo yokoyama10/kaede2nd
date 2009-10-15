@@ -243,18 +243,21 @@ namespace kaede2nd
 
             if (printit.volumeNum < 2)
             {
+
+                int barcodesize = 0;
                 if (printit.volumeNum == 1)
                 {
                     e.Graphics.DrawString("分売不可 1 / " + it.item_volumes.ToString(), fnt, Brushes.Red, x + 50, y + 3.5f + (5.25f) * 2);
-
-                    //バーコード
-                    this.barcode.WriteBar("58" + it.item_id.ToString("00000"), x + 50, y + 19, 25, 10, e.Graphics);
+                    barcodesize = 10;
                 }
                 else
                 {
-                    //バーコード
-                    this.barcode.WriteBar("58" + it.item_id.ToString("00000"), x + 50, y + 17, 25, 12, e.Graphics);
+                    barcodesize = 12;
                 }
+
+                //バーコード
+                this.barcode.WriteBar(GlobalData.Instance.barcodePrefix + it.item_id.ToString("00000"), x + 50, y + (29 - barcodesize), 25, barcodesize, e.Graphics);
+
 
                 //販売価格
                 Pen nedanPen = new Pen(Color.Black, 0.2f);

@@ -168,6 +168,9 @@
     <EmbeddedResource Include="RecentItem.resx">
       <DependentUpon>RecentItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SellForm.resx">
+      <DependentUpon>SellForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TitleSplitForm.resx">
       <DependentUpon>TitleSplitForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +191,12 @@
     </Compile>
     <Compile Include="RecentItem.Designer.cs">
       <DependentUpon>RecentItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SellForm.Designer.cs">
+      <DependentUpon>SellForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SignedRequestHelper.cs" />
     <Compile Include="TitleSplitForm.cs">
