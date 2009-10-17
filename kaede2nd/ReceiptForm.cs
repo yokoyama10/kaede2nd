@@ -381,7 +381,11 @@ namespace kaede2nd
                         System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvIsbnThread);
                         t.Start(dgv[e.ColumnIndex, e.RowIndex]);
                     }
-
+                    else if (val.StartsWith("49") || val.StartsWith("４９"))
+                    {
+                        System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvJanThread);
+                        t.Start(dgv[e.ColumnIndex, e.RowIndex]);
+                    }
                 }
             }
 

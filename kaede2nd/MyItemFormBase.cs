@@ -262,24 +262,31 @@ namespace kaede2nd
 
 #region Amazon関連
 
+        public enum BarcodeType
+        {
+            Isbn, Jan
+        }
 
-        protected readonly string tooltip_ISBNsearching = "ISBN検索中";
+        protected readonly string tooltip_BarcodeSearching = "ISBN/JAN検索中";
         //別スレッド
-        protected void setTitleConvIsbnThread(object obj)
+        protected void setTitleConvIsbnThread(object obj) { this.setTitleConvBarcodeThread(obj, BarcodeType.Isbn); }
+        protected void setTitleConvJanThread(object obj) { this.setTitleConvBarcodeThread(obj, BarcodeType.Jan); }
+
+        protected void setTitleConvBarcodeThread(object obj, BarcodeType type)
         {
             DataGridViewCell cell = (DataGridViewCell)obj;
 
-            if (cell.ToolTipText == this.tooltip_ISBNsearching) { return; }
+            if (cell.ToolTipText == this.tooltip_BarcodeSearching) { return; }
 
             bool f = false;
             try
             {
-                ControlUtil.SafelyOperated(this, (MethodInvoker)delegate() { cell.ToolTipText = this.tooltip_ISBNsearching; });
-                f = this.setTitleConvIsbn_Impl(cell);
+                ControlUtil.SafelyOperated(this, (MethodInvoker)delegate() { cell.ToolTipText = this.tooltip_BarcodeSearching; });
+                f = this.setTitleConvIsbn_Impl(cell, type);
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "ISBN検索");
+                MessageBox.Show(e.Message, "ISBN/JAN検索");
             }
             finally
             {
@@ -294,17 +301,17 @@ namespace kaede2nd
 
 
         //別スレッド
-        protected bool setTitleConvIsbn_Impl(DataGridViewCell cell)
+        protected bool setTitleConvIsbn_Impl(DataGridViewCell cell, BarcodeType type)
         {
             if (cell.DataGridView.Columns[cell.ColumnIndex].Name != ColumnName.shouhinMei)
             {
-                throw new Exception("商品名の列以外ではISBNサーチはできません");
+                throw new Exception("商品名の列以外ではISBN/JANサーチはできません");
             }
 
-            string isbn = (string)cell.Value;
-            isbn = Microsoft.VisualBasic.Strings.StrConv(isbn, Microsoft.VisualBasic.VbStrConv.Narrow, 0);
+            string code = (string)cell.Value;
+            code = Microsoft.VisualBasic.Strings.StrConv(code, Microsoft.VisualBasic.VbStrConv.Narrow, 0);
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(isbn, @"^\d{13}$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(code, @"^\d{13}$"))
             {
                 return false;
             }
@@ -313,10 +320,18 @@ namespace kaede2nd
             IDictionary<string, string> requestParams = new Dictionary<string, String>();
             requestParams["Service"] = "AWSECommerceService";
             requestParams["Version"] = "2009-03-31";
-            requestParams["SearchIndex"] = "Books";
             requestParams["Operation"] = "ItemLookup";
-            requestParams["IdType"] = "ISBN";
-            requestParams["ItemId"] = isbn;
+            requestParams["SearchIndex"] = "Books";
+
+            if (type == BarcodeType.Isbn)
+            {
+                requestParams["IdType"] = "ISBN";
+            }
+            else
+            {
+                requestParams["IdType"] = "EAN";
+            }
+            requestParams["ItemId"] = code;
             string url = helper.Sign(requestParams);
 
             // @"http://webservices.amazon.co.jp/onca/xml?SearchIndex=Books&Operation=ItemLookup&IdType=ISBN&AWSAccessKeyId=13R1P6WSEW5Y6CP6MVR2&ItemId=" + isbn
@@ -341,7 +356,7 @@ namespace kaede2nd
                         XmlNode xtitle = xlist.Item(0);
                         ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
                         {
-                            cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(isbn);
+                            cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(code);
                             cell.Value = xtitle.InnerText;
                         });
                     }
