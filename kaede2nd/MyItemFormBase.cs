@@ -267,6 +267,30 @@ namespace kaede2nd
             Isbn, Jan
         }
 
+        protected void ConvBarcode(DataGridViewCell cell)
+        {
+            string val = (string)cell.Value;
+            if (val != null && val.Length == 13)
+            {
+                val = Microsoft.VisualBasic.Strings.StrConv(val, Microsoft.VisualBasic.VbStrConv.Narrow, 0);
+
+                if (System.Text.RegularExpressions.Regex.IsMatch(val, @"^\d{13}$"))
+                {
+                    if (val.StartsWith("978"))
+                    {
+                        System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvIsbnThread);
+                        t.Start(cell);
+                    }
+                    else if (val.StartsWith("49"))
+                    {
+                        System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvJanThread);
+                        t.Start(cell);
+                    }
+                }
+            }
+        }
+
+
         protected readonly string tooltip_BarcodeSearching = "ISBN/JAN検索中";
         //別スレッド
         protected void setTitleConvIsbnThread(object obj) { this.setTitleConvBarcodeThread(obj, BarcodeType.Isbn); }
