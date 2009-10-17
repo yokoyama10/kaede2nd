@@ -650,6 +650,25 @@ namespace kaede2nd
             f.outCSV();
         }
 
+        private void 終了XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void 売却ウィンドウSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is SellForm)
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+
+            (new SellForm()).Show();
+        }
+
 
         /*
         private void button3_Click(object sender, EventArgs e)

@@ -206,6 +206,7 @@
             this.終了XToolStripMenuItem.Name = "終了XToolStripMenuItem";
             this.終了XToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.終了XToolStripMenuItem.Text = "終了(&X)";
+            this.終了XToolStripMenuItem.Click += new System.EventHandler(this.終了XToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -262,6 +263,7 @@
             this.売却ウィンドウSToolStripMenuItem.Name = "売却ウィンドウSToolStripMenuItem";
             this.売却ウィンドウSToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.売却ウィンドウSToolStripMenuItem.Text = "売却ウィンドウ (&S)";
+            this.売却ウィンドウSToolStripMenuItem.Click += new System.EventHandler(this.売却ウィンドウSToolStripMenuItem_Click);
             // 
             // 監査ウィンドウWToolStripMenuItem
             // 

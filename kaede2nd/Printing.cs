@@ -184,7 +184,7 @@ namespace kaede2nd
                     e.Graphics.DrawString("値引: ？", fnt, new SolidBrush(Color.Cyan), x + 30, y + 3.5f + (5.25f) * 2);
                 }
                 else */
-                if (it.item_return/*.Value*/ == false)
+                if (it.item_return /*FIXME*/ == false)
                 {
                     e.Graphics.DrawString("値引: ○", fnt, Brushes.Black, x + 30, y + 3.5f + (5.25f) * 2);
                 }
