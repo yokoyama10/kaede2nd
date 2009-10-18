@@ -16,6 +16,10 @@ namespace kaede2nd
     {
         private Item curItem = null;
 
+        private Item privItem = null;
+        private uint? privItemSellPrice = null;
+        private DateTime? privItemSellTime = null;
+
         public SellForm()
         {
             InitializeComponent();
@@ -37,41 +41,7 @@ namespace kaede2nd
 
                 uint shinaBan;
 
-                if (s.Length == 8 && s.StartsWith(GlobalData.Instance.barcodePrefix))
-                {
-                    char check = s[7];
-
-                    byte[] di = new byte[7];
-                    byte cdi;
-                    try
-                    {
-                        for (int i = 0; i < 7; i++)
-                        {
-                            if (!char.IsDigit(s[i])) { throw new Exception(); }
-                            di[i] = byte.Parse(s.Substring(i, 1));
-                        }
-
-                        if (!char.IsDigit(check)) { throw new Exception(); }
-                        cdi = byte.Parse(check.ToString());
-
-                        //CheckDigit
-                        int c1 = (di[0] + di[2] + di[4] + di[6]) * 3 +
-                                di[1] + di[3] + di[5];
-                        int c2 = (10 - (c1 % 10)) % 10;
-
-                        if (c2.ToString() != check.ToString())
-                        {
-                            throw new Exception();
-                        }
-
-                    }
-                    catch
-                    {
-                        this.textBox_ban_err("バーコードの値が不正です");
-                        return;
-                    }
-
-                    shinaBan = uint.Parse(s.Substring(2, 5));
+                if ( Globals.TryParseBarcode(s, out shinaBan) ) {
                 }
                 else
                 {
@@ -95,16 +65,39 @@ namespace kaede2nd
                     return;
                 }
 
-                this.curItem = its[0];
-
-                this.textBox_name.BackColor = SystemColors.Control;
-                this.textBox_name.Text = its[0].item_name;
-                this.textBox_teika.Text = its[0].item_tagprice.ToString("#,##0");
-                this.textBox_nebiki.Text = its[0].item_return /*FIXME*/ ? "×" : "○";
-
-                this.textBox_baika.Focus();
-                this.textBox_baika.SelectAll();
+                this.setItem(its[0]);
             }
+        }
+
+        private void setItem(Item it)
+        {
+            this.curItem = it;
+
+            this.textBox_ban.Text = it.item_id.ToString();
+
+            this.textBox_name.BackColor = SystemColors.Control;
+            this.textBox_name.Text = it.item_name;
+            this.textBox_teika.Text = it.item_tagprice.ToString("#,##0");
+            this.textBox_nebiki.Text = it.item_return /*FIXME*/ ? "×" : "○";
+            if (it.item_sellprice.HasValue)
+            {
+                this.label_sellzumi.Visible = true;
+                this.label_sellzumi.Text = "売却済 \\" + it.item_sellprice.Value.ToString("#,##0");
+                this.textBox_baika.Text = it.item_sellprice.Value.ToString();
+                this.button_mibai.Visible = true;
+            }
+            else
+            {
+                this.label_sellzumi.Visible = false;
+                this.button_mibai.Visible = false;
+                this.textBox_baika.Text = "";
+            }
+
+            this.label6.Visible = true;
+            this.textBox_baika.ReadOnly = false;
+            this.textBox_baika.BackColor = SystemColors.Window;
+            this.textBox_baika.Focus();
+            this.textBox_baika.SelectAll();
         }
 
         private void textBox_ban_err(string err)
@@ -116,8 +109,117 @@ namespace kaede2nd
             this.textBox_teika.Text = "";
             this.textBox_nebiki.Text = "";
 
+            this.label_sellzumi.Visible = false;
+            this.button_mibai.Visible = false;
+
+            this.textBox_baika.BackColor = SystemColors.Control;
+            this.textBox_baika.ReadOnly = true;
+            this.label6.Visible = false;
+
             this.textBox_ban.Focus();
             this.textBox_ban.SelectAll();
+        }
+
+        private void textBox_baika_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (this.curItem == null) { return; }
+                string s = this.textBox_baika.Text;
+
+                uint sute;
+                if (Globals.TryParseBarcode(s, out sute))
+                {
+                    this.textBox_baika_err();
+                    return;
+                }
+
+                uint baika;
+                if (s == "-")
+                {
+                    baika = curItem.item_tagprice;
+                }
+                else
+                {
+                    if (!uint.TryParse(s, out baika))
+                    {
+                        this.textBox_baika_err();
+                        return;
+                    }
+                }
+
+                privItem = curItem;
+                privItemSellPrice = curItem.item_sellprice;
+                privItemSellTime = curItem.item_selltime;
+
+                curItem.item_sellprice = baika;
+                curItem.item_selltime = DateTime.Now;
+
+
+                Item i = curItem;
+                System.Threading.Thread t = new System.Threading.Thread(
+                    delegate(object item)
+                    {
+                        IItemDao idao = GlobalData.getIDao<IItemDao>();
+                        idao.Update((Item)item);
+                    }
+                );
+                t.Start(i);
+
+                this.textBox_ban_err("次の品番を入力してね");
+            }
+        }
+
+        private void textBox_baika_err()
+        {
+            this.textBox_baika.BackColor = Color.LightPink;
+            this.textBox_baika.Focus();
+            this.textBox_baika.SelectAll();
+        }
+
+        private void SellForm_Load(object sender, EventArgs e)
+        {
+            this.textBox_ban_err("品番を入力してください");
+        }
+
+        private void SellForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                if (this.privItem == null) { return; }
+
+                uint? priv_canceledsellprice = this.privItem.item_sellprice;
+                this.privItem.item_sellprice = privItemSellPrice;
+                this.privItem.item_selltime = privItemSellTime;
+
+                IItemDao idao = GlobalData.getIDao<IItemDao>();
+                idao.Update(this.privItem);
+
+                this.setItem(this.privItem);
+
+                this.textBox_baika.Text = priv_canceledsellprice.ToString();
+                this.textBox_baika.Focus();
+                this.textBox_baika.SelectAll();
+
+                this.privItem = null;                
+            }
+        }
+
+        private void button_mibai_Click(object sender, EventArgs e)
+        {
+            if (curItem == null) { return; }
+
+            privItem = curItem;
+            privItemSellPrice = curItem.item_sellprice;
+            privItemSellTime = curItem.item_selltime;
+
+            curItem.item_sellprice = null;
+            curItem.item_selltime = null;
+
+            IItemDao idao = GlobalData.getIDao<IItemDao>();
+            idao.Update(curItem);
+
+            this.textBox_ban_err("次の品番を入力してね");
         }
     }
 }

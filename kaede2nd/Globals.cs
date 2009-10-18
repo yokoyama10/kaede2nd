@@ -255,6 +255,52 @@ namespace kaede2nd
             }
         }
 
+
+        public static bool TryParseBarcode(string s, out uint itemid)
+        {
+            if (s.Length == 8 && s.StartsWith(GlobalData.Instance.barcodePrefix))
+            {
+                char check = s[7];
+
+                byte[] di = new byte[7];
+                byte cdi;
+                try
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        if (!char.IsDigit(s[i])) { throw new Exception(); }
+                        di[i] = byte.Parse(s.Substring(i, 1));
+                    }
+
+                    if (!char.IsDigit(check)) { throw new Exception(); }
+                    cdi = byte.Parse(check.ToString());
+
+                    //CheckDigit
+                    int c1 = (di[0] + di[2] + di[4] + di[6]) * 3 +
+                            di[1] + di[3] + di[5];
+                    int c2 = (10 - (c1 % 10)) % 10;
+
+                    if (c2.ToString() != check.ToString())
+                    {
+                        throw new Exception();
+                    }
+
+                }
+                catch
+                {
+                    itemid = 0;
+                    return false;
+                }
+
+                itemid = uint.Parse(s.Substring(2, 5));
+                return true;
+            }
+            else
+            {
+                itemid = 0;
+                return false;
+            }
+        }
     }
 
     public static class KaedeExMethods

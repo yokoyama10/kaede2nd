@@ -228,9 +228,6 @@ namespace kaede2nd
             {
                 this.最新の情報に更新RToolStripMenuItem.PerformClick();
             }
-            else if (e.KeyCode == Keys.F5)
-            {
-            }
         }
 
         private void DeleteOldPrinted()
@@ -280,14 +277,16 @@ namespace kaede2nd
                 var itl = idao.GetItemById(this.recentList[cnt].item_id);
                 if (itl.Count == 0) { continue; }
 
+
+                if (printAll == false)
+                {
+                    if ((printCount + itl[0].GetTagPrintCount() ) > this.countPerPage) { break; }
+                }
+
                 items.Add(itl[0]);
                 this.recentList[cnt].printed = true;
                 printCount += itl[0].GetTagPrintCount();
                 
-                if (printAll == false)
-                {
-                    if (printCount >= this.countPerPage) { break; }
-                }
             }
 
             ItemsPrintDocument.PrintItems(items);

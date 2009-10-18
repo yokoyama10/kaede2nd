@@ -43,6 +43,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_nebiki = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label_sellzumi = new System.Windows.Forms.Label();
+            this.button_mibai = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +65,7 @@
             this.textBox_ban.Name = "textBox_ban";
             this.textBox_ban.Size = new System.Drawing.Size(100, 28);
             this.textBox_ban.TabIndex = 0;
-            this.textBox_ban.Text = "58000001";
+            this.textBox_ban.Text = "品番";
             this.textBox_ban.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBox_ban.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_ban_KeyDown);
             this.textBox_ban.Enter += new System.EventHandler(this.textBox_Enter);
@@ -90,7 +93,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 176);
+            this.label3.Location = new System.Drawing.Point(21, 195);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 4;
@@ -100,19 +103,20 @@
             // 
             this.textBox_baika.Font = new System.Drawing.Font("MS UI Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox_baika.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox_baika.Location = new System.Drawing.Point(113, 160);
+            this.textBox_baika.Location = new System.Drawing.Point(113, 179);
             this.textBox_baika.Name = "textBox_baika";
             this.textBox_baika.Size = new System.Drawing.Size(109, 34);
             this.textBox_baika.TabIndex = 1;
             this.textBox_baika.Text = "0";
             this.textBox_baika.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox_baika.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_baika_KeyDown);
             this.textBox_baika.Enter += new System.EventHandler(this.textBox_Enter);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(86, 168);
+            this.label4.Location = new System.Drawing.Point(86, 187);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(21, 21);
             this.label4.TabIndex = 6;
@@ -130,7 +134,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(241, 176);
+            this.label6.Location = new System.Drawing.Point(241, 195);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(74, 12);
             this.label6.TabIndex = 8;
@@ -192,17 +196,52 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(21, 222);
+            this.label10.Location = new System.Drawing.Point(21, 255);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(169, 12);
             this.label10.TabIndex = 14;
             this.label10.Text = "最後の変更を取り消すには Ctrl+Z";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.label11.Location = new System.Drawing.Point(111, 219);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(152, 12);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "定価通りの売却は \"-\" を入力";
+            // 
+            // label_sellzumi
+            // 
+            this.label_sellzumi.AutoSize = true;
+            this.label_sellzumi.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_sellzumi.ForeColor = System.Drawing.Color.Red;
+            this.label_sellzumi.Location = new System.Drawing.Point(19, 146);
+            this.label_sellzumi.Name = "label_sellzumi";
+            this.label_sellzumi.Size = new System.Drawing.Size(145, 19);
+            this.label_sellzumi.TabIndex = 16;
+            this.label_sellzumi.Text = "売却済 00,000円";
+            this.label_sellzumi.Visible = false;
+            // 
+            // button_mibai
+            // 
+            this.button_mibai.Location = new System.Drawing.Point(203, 142);
+            this.button_mibai.Name = "button_mibai";
+            this.button_mibai.Size = new System.Drawing.Size(112, 23);
+            this.button_mibai.TabIndex = 17;
+            this.button_mibai.Text = "未売却にする (&M)";
+            this.button_mibai.UseVisualStyleBackColor = true;
+            this.button_mibai.Click += new System.EventHandler(this.button_mibai_Click);
+            // 
             // SellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 255);
+            this.ClientSize = new System.Drawing.Size(356, 319);
+            this.Controls.Add(this.button_mibai);
+            this.Controls.Add(this.label_sellzumi);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox_nebiki);
             this.Controls.Add(this.label9);
@@ -224,6 +263,8 @@
             this.MinimizeBox = false;
             this.Name = "SellForm";
             this.Text = "売却";
+            this.Load += new System.EventHandler(this.SellForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SellForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +287,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox_nebiki;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label_sellzumi;
+        private System.Windows.Forms.Button button_mibai;
     }
 }
