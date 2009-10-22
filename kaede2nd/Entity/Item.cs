@@ -12,6 +12,14 @@ namespace kaede2nd.Entity
     {
         /*
          * ALTER TABLE item ADD COLUMN item_volumes INT(10) UNSIGNED DEFAULT NULL AFTER item_isbn;
+         * 
+         * ALTER TABLE item ADD COLUMN `item_sell_operator` INT(10) UNSIGNED DEFAULT NULL AFTER item_selltime;
+         * ALTER TABLE item ADD CONSTRAINT `item_ibfk_4` FOREIGN KEY (`item_sell_operator`) REFERENCES `operator` (`operator_id`) ON DELETE SET NULL;
+         * 
+         * ALTER TABLE item ADD COLUMN `item_kansa_end` DATETIME DEFAULT NULL AFTER item_sell_operator;
+         * ALTER TABLE item ADD COLUMN `item_kansa_flag1` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_end;
+         * ALTER TABLE item ADD COLUMN `item_kansa_flag2` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag1;
+         * ALTER TABLE item ADD COLUMN `item_kansa_flag3` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag2;
          */
 
         /*
@@ -28,6 +36,11 @@ namespace kaede2nd.Entity
        `item_receipt_operator` int(10) unsigned,
        `item_sellprice` int(10) unsigned,
        `item_selltime` datetime,
+       `item_sell_operator` int(10) unsigned DEFAULT NULL,
+       `item_kansa_end` DATETIME DEFAULT NULL,
+       `item_kansa_flag1` int(10) unsigned DEFAULT NULL,
+       `item_kansa_flag2` int(10) unsigned DEFAULT NULL,
+       `item_kansa_flag3` int(10) unsigned DEFAULT NULL,
        `item_adjust` int(11),
        `item_isbn` bigint(20) unsigned,
        `item_volumes` int(10) unsigned DEFAULT NULL,
@@ -35,9 +48,12 @@ namespace kaede2nd.Entity
        `item_sellcomment` text,
        `item_userspace` text,
        PRIMARY KEY (`item_id`),
-       KEY `item_receipt_id` (`item_receipt_id`),
-       KEY `item_receipt_operator` (`item_receipt_operator`)
-        ) ENGINE=InnoDB DEFAULT CHARSET utf8;
+       CONSTRAINT `item_ibfk_1` FOREIGN KEY (`item_receipt_id`) REFERENCES `receipt` (`receipt_id`) ON DELETE CASCADE,
+       CONSTRAINT `item_ibfk_2` FOREIGN KEY (`item_receipt_operator`) REFERENCES `operator` (`operator_id`) ON DELETE SET NULL,
+       CONSTRAINT `item_ibfk_3` FOREIGN KEY (`item_sell_operator`) REFERENCES `operator` (`operator_id`) ON DELETE SET NULL
+       ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+          
+         
         */
 
         [ID(IDType.IDENTITY)]
@@ -56,6 +72,12 @@ namespace kaede2nd.Entity
         public Operator item_receipt__Operator { get; set; }
         public UInt32? item_sellprice { get; set; }
         public DateTime? item_selltime { get; set; }
+        [Relno(1), Relkeys("item_sell_operator:operator_id")]
+        public Operator item_sell__Operator { get; set; }
+        public DateTime? item_kansa_end { get; set; }
+        public UInt32? item_kansa_flag1 { get; set; }
+        public UInt32? item_kansa_flag2 { get; set; }
+        public UInt32? item_kansa_flag3 { get; set; }
         public Int32? item_adjust { get; set; }
         public Decimal? item_isbn { get; set; }
         public UInt32? item_volumes { get; set; }

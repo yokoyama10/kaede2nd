@@ -19,6 +19,9 @@ namespace kaede2nd
         private Item privItem = null;
         private uint? privItemSellPrice = null;
         private DateTime? privItemSellTime = null;
+        private Operator privItemSellOperator = null;
+
+        private Operator nowOperator = null;
 
         public SellForm()
         {
@@ -93,7 +96,7 @@ namespace kaede2nd
                 this.textBox_baika.Text = "";
             }
 
-            this.label6.Visible = true;
+            this.label_baikaEnter.Visible = true;
             this.textBox_baika.ReadOnly = false;
             this.textBox_baika.BackColor = SystemColors.Window;
             this.textBox_baika.Focus();
@@ -114,7 +117,7 @@ namespace kaede2nd
 
             this.textBox_baika.BackColor = SystemColors.Control;
             this.textBox_baika.ReadOnly = true;
-            this.label6.Visible = false;
+            this.label_baikaEnter.Visible = false;
 
             this.textBox_ban.Focus();
             this.textBox_ban.SelectAll();
@@ -151,9 +154,11 @@ namespace kaede2nd
                 privItem = curItem;
                 privItemSellPrice = curItem.item_sellprice;
                 privItemSellTime = curItem.item_selltime;
+                privItemSellOperator = curItem.item_sell__Operator;
 
                 curItem.item_sellprice = baika;
                 curItem.item_selltime = DateTime.Now;
+                curItem.item_sell__Operator = this.nowOperator;
 
 
                 Item i = curItem;
@@ -180,6 +185,8 @@ namespace kaede2nd
         private void SellForm_Load(object sender, EventArgs e)
         {
             this.textBox_ban_err("品番を入力してください");
+
+            this.button1.PerformClick();
         }
 
         private void SellForm_KeyDown(object sender, KeyEventArgs e)
@@ -191,6 +198,7 @@ namespace kaede2nd
                 uint? priv_canceledsellprice = this.privItem.item_sellprice;
                 this.privItem.item_sellprice = privItemSellPrice;
                 this.privItem.item_selltime = privItemSellTime;
+                this.privItem.item_sell__Operator = privItemSellOperator;
 
                 IItemDao idao = GlobalData.getIDao<IItemDao>();
                 idao.Update(this.privItem);
@@ -212,6 +220,7 @@ namespace kaede2nd
             privItem = curItem;
             privItemSellPrice = curItem.item_sellprice;
             privItemSellTime = curItem.item_selltime;
+            privItemSellOperator = curItem.item_sell__Operator;
 
             curItem.item_sellprice = null;
             curItem.item_selltime = null;
@@ -220,6 +229,45 @@ namespace kaede2nd
             idao.Update(curItem);
 
             this.textBox_ban_err("次の品番を入力してね");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string err = "オペレータID";
+            while (true)
+            {
+                string res;
+                DialogResult dres = InputBox.ShowIntDialog("あなたのオペレータIDを入力してください", "売却入力者", err, out res);
+
+                if (dres == DialogResult.Cancel)
+                {
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    uint oid;
+                    if (!uint.TryParse(res, out oid))
+                    {
+                        err = "不正な文字列です";
+                        continue;
+                    }
+
+                    IOperatorDao opdao = GlobalData.getIDao<IOperatorDao>();
+                    List<Operator> lo = opdao.GetById(oid);
+
+                    if (lo.Count != 1)
+                    {
+                        err = "該当するオペレータIDがありません";
+                        continue;
+                    }
+
+                    this.nowOperator = lo[0];
+                    break;
+                }
+            }
+
+            this.textBox_operator.Text = this.nowOperator.operator_name;
         }
     }
 }

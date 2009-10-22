@@ -19,5 +19,8 @@ namespace kaede2nd.Dao
         /**取得**/
 
         List<Operator> GetAll();
+
+        [Query("operator_id = /*operator_id*/")]
+        List<Operator> GetById(UInt32 operator_id);
     }
 }

@@ -63,10 +63,6 @@
             this.contextMenuStrip_temp.SuspendLayout();
             this.SuspendLayout();
             // 
-            // webc
-            // 
-            this.webc.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webc.Headers")));
-            // 
             // label1
             // 
             this.label1.AutoSize = true;

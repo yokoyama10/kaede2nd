@@ -669,6 +669,37 @@ namespace kaede2nd
             (new SellForm()).Show();
         }
 
+        private void オペレーターIDを管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new SelectOperator()).ShowDialog();
+
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is OperatorList)
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+
+            (new OperatorList()).Show();
+        }
+
+        private void 監査ウィンドウWToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is KansaForm)
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+
+            (new KansaForm()).Show();
+
+        }
+
 
         /*
         private void button3_Click(object sender, EventArgs e)

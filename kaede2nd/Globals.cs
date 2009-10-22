@@ -424,6 +424,9 @@ namespace kaede2nd
         public readonly static string uketsukeNitizi = "受付日時";
         public readonly static string henkinZumi = "返金済";
 
+        public readonly static string operatorId = "OpID";
+        public readonly static string operatorName = "名前";
+
     }
 
     public class GlobalData

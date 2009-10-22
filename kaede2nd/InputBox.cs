@@ -47,6 +47,8 @@ namespace kaede2nd
                 result = null;
             }
 
+            f.Dispose();
+
             return dres;
         }
 

@@ -15,13 +15,11 @@ namespace kaede2nd
     public partial class MyItemFormBase : MyForm
     {
         protected DataGridView formDGV;
-        protected List<Item> itemList;
-        protected System.Net.WebClient webc; 
+        protected List<Item> itemList; 
 
         public MyItemFormBase()
         {
             this.formDGV = null;
-            this.webc = new System.Net.WebClient();
 
             InitializeComponent();
         }
@@ -358,8 +356,10 @@ namespace kaede2nd
             requestParams["ItemId"] = code;
             string url = helper.Sign(requestParams);
 
+            System.Net.WebClient webc = new System.Net.WebClient();
+
             // @"http://webservices.amazon.co.jp/onca/xml?SearchIndex=Books&Operation=ItemLookup&IdType=ISBN&AWSAccessKeyId=13R1P6WSEW5Y6CP6MVR2&ItemId=" + isbn
-            using (Stream st = this.webc.OpenRead(url))
+            using (Stream st = webc.OpenRead(url))
             {
                 if (st == null) { return false; }
                 using (StreamReader sr = new StreamReader(st, Encoding.UTF8))

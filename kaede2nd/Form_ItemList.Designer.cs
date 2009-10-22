@@ -38,10 +38,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // webc
-            // 
-            this.webc.Headers = ((System.Net.WebHeaderCollection)(resources.GetObject("webc.Headers")));
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;

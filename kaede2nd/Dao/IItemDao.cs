@@ -31,5 +31,28 @@ namespace kaede2nd.Dao
 
         [Sql("ALTER TABLE item AUTO_INCREMENT=1")]
         void ResetItemIdNumber();
+
+
+        /**監査**/
+        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL")]
+        List<Item> GetNeedKansaItem();
+
+        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag1 IS NULL")]
+        List<Item> GetNeedKansaItem_NotFlagged1();
+        [Sql("SELECT COUNT(*) FROM item WHERE " +
+               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag1 IS NULL")]
+        UInt32 CountNeedKansaItem_NotFlagged1();
+
+        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag2 IS NULL")]
+        List<Item> GetNeedKansaItem_NotFlagged2();
+        [Sql("SELECT COUNT(*) FROM item WHERE " +
+               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag2 IS NULL")]
+        UInt32 CountNeedKansaItem_NotFlagged2();
+
+        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag3 IS NULL")]
+        List<Item> GetNeedKansaItem_NotFlagged3();
+        [Sql("SELECT COUNT(*) FROM item WHERE " +
+               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag3 IS NULL")]
+        UInt32 CountNeedKansaItem_NotFlagged3();
     }
 }

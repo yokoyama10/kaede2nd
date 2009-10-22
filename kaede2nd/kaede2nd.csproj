@@ -118,6 +118,12 @@
     <Compile Include="MyItemFormBase.Designer.cs">
       <DependentUpon>MyItemFormBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="OperatorList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperatorList.Designer.cs">
+      <DependentUpon>OperatorList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Printing.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     <EmbeddedResource Include="MyItemFormBase.resx">
       <DependentUpon>MyItemFormBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OperatorList.resx">
+      <DependentUpon>OperatorList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReceiptForm.resx">
       <DependentUpon>ReceiptForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +177,9 @@
     <EmbeddedResource Include="RecentItem.resx">
       <DependentUpon>RecentItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelectOperator.resx">
+      <DependentUpon>SelectOperator.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SellForm.resx">
       <DependentUpon>SellForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -176,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Version.resx">
       <DependentUpon>Version.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KansaForm.resx">
+      <DependentUpon>KansaForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -191,6 +206,12 @@
     </Compile>
     <Compile Include="RecentItem.Designer.cs">
       <DependentUpon>RecentItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectOperator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectOperator.Designer.cs">
+      <DependentUpon>SelectOperator.cs</DependentUpon>
     </Compile>
     <Compile Include="SellForm.cs">
       <SubType>Form</SubType>
@@ -210,6 +231,12 @@
     </Compile>
     <Compile Include="Version.Designer.cs">
       <DependentUpon>Version.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KansaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KansaForm.Designer.cs">
+      <DependentUpon>KansaForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

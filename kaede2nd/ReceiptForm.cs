@@ -484,7 +484,7 @@ namespace kaede2nd
                 //this.combo_operator.SelectedValue =
                 //    (r.receipt__Operator != null ? r.receipt__Operator.operator_id : 0);
 
-                GlobalData.Instance.mainForm.DoRefresh();
+                //GlobalData.Instance.mainForm.DoRefresh();
 
 
             }

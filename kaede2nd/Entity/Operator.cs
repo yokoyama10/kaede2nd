@@ -24,5 +24,10 @@ namespace kaede2nd.Entity
         public UInt32 operator_id { get; set; }
         public string operator_name { get; set; }
         public string operator_comment { get; set; }
+
+        public override string ToString()
+        {
+            return this.operator_id.ToString() + ". " + this.operator_name;
+        }
     }
 }

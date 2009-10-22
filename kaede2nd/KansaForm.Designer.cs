@@ -1,6 +1,6 @@
 ﻿namespace kaede2nd
 {
-    partial class SellForm
+    partial class KansaForm
     {
         /// <summary>
         /// Required designer variable.
@@ -36,19 +36,23 @@
             this.textBox_baika = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label_baikaEnter = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_teika = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_nebiki = new System.Windows.Forms.TextBox();
-            this.label_CtrlZ = new System.Windows.Forms.Label();
-            this.label_teikaBaikyaku = new System.Windows.Forms.Label();
-            this.label_sellzumi = new System.Windows.Forms.Label();
             this.button_mibai = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.textBox_operator = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button_teisei = new System.Windows.Forms.Button();
+            this.label_error = new System.Windows.Forms.Label();
+            this.label_kansacnt = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox_remain = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -96,7 +100,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 195);
+            this.label3.Location = new System.Drawing.Point(21, 163);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 4;
@@ -104,22 +108,23 @@
             // 
             // textBox_baika
             // 
+            this.textBox_baika.BackColor = System.Drawing.SystemColors.Control;
             this.textBox_baika.Font = new System.Drawing.Font("MS UI Gothic", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox_baika.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.textBox_baika.Location = new System.Drawing.Point(113, 179);
+            this.textBox_baika.Location = new System.Drawing.Point(113, 147);
             this.textBox_baika.Name = "textBox_baika";
+            this.textBox_baika.ReadOnly = true;
             this.textBox_baika.Size = new System.Drawing.Size(109, 34);
             this.textBox_baika.TabIndex = 1;
             this.textBox_baika.Text = "0";
             this.textBox_baika.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBox_baika.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_baika_KeyDown);
             this.textBox_baika.Enter += new System.EventHandler(this.textBox_Enter);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(86, 187);
+            this.label4.Location = new System.Drawing.Point(86, 155);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(21, 21);
             this.label4.TabIndex = 6;
@@ -133,16 +138,6 @@
             this.label5.Size = new System.Drawing.Size(74, 12);
             this.label5.TabIndex = 7;
             this.label5.Text = "入力してEnter";
-            // 
-            // label_baikaEnter
-            // 
-            this.label_baikaEnter.AutoSize = true;
-            this.label_baikaEnter.Location = new System.Drawing.Point(241, 195);
-            this.label_baikaEnter.Name = "label_baikaEnter";
-            this.label_baikaEnter.Size = new System.Drawing.Size(74, 12);
-            this.label_baikaEnter.TabIndex = 8;
-            this.label_baikaEnter.Text = "入力してEnter";
-            this.label_baikaEnter.Visible = false;
             // 
             // label7
             // 
@@ -196,40 +191,10 @@
             this.textBox_nebiki.Text = "不可";
             this.textBox_nebiki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label_CtrlZ
-            // 
-            this.label_CtrlZ.AutoSize = true;
-            this.label_CtrlZ.Location = new System.Drawing.Point(21, 255);
-            this.label_CtrlZ.Name = "label_CtrlZ";
-            this.label_CtrlZ.Size = new System.Drawing.Size(169, 12);
-            this.label_CtrlZ.TabIndex = 14;
-            this.label_CtrlZ.Text = "最後の変更を取り消すには Ctrl+Z";
-            // 
-            // label_teikaBaikyaku
-            // 
-            this.label_teikaBaikyaku.AutoSize = true;
-            this.label_teikaBaikyaku.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.label_teikaBaikyaku.Location = new System.Drawing.Point(111, 219);
-            this.label_teikaBaikyaku.Name = "label_teikaBaikyaku";
-            this.label_teikaBaikyaku.Size = new System.Drawing.Size(152, 12);
-            this.label_teikaBaikyaku.TabIndex = 15;
-            this.label_teikaBaikyaku.Text = "定価通りの売却は \"-\" を入力";
-            // 
-            // label_sellzumi
-            // 
-            this.label_sellzumi.AutoSize = true;
-            this.label_sellzumi.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label_sellzumi.ForeColor = System.Drawing.Color.Red;
-            this.label_sellzumi.Location = new System.Drawing.Point(19, 146);
-            this.label_sellzumi.Name = "label_sellzumi";
-            this.label_sellzumi.Size = new System.Drawing.Size(145, 19);
-            this.label_sellzumi.TabIndex = 16;
-            this.label_sellzumi.Text = "売却済 00,000円";
-            this.label_sellzumi.Visible = false;
-            // 
             // button_mibai
             // 
-            this.button_mibai.Location = new System.Drawing.Point(203, 142);
+            this.button_mibai.Enabled = false;
+            this.button_mibai.Location = new System.Drawing.Point(122, 205);
             this.button_mibai.Name = "button_mibai";
             this.button_mibai.Size = new System.Drawing.Size(112, 23);
             this.button_mibai.TabIndex = 17;
@@ -268,24 +233,110 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // SellForm
+            // button_teisei
+            // 
+            this.button_teisei.Enabled = false;
+            this.button_teisei.Location = new System.Drawing.Point(23, 205);
+            this.button_teisei.Name = "button_teisei";
+            this.button_teisei.Size = new System.Drawing.Size(75, 23);
+            this.button_teisei.TabIndex = 21;
+            this.button_teisei.TabStop = false;
+            this.button_teisei.Text = "訂正 (&F)";
+            this.button_teisei.UseVisualStyleBackColor = true;
+            this.button_teisei.Click += new System.EventHandler(this.button_teisei_Click);
+            // 
+            // label_error
+            // 
+            this.label_error.AutoSize = true;
+            this.label_error.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_error.ForeColor = System.Drawing.Color.Red;
+            this.label_error.Location = new System.Drawing.Point(21, 244);
+            this.label_error.Name = "label_error";
+            this.label_error.Size = new System.Drawing.Size(156, 12);
+            this.label_error.TabIndex = 22;
+            this.label_error.Text = "監査する品番を入力してください";
+            // 
+            // label_kansacnt
+            // 
+            this.label_kansacnt.AutoSize = true;
+            this.label_kansacnt.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label_kansacnt.ForeColor = System.Drawing.Color.Red;
+            this.label_kansacnt.Location = new System.Drawing.Point(354, 34);
+            this.label_kansacnt.Name = "label_kansacnt";
+            this.label_kansacnt.Size = new System.Drawing.Size(172, 19);
+            this.label_kansacnt.TabIndex = 23;
+            this.label_kansacnt.Text = "監査 #0 (テスト部門)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(357, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(153, 12);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "部門全員が同じか確認すること";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(357, 75);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(61, 12);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "残り未監査";
+            // 
+            // textBox_remain
+            // 
+            this.textBox_remain.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox_remain.Location = new System.Drawing.Point(424, 71);
+            this.textBox_remain.Name = "textBox_remain";
+            this.textBox_remain.ReadOnly = true;
+            this.textBox_remain.Size = new System.Drawing.Size(58, 23);
+            this.textBox_remain.TabIndex = 26;
+            this.textBox_remain.Text = "0";
+            this.textBox_remain.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(488, 75);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(17, 12);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "品";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(467, 104);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(59, 23);
+            this.button2.TabIndex = 28;
+            this.button2.Text = "一覧";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // KansaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 330);
+            this.ClientSize = new System.Drawing.Size(554, 330);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.textBox_remain);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label_kansacnt);
+            this.Controls.Add(this.label_error);
+            this.Controls.Add(this.button_teisei);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox_operator);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.button_mibai);
-            this.Controls.Add(this.label_sellzumi);
-            this.Controls.Add(this.label_teikaBaikyaku);
-            this.Controls.Add(this.label_CtrlZ);
             this.Controls.Add(this.textBox_nebiki);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox_teika);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label_baikaEnter);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox_baika);
@@ -298,10 +349,9 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SellForm";
-            this.Text = "売却";
-            this.Load += new System.EventHandler(this.SellForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SellForm_KeyDown);
+            this.Name = "KansaForm";
+            this.Text = "監査";
+            this.Load += new System.EventHandler(this.KansaForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,18 +367,22 @@
         private System.Windows.Forms.TextBox textBox_baika;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label_baikaEnter;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_teika;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox_nebiki;
-        private System.Windows.Forms.Label label_CtrlZ;
-        private System.Windows.Forms.Label label_teikaBaikyaku;
-        private System.Windows.Forms.Label label_sellzumi;
         private System.Windows.Forms.Button button_mibai;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox_operator;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_teisei;
+        private System.Windows.Forms.Label label_error;
+        private System.Windows.Forms.Label label_kansacnt;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox_remain;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button2;
     }
 }
