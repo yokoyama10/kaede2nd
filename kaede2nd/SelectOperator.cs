@@ -36,6 +36,8 @@ namespace kaede2nd
 
             op = f.retop;
 
+            f.Dispose();
+
             return res;
         }
 
@@ -64,6 +66,11 @@ namespace kaede2nd
             this.textBox1.BackColor = Color.LightPink;
             this.textBox1.Focus();
             this.textBox1.SelectAll();
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.button1.PerformClick();
         }
     }
 }

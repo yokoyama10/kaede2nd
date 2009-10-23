@@ -671,8 +671,6 @@ namespace kaede2nd
 
         private void オペレーターIDを管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            (new SelectOperator()).ShowDialog();
-
             foreach (Form f in Application.OpenForms)
             {
                 if (f is OperatorList)

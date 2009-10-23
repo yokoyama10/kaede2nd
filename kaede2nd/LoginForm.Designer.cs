@@ -118,6 +118,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "ガラクタ",
             "古本",
+            "テストデータ",
             "サンドボックスG",
             "-"});
             this.comboBox1.Location = new System.Drawing.Point(12, 12);

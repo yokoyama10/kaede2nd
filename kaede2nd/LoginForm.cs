@@ -67,6 +67,12 @@ namespace kaede2nd
             {
                 GlobalData.Instance.itemNameImeOn = true;
                 GlobalData.Instance.enterToTab = false;
+                GlobalData.Instance.bumonName = "テスト部門";
+            }
+            else if (this.comboBox1.SelectedIndex == 3)
+            {
+                GlobalData.Instance.itemNameImeOn = true;
+                GlobalData.Instance.enterToTab = false;
                 GlobalData.Instance.bumonName = "松代実験場";
             }
 
@@ -95,6 +101,10 @@ namespace kaede2nd
                 text_dbname.Text = "en_furu";
             }
             else if (this.comboBox1.SelectedIndex == 2)
+            {
+                text_dbname.Text = "en_test2";
+            }
+            else if (this.comboBox1.SelectedIndex == 3)
             {
                 text_host.Text = "localhost";
                 text_dbname.Text = "en_test";

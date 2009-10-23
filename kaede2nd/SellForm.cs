@@ -233,41 +233,19 @@ namespace kaede2nd
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string err = "オペレータID";
-            while (true)
+            Operator op;
+            if (SelectOperator.ShowSelectOperatorDialog(out op) == DialogResult.OK)
             {
-                string res;
-                DialogResult dres = InputBox.ShowIntDialog("あなたのオペレータIDを入力してください", "売却入力者", err, out res);
-
-                if (dres == DialogResult.Cancel)
-                {
-                    this.Close();
-                    return;
-                }
-                else
-                {
-                    uint oid;
-                    if (!uint.TryParse(res, out oid))
-                    {
-                        err = "不正な文字列です";
-                        continue;
-                    }
-
-                    IOperatorDao opdao = GlobalData.getIDao<IOperatorDao>();
-                    List<Operator> lo = opdao.GetById(oid);
-
-                    if (lo.Count != 1)
-                    {
-                        err = "該当するオペレータIDがありません";
-                        continue;
-                    }
-
-                    this.nowOperator = lo[0];
-                    break;
-                }
+                this.nowOperator = op;
+            }
+            else
+            {
+                this.Close();
+                return;
             }
 
             this.textBox_operator.Text = this.nowOperator.operator_name;
+            this.textBox_ban_err("品番を入力してください");
         }
     }
 }
