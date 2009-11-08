@@ -19,7 +19,7 @@ namespace kaede2nd
         private Item privItem = null;
         private uint? privItemSellPrice = null;
         private DateTime? privItemSellTime = null;
-        private Operator privItemSellOperator = null;
+        private UInt32? privItemSellOperatorId = null;
 
         private Operator nowOperator = null;
 
@@ -86,12 +86,24 @@ namespace kaede2nd
             {
                 this.label_sellzumi.Visible = true;
                 this.label_sellzumi.Text = "売却済 \\" + it.item_sellprice.Value.ToString("#,##0");
-                this.textBox_baika.Text = it.item_sellprice.Value.ToString();
+                this.label_sellop.Visible = true;
+                this.label_sellop.Text = "入力者: " +
+                    (it.item_sell__Operator != null ? it.item_sell__Operator.operator_name : "不明");
+
+                if (it.item_sellprice.Value == it.item_tagprice)
+                {
+                    this.textBox_baika.Text = "-";
+                }
+                else
+                {
+                    this.textBox_baika.Text = it.item_sellprice.Value.ToString();
+                }
                 this.button_mibai.Visible = true;
             }
             else
             {
                 this.label_sellzumi.Visible = false;
+                this.label_sellop.Visible = false;
                 this.button_mibai.Visible = false;
                 this.textBox_baika.Text = "";
             }
@@ -113,6 +125,7 @@ namespace kaede2nd
             this.textBox_nebiki.Text = "";
 
             this.label_sellzumi.Visible = false;
+            this.label_sellop.Visible = false;
             this.button_mibai.Visible = false;
 
             this.textBox_baika.BackColor = SystemColors.Control;
@@ -151,25 +164,32 @@ namespace kaede2nd
                     }
                 }
 
-                privItem = curItem;
-                privItemSellPrice = curItem.item_sellprice;
-                privItemSellTime = curItem.item_selltime;
-                privItemSellOperator = curItem.item_sell__Operator;
+                if (curItem.item_sellprice.HasValue && curItem.item_sellprice.Value == baika)
+                {
+                }
+                else
+                {
 
-                curItem.item_sellprice = baika;
-                curItem.item_selltime = DateTime.Now;
-                curItem.item_sell__Operator = this.nowOperator;
+                    privItem = curItem;
+                    privItemSellPrice = curItem.item_sellprice;
+                    privItemSellTime = curItem.item_selltime;
+                    privItemSellOperatorId = curItem.item_sell_operator;
+
+                    curItem.item_sellprice = baika;
+                    curItem.item_selltime = DateTime.Now;
+                    curItem.item_sell_operator = this.nowOperator.operator_id;
 
 
-                Item i = curItem;
-                System.Threading.Thread t = new System.Threading.Thread(
-                    delegate(object item)
-                    {
-                        IItemDao idao = GlobalData.getIDao<IItemDao>();
-                        idao.Update((Item)item);
-                    }
-                );
-                t.Start(i);
+                    Item i = curItem;
+                    System.Threading.Thread t = new System.Threading.Thread(
+                        delegate(object item)
+                        {
+                            IItemDao idao = GlobalData.getIDao<IItemDao>();
+                            idao.Update((Item)item);
+                        }
+                    );
+                    t.Start(i);
+                }
 
                 this.textBox_ban_err("次の品番を入力してね");
             }
@@ -198,7 +218,7 @@ namespace kaede2nd
                 uint? priv_canceledsellprice = this.privItem.item_sellprice;
                 this.privItem.item_sellprice = privItemSellPrice;
                 this.privItem.item_selltime = privItemSellTime;
-                this.privItem.item_sell__Operator = privItemSellOperator;
+                this.privItem.item_sell_operator = privItemSellOperatorId;
 
                 IItemDao idao = GlobalData.getIDao<IItemDao>();
                 idao.Update(this.privItem);
@@ -220,7 +240,7 @@ namespace kaede2nd
             privItem = curItem;
             privItemSellPrice = curItem.item_sellprice;
             privItemSellTime = curItem.item_selltime;
-            privItemSellOperator = curItem.item_sell__Operator;
+            privItemSellOperatorId = curItem.item_sell_operator;
 
             curItem.item_sellprice = null;
             curItem.item_selltime = null;

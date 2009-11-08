@@ -45,31 +45,8 @@ namespace kaede2nd
             ColumnInfo colinfo;
             DataGridViewColumn col;
 
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shinaBan);
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_id;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(UInt32);
-            col.ReadOnly = true;
-            col.DefaultCellStyle.Format = "00000";
-            col.Width = GlobalData.moziWidth * 6;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewButtonColumn>(ColumnName.hyouBan);
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item__Receipt.receipt_id;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(UInt32);
-            col.ReadOnly = true;
-            col.DefaultCellStyle.BackColor = System.Drawing.SystemColors.ButtonFace;
-            col.DefaultCellStyle.Format = "'R'0000";
-            col.Width = GlobalData.moziWidth * 6;
-            col.SortMode = DataGridViewColumnSortMode.Automatic;
-            this.dataGridView1.Columns.Add(col);
+            this.AddColumn(this.dataGridView1, ColumnType.ItemId);
+            this.AddColumn(this.dataGridView1, ColumnType.ReceiptIdButton);
 
             colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shuppinsha);
             colinfo.sortComparison = delegate(DataGridViewCell c1, DataGridViewCell c2)
@@ -230,7 +207,7 @@ namespace kaede2nd
             {
                 try
                 {
-                    reg = new Regex(this.searchText);
+                    reg = new Regex(this.searchText, RegexOptions.IgnoreCase);
                 }
                 catch (Exception e)
                 {

@@ -58,9 +58,11 @@ namespace kaede2nd.Entity
 
         [ID(IDType.IDENTITY)]
         public UInt32 item_id { get; set; }
+
         public UInt32 item_receipt_id { get; set; }
         [Relno(0), Relkeys("item_receipt_id:receipt_id")]
         public Receipt item__Receipt { get; set; }
+
         public string item_name { get; set; }
         public UInt32 item_tagprice { get; set; }
         public bool item_tataki { get; set; }
@@ -68,12 +70,18 @@ namespace kaede2nd.Entity
         public string item_genre { get; set; }
         public string item_sellway { get; set; }
         public DateTime? item_receipt_time { get; set; }
+
+        public UInt32? item_receipt_operator { get; set; }
         [Relno(1), Relkeys("item_receipt_operator:operator_id")]
         public Operator item_receipt__Operator { get; set; }
+
         public UInt32? item_sellprice { get; set; }
         public DateTime? item_selltime { get; set; }
-        [Relno(1), Relkeys("item_sell_operator:operator_id")]
+
+        public UInt32? item_sell_operator { get; set; }
+        [Relno(2), Relkeys("item_sell_operator:operator_id")]
         public Operator item_sell__Operator { get; set; }
+
         public DateTime? item_kansa_end { get; set; }
         public UInt32? item_kansa_flag1 { get; set; }
         public UInt32? item_kansa_flag2 { get; set; }
@@ -87,7 +95,7 @@ namespace kaede2nd.Entity
 
         public static string GetCSVHeader()
         {
-            return "id,出品者,商品名,定価,売価,返す?,売れた?,コメント";
+            return "id,出品者,商品名,定価,売価,返す?,売却日時,コメント,監査終了日時";
         }
 
         public string GetCSVLine()
@@ -100,8 +108,9 @@ namespace kaede2nd.Entity
             rets.Add(this.item_tagprice.ToString());
             rets.Add((this.item_sellprice ?? 0).ToString());
             rets.Add(this.item_return ? "返" : "不返");
-            rets.Add(this.item_sellprice.HasValue ? "既売" : "未売");
+            rets.Add(this.item_sellprice.HasValue ? Globals.getTimeString(this.item_selltime) : "未売");
             rets.Add(this.item_comment.ToCSVString());
+            rets.Add(this.item_kansa_end.HasValue ? Globals.getTimeString(this.item_kansa_end) : "未終了");
 
             return string.Join(",",rets.ToArray());
         }

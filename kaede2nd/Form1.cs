@@ -694,8 +694,37 @@ namespace kaede2nd
                 }
             }
 
-            (new KansaForm()).Show();
+            KansaSelect kansele = new KansaSelect();
+            kansele.ShowDialog();
 
+            if (kansele.fkansa != null)
+            {
+                kansele.fkansa.Show();
+            }
+
+        }
+
+        private void 返金返品ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IItemDao iDao = GlobalData.getIDao<IItemDao>();
+            List<Item> items = iDao.GetAll();
+
+            var grps = (from i in items
+                        group i by i.item__Receipt.getSellerString());
+            foreach (var g in grps)
+            {
+                System.Diagnostics.Debug.Write(g.Key);
+                System.Diagnostics.Debug.Write(",");
+                System.Diagnostics.Debug.Write(
+                    (from i in g where i.item_sellprice.HasValue select i.item_sellprice.Value).Sum(a => (long)a).ToString()
+                    );
+                System.Diagnostics.Debug.Write(",");
+                System.Diagnostics.Debug.Write(
+                    (from i in g where i.item_sellprice.HasValue == false select i).Count().ToString()
+                    );
+                System.Diagnostics.Debug.Write("\n");
+            }
+                        
         }
 
 

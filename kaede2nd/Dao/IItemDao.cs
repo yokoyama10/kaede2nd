@@ -36,6 +36,13 @@ namespace kaede2nd.Dao
         /**監査**/
         [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL")]
         List<Item> GetNeedKansaItem();
+        [Sql("SELECT COUNT(*) FROM item WHERE " +
+               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL")]
+        UInt32 CountNeedKansaItem();
+
+        [Sql("SELECT SUM(item_sellprice) FROM item WHERE " +
+               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL")]
+        UInt32 SumNeedKansaItem_SellPrice();
 
         [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag1 IS NULL")]
         List<Item> GetNeedKansaItem_NotFlagged1();

@@ -11,28 +11,15 @@ namespace kaede2nd
 {
     public partial class LoginForm : Form
     {
-        private readonly bool isViewOnlyDB = false;
- 
+
         public LoginForm()
         {
             InitializeComponent();
 
-            if (this.isViewOnlyDB == false)
-            {
-                text_host.Text = "halfed-note";
-                text_port.Text = "3306";
-                text_user.Text = "ennichi";
-                text_pass.Text = "itsuki";
-            }
-            else
-            {
-                text_host.Text = "ma.hocha.org";
-                text_port.Text = "3307";
-                text_user.Text = "ennichi";
-                text_pass.Text = "3251";
-
-                this.Text += "（読み取り専用Ver）";
-            }
+            text_host.Text = "halfed-note";
+            text_port.Text = "3306";
+            text_user.Text = "ennichi";
+            text_pass.Text = "itsuki";
             this.comboBox1.SelectedIndex = 0;
         }
 
@@ -78,10 +65,6 @@ namespace kaede2nd
 
             GlobalData.Instance.windowTitle = deity + "萌え萌えソフトウェア";
 
-            if (this.isViewOnlyDB)
-            {
-                GlobalData.Instance.bumonName += "（閲覧専用）";
-            }
         }
 
 

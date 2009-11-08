@@ -19,7 +19,52 @@ namespace kaede2nd
         }
 
 
+        public enum ColumnType
+        {
+            ItemId,
+            ReceiptIdButton,
+        }
 
+        protected void AddColumn(DataGridView dgv, ColumnType type)
+        {
+            ColumnInfo colinfo;
+            DataGridViewColumn col;
+
+            switch (type)
+            {
+                case ColumnType.ItemId:
+                    colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shinaBan);
+                    colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
+                    {
+                        cell.Value = ((Item)obj).item_id;
+                    };
+                    col = colinfo.col;
+                    col.ValueType = typeof(UInt32);
+                    col.ReadOnly = true;
+                    col.DefaultCellStyle.Format = "00000";
+                    col.Width = GlobalData.moziWidth * 6;
+
+                    dgv.Columns.Add(col);
+                    break;
+
+                case ColumnType.ReceiptIdButton:
+                    colinfo = this.newColumn<DataGridViewButtonColumn>(ColumnName.hyouBan);
+                    colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
+                    {
+                        cell.Value = ((Item)obj).item__Receipt.receipt_id;
+                    };
+                    col = colinfo.col;
+                    col.ValueType = typeof(UInt32);
+                    col.ReadOnly = true;
+                    col.DefaultCellStyle.BackColor = System.Drawing.SystemColors.ButtonFace;
+                    col.DefaultCellStyle.Format = "'R'0000";
+                    col.Width = GlobalData.moziWidth * 6;
+                    col.SortMode = DataGridViewColumnSortMode.Automatic;
+                    dgv.Columns.Add(col);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         protected ColumnInfo newColumn<T>(string name) where T : System.Windows.Forms.DataGridViewColumn, new()
         {

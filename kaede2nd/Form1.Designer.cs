@@ -58,6 +58,7 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.バージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
+            this.返金返品ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -254,6 +255,7 @@
             this.機能ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.売却ウィンドウSToolStripMenuItem,
             this.監査ウィンドウWToolStripMenuItem,
+            this.返金返品ToolStripMenuItem,
             this.toolStripSeparator5,
             this.オペレーターIDを管理ToolStripMenuItem,
             this.toolStripSeparator6,
@@ -310,6 +312,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // 返金返品ToolStripMenuItem
+            // 
+            this.返金返品ToolStripMenuItem.Name = "返金返品ToolStripMenuItem";
+            this.返金返品ToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.返金返品ToolStripMenuItem.Text = "返金・返品 (&R)";
+            this.返金返品ToolStripMenuItem.Click += new System.EventHandler(this.返金返品ToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -365,6 +374,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem オペレーターIDを管理ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem 返金返品ToolStripMenuItem;
     }
 }
 

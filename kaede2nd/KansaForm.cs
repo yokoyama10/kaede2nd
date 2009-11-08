@@ -74,8 +74,24 @@ namespace kaede2nd
                         throw new InvalidOperationException();
                 }
 
-                ControlUtil.SafelyOperated(this.textBox_remain, (MethodInvoker)delegate(){
+                ControlUtil.SafelyOperated(this.textBox_remain, (MethodInvoker)delegate()
+                {
                     this.textBox_remain.Text = cnt.ToString();
+                });
+
+                UInt32 allcnt;
+                allcnt = itDao.CountNeedKansaItem();
+
+                ControlUtil.SafelyOperated(this.textBox_allkansa, (MethodInvoker)delegate()
+                {
+                    this.textBox_allkansa.Text = allcnt.ToString();
+                });
+
+                UInt32 sum;
+                sum = itDao.SumNeedKansaItem_SellPrice();
+                ControlUtil.SafelyOperated(this.textBox_sum, (MethodInvoker)delegate()
+                {
+                    this.textBox_sum.Text = sum.ToString("#,##0");
                 });
             });
 
@@ -122,11 +138,11 @@ namespace kaede2nd
                     return;
                 }
 
-                this.kansaItem(its[0]);
+                this.DoKansaItem(its[0]);
             }
         }
 
-        private void kansaItem(Item it)
+        private void DoKansaItem(Item it)
         {
             this.curItem = it;
 
@@ -139,7 +155,22 @@ namespace kaede2nd
 
             if (it.item_sellprice.HasValue)
             {
-                this.textBox_baika.Text = it.item_sellprice.Value.ToString();
+                if (it.item_sellprice.Value == it.item_tagprice)
+                {
+                    this.textBox_baika.Text = "- #" + it.item_sellprice.Value.ToString();
+                }
+                else
+                {
+                    this.textBox_baika.Text = it.item_sellprice.Value.ToString();
+                }
+                if (it.item_sell__Operator != null)
+                {
+                    this.textBox_sellop.Text = it.item_sell__Operator.operator_name;
+                }
+                else
+                {
+                    this.textBox_sellop.Text = "不明";
+                }
                 this.button_mibai.Enabled = true;
                 this.button_teisei.Enabled = true;
                 this.textBox_baika.BackColor = SystemColors.Control;
@@ -148,7 +179,7 @@ namespace kaede2nd
                 if (it.item_kansa_end.HasValue)
                 {
                     //監査済み
-                    this.label_error.Text = "監査が完全終了した品です。昨日販売では？";
+                    this.label_error.Text = "監査対象ではありません。今日販売ではない可能性が。";
                     this.label_error.Visible = true;
                 }
                 else
@@ -160,11 +191,11 @@ namespace kaede2nd
 
                         if (lop.Count() == 0)
                         {
-                            this.label_error.Text = "だれかが監査したようです";
+                            this.label_error.Text = "だれかが既に監査したようです";
                         }
                         else
                         {
-                            this.label_error.Text = lop[0].operator_name + " が監査したようです";
+                            this.label_error.Text = lop[0].operator_name + " が既に監査しています";
                         }
 
                         this.label_error.Visible = true;
@@ -198,6 +229,7 @@ namespace kaede2nd
                 this.button_mibai.Enabled = false;
                 this.textBox_baika.Text = "未売却";
                 this.textBox_baika.BackColor = Color.LightPink;
+                this.textBox_sellop.Text = null;
 
                 this.label_error.Text = "未売却は監査できません";
                 this.label_error.Visible = true;
@@ -250,7 +282,7 @@ namespace kaede2nd
             IItemDao idao = GlobalData.getIDao<IItemDao>();
             idao.Update(curItem);
 
-            this.kansaItem(curItem);
+            this.DoKansaItem(curItem);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -342,9 +374,11 @@ namespace kaede2nd
 
                     IItemDao itDao = GlobalData.getIDao<IItemDao>();
                     this.curItem.item_sellprice = baika;
+                    this.curItem.item_selltime = DateTime.Now;
+                    this.curItem.item_sell_operator = this.nowOperator.operator_id;
                     itDao.Update(this.curItem);
 
-                    this.kansaItem(this.curItem);
+                    this.DoKansaItem(this.curItem);
 
                     return;
                 }
@@ -380,9 +414,48 @@ namespace kaede2nd
             this.listForm.Activate();
         }
 
+        private Form_ItemList allListForm = null;
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (this.allListForm == null || this.allListForm.IsDisposed)
+            {
+                this.allListForm = new Form_ItemList(
+                    (Form_ItemList.ItemReturnDelegate)delegate()
+                    {
+                        var itemDao = GlobalData.getIDao<IItemDao>();
+                        return itemDao.GetNeedKansaItem();
+                    }, "監査対象", "監査対象");
+
+            }
+
+            this.allListForm.Show();
+            this.allListForm.Activate();
+        }
+
         private void KansaForm_Load(object sender, EventArgs e)
         {
             this.button1.PerformClick();
         }
+
+        private void button_allend_Click(object sender, EventArgs e)
+        {
+
+            DialogResult res = MessageBox.Show("このコマンドは、当日の監査が終了したときに一度だけ実行してください。\n" +
+                            "\"監査対象\" の品をクリアしますか？", "監査完了？", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (res != DialogResult.Yes) { return; }
+            
+            var itemDao = GlobalData.getIDao<IItemDao>();
+            List<Item> lit = itemDao.GetNeedKansaItem();
+
+            DateTime dt = DateTime.Now;
+            for (int i = 0; i < lit.Count; i++)
+            {
+                lit[i].item_kansa_end = dt;
+                itemDao.Update(lit[i]);
+            }
+
+            this.RefreshRemain();
+        }
+
     }
 }
