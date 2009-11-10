@@ -55,41 +55,19 @@ namespace kaede2nd
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
 
+            
+
+            this.AddColumn(this.dataGridView1, ColumnType.ReceiptIdButton);
+            this.AddColumn(this.dataGridView1, ColumnType.SellerName);
+            this.AddColumn(this.dataGridView1, ColumnType.ReceiptReceiveTime);
+            this.AddColumn(this.dataGridView1, ColumnType.ReceiptComment);
+
+            /*
+             
             ColumnInfo colinfo;
             DataGridViewColumn col;
-
-            colinfo = this.newColumn<DataGridViewButtonColumn>(ColumnName.hyouBan);
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Receipt)obj).receipt_id;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(UInt32);
-            col.ReadOnly = true;
-            col.DefaultCellStyle.BackColor = SystemColors.ButtonFace;
-            col.DefaultCellStyle.Format = "'R'0000";
-            col.Width = GlobalData.moziWidth * 6;
-            col.SortMode = DataGridViewColumnSortMode.Automatic;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shuppinsha);
-            colinfo.sortComparison = delegate(DataGridViewCell c1, DataGridViewCell c2)
-            {
-                return String.Compare((string)c1.Tag, (string)c2.Tag, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.CompareOptions.Ordinal);
-            };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                Receipt r = (Receipt)obj;
-
-                cell.Value = r.getSellerString();
-                cell.Tag = r.getSellerSortKey();
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 18;          
-            this.dataGridView1.Columns.Add(col);
-
+             
+            
             colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.kosuu);
             col = colinfo.col;
             col.ValueType = typeof(UInt32);
@@ -97,18 +75,9 @@ namespace kaede2nd
             col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             col.Width = GlobalData.moziWidth * 5;
             this.dataGridView1.Columns.Add(col);
+            */
 
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.uketsukeNitizi);
-            colinfo.sortComparison = ColumnInfo.DateTimeCellComp;
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                Globals.setCellByDateTimeN(cell, ((Receipt)obj).receipt_time, "不明");
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 11;
-            this.dataGridView1.Columns.Add(col);
+
 
             /*
             colinfo = this.newColumn<DataGridViewTextBoxColumn>("受付者");
@@ -120,6 +89,7 @@ namespace kaede2nd
             this.dataGridView1.Columns.Add(col);
             */
 
+            /*
             colinfo = this.newColumn<DataGridViewCheckBoxColumn>(ColumnName.henkinZumi);
             colinfo.DBvalueSet = delegate(object obj, object val) { ((Receipt)obj).receipt_payback = Globals.getNullableBoolFromCheckboxString((string)val); };
             colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
@@ -135,16 +105,9 @@ namespace kaede2nd
             col.Width = GlobalData.moziWidth * 8;
             col.SortMode = DataGridViewColumnSortMode.Automatic;
             this.dataGridView1.Columns.Add(col);
+            */
 
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.comment);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Receipt)obj).receipt_comment = (string)val; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Receipt)obj).receipt_comment;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            this.dataGridView1.Columns.Add(col);
+            
 
             /*
             DataGridViewComboBoxColumn combocol = new DataGridViewComboBoxColumn();
@@ -214,7 +177,7 @@ namespace kaede2nd
                 this.setRowValue(row, r);
 
                 //個数 - のこす
-                row.Cells["個数"].Value = itemDao.CountReceiptItem(r.receipt_id);
+                //row.Cells["個数"].Value = itemDao.CountReceiptItem(r.receipt_id);
             }
 
             dataGridView1.Sort(dataGridView1.Columns[ColumnName.hyouBan], ListSortDirection.Ascending);
@@ -706,6 +669,18 @@ namespace kaede2nd
 
         private void 返金返品ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is HenkinForm)
+                {
+                    f.Activate();
+                    return;
+                }
+            }
+
+            (new HenkinForm()).Show();
+
+            /*
             IItemDao iDao = GlobalData.getIDao<IItemDao>();
             List<Item> items = iDao.GetAll();
 
@@ -724,6 +699,7 @@ namespace kaede2nd
                     );
                 System.Diagnostics.Debug.Write("\n");
             }
+             * */
                         
         }
 

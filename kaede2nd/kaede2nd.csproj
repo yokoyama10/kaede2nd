@@ -94,6 +94,12 @@
     <Compile Include="Form_ItemList.Designer.cs">
       <DependentUpon>Form_ItemList.cs</DependentUpon>
     </Compile>
+    <Compile Include="HenkinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HenkinForm.Designer.cs">
+      <DependentUpon>HenkinForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_ItemList.resx">
       <DependentUpon>Form_ItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HenkinForm.resx">
+      <DependentUpon>HenkinForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>

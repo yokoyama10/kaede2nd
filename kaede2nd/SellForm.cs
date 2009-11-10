@@ -143,13 +143,6 @@ namespace kaede2nd
                 if (this.curItem == null) { return; }
                 string s = this.textBox_baika.Text;
 
-                uint sute;
-                if (Globals.TryParseBarcode(s, out sute))
-                {
-                    this.textBox_baika_err();
-                    return;
-                }
-
                 uint baika;
                 if (s == "-")
                 {
@@ -158,6 +151,11 @@ namespace kaede2nd
                 else
                 {
                     if (!uint.TryParse(s, out baika))
+                    {
+                        this.textBox_baika_err();
+                        return;
+                    }
+                    if (baika > 999999)
                     {
                         this.textBox_baika_err();
                         return;

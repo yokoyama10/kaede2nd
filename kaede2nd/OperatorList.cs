@@ -22,43 +22,9 @@ namespace kaede2nd
             InitializeComponent();
             this.Text += " (" + GlobalData.Instance.bumonName + ")";
 
-
-            ColumnInfo colinfo;
-            DataGridViewColumn col;
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.operatorId);
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Operator)obj).operator_id;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(UInt32);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 6;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.operatorName);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Operator)obj).operator_name = (string)val; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Operator)obj).operator_name;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.Width = GlobalData.moziWidth * 12;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.comment);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Operator)obj).operator_comment = (string)val; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Operator)obj).operator_comment;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.Width = GlobalData.moziWidth * 50;
-            this.dataGridView1.Columns.Add(col);
-
+            this.AddColumn(this.dataGridView1, ColumnType.OperatorId);
+            this.AddColumn(this.dataGridView1, ColumnType.OperatorName);
+            this.AddColumn(this.dataGridView1, ColumnType.OperatorComment);
 
             this.addDGVEvents(this.dataGridView1);
 

@@ -71,6 +71,32 @@ namespace kaede2nd
         }
     }
 
+    
+        public enum ColumnType
+        {
+            Unknown = 0,
+
+            ItemId,
+            ReceiptIdButton,
+            SellerName,
+            ItemName,
+            TagPrice,
+            IsHenpin,
+            ItemReceiveTime,
+            ItemComment,
+            SellPrice,
+            SellTime,
+            Isbn,
+            Bunsatsu,
+
+            ReceiptReceiveTime,
+            ReceiptComment,
+
+            OperatorId,
+            OperatorName,
+            OperatorComment,
+        }
+
     public class ColumnInfo
     {
         public System.Windows.Forms.DataGridViewColumn col;
@@ -85,7 +111,13 @@ namespace kaede2nd
         public delegate void CellValueSetDelegate(DataGridViewCell cell, object obj);
         public CellValueSetDelegate CellvalueSet;
 
+        public readonly ColumnType columnType;
+
         public ColumnInfo(System.Windows.Forms.DataGridViewColumn col)
+            : this(col, ColumnType.Unknown)
+        { }
+
+        public ColumnInfo(System.Windows.Forms.DataGridViewColumn col, ColumnType type)
         {
             this.col = col;
             this.imeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -93,6 +125,8 @@ namespace kaede2nd
             this.sortComparison = null;
             this.DBvalueSet = null;
             this.CellvalueSet = null;
+
+            this.columnType = type;
         }
 
 
@@ -301,6 +335,12 @@ namespace kaede2nd
                 return false;
             }
         }
+
+        public static int CalcAllPages(int itemCount, int itemPerPage)
+        {
+            double d = (double)itemCount / (double)itemPerPage;
+            return (int)Math.Ceiling(d);
+        }
     }
 
     public static class KaedeExMethods
@@ -426,6 +466,11 @@ namespace kaede2nd
 
         public readonly static string operatorId = "OpID";
         public readonly static string operatorName = "名前";
+
+        public readonly static string itiran = "一覧";
+        public readonly static string uriageGaku = "売上額";
+        public readonly static string henkinGaku = "返金額";
+        public readonly static string henpinKosuu = "返品個数";
 
     }
 

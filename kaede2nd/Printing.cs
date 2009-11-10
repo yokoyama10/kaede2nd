@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 
 using kaede2nd.Entity;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace kaede2nd
 {
@@ -313,7 +314,7 @@ namespace kaede2nd
         {
             if (items.Count == 0) { e.Cancel = true; }
             itemperpage = (int)((this.printArea.Height - 80) / rowheight);
-            allpages = (int)(items.Count / itemperpage) + 1;
+            allpages = Globals.CalcAllPages(items.Count, itemperpage);
 
             tableWidth = ((int)this.printArea.Width - 10) - (wmargin + 30);
 
@@ -386,6 +387,164 @@ namespace kaede2nd
 
             this.pagecount++;
             e.HasMorePages = true;
+        }
+
+    }
+
+
+    public class ReturnListPrintDocument : PrintUtils.MyPrintDocument
+    {
+        private List<IGrouping<string, Item>> list;
+
+        private const int rowheight = 6; //mm
+        private const float fontheight = 4f; //mm
+
+        public ReturnListPrintDocument(List<IGrouping<string, Item>> list, PageSettings pageSettings, PrinterSettings printerSettings)
+            : base(pageSettings, printerSettings)
+        {
+
+            if (list == null) { throw new NullReferenceException("list"); }
+            this.list = list;
+
+            this.BeginPrint += new PrintEventHandler(ReturnListPrintDocument_BeginPrint);
+            this.PrintPage += new PrintPageEventHandler(ReturnListPrintDocument_PrintPage);
+        }
+
+
+        private List<Item> curGrpItems = null;
+
+        private int itemPerPage;
+        private int tableWidth;
+
+        private int grpPointer = -1;
+        private int itemInGrpPointer;
+        private int pageInGrpCount = 1;
+        private int allPageCount = 0;
+
+        
+        void ReturnListPrintDocument_BeginPrint(object sender, PrintEventArgs e)
+        {
+            if (list.Count == 0) { e.Cancel = true; }
+            itemPerPage = (int)((this.printArea.Height - 50) / rowheight);
+            tableWidth = ((int)this.printArea.Width - 10) - (wmargin + 10);
+
+            this.DocumentName = GlobalData.Instance.bumonName + " 返品リスト";
+
+            this.allPageCount = 0;
+            this.grpPointer = -1;
+            this.curGrpItems = null;
+
+            if (this.prepareNewPage() == false)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        //return: HasMorePage
+        bool prepareNewPage()
+        {
+            if (this.curGrpItems == null)
+            {
+                this.grpPointer++;
+                if (this.grpPointer >= this.list.Count)
+                {
+                    return false;
+                }
+
+                this.curGrpItems = (from i in this.list[grpPointer] where i.item_sellprice.HasValue == false select i).ToList();
+                if (this.curGrpItems.Count == 0)
+                {
+                    this.curGrpItems = null;
+                    this.grpPointer++;
+                    return this.prepareNewPage();
+                }
+
+                this.itemInGrpPointer = -1;
+                this.pageInGrpCount = 1;
+
+            }
+            else
+            {
+                this.pageInGrpCount++;
+            }
+
+            this.allPageCount++;
+            return true;
+        }
+
+        void ReturnListPrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            g.PageUnit = GraphicsUnit.Millimeter;
+
+            g.DrawString("返品リスト",
+                new Font("MS Gothic", 8.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
+                new PointF(wmargin + 15, 7));
+
+            g.DrawString("(" + GlobalData.Instance.bumonName + ") " + this.pageInGrpCount.ToString() + " / " + 
+                Globals.CalcAllPages(this.curGrpItems.Count, this.itemPerPage).ToString() + " ページ",
+                new Font("MS Gothic", 6.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
+                new PointF(wmargin + 15 + 48, 9));
+
+            Font font = new Font("MS Gothic", fontheight, FontStyle.Regular, GraphicsUnit.Millimeter);
+
+            g.DrawString("出品者: " + this.list[grpPointer].Key,
+                new Font("MS Gothic", 6.0f, FontStyle.Regular, GraphicsUnit.Millimeter)
+                , Brushes.Black, new PointF(wmargin + 20, 20));
+
+            /*
+            g.DrawString(this.receipt.receipt_id.ToString("'R'0000"),
+                new Font("MS Gothic", 10.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
+                new PointF(this.printArea.Width - 40, this.printArea.Height - 25)
+            );
+            */
+
+            Pen pline = new Pen(Color.Black, 0.1f);
+
+            g.DrawLine(pline, new Point(wmargin + 10, hmargin + 40), new Point(wmargin + 10 + tableWidth, hmargin + 40));
+
+            Region infClip = g.Clip;
+
+            UInt32 receiptId = 0;
+            for (int i = 0; i < this.itemPerPage; i++)
+            {
+                this.itemInGrpPointer++;
+                Item it = this.curGrpItems[this.itemInGrpPointer];
+
+                int x = wmargin + 18;
+                int y = hmargin + 40 + rowheight * i + 1;
+
+                g.DrawString(String.Format("{0,2}", this.itemInGrpPointer+1) + ".", font, Brushes.Black, new PointF(x + 1, y));
+                if (receiptId != it.item_receipt_id)
+                {
+                    g.DrawString("R" + it.item_receipt_id.ToString("0000"),
+                        new Font("MS Gothic", fontheight, FontStyle.Italic, GraphicsUnit.Millimeter), Brushes.Black, new PointF(x + 10, y));
+                }
+                g.DrawString(it.item_id.ToString("00000"), font, Brushes.Black, new PointF(x + 25, y));
+
+
+                g.SetClip(new Rectangle(x + 38, y, tableWidth - 36 - 36, rowheight));
+                g.DrawString(it.item_name, font, Brushes.Black, new PointF(x + 38, y));
+                g.Clip = infClip;
+
+                g.DrawString(it.item_tagprice.ToString("#,##0").PadLeft(6, ' ') + "円", font, Brushes.Black, new PointF(x + tableWidth - 34, y));
+                if (it.item_return == true)
+                {
+                    g.DrawString("返品", font, Brushes.Black, new PointF(x + tableWidth - 14, y));
+                }
+
+                g.DrawLine(pline, new Point(wmargin + 10, y + rowheight - 1), new Point(wmargin + 10 + tableWidth, y + rowheight - 1));
+
+                receiptId = it.item_receipt_id;
+
+                if (this.itemInGrpPointer + 1 >= this.curGrpItems.Count())
+                {
+                    this.curGrpItems = null;
+                    break;
+                }
+            }
+
+            e.HasMorePages = this.prepareNewPage();
         }
 
     }

@@ -42,153 +42,16 @@ namespace kaede2nd
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
             this.dataGridView1.RowTemplate.Height = 20;
 
-            ColumnInfo colinfo;
-            DataGridViewColumn col;
-
             this.AddColumn(this.dataGridView1, ColumnType.ItemId);
             this.AddColumn(this.dataGridView1, ColumnType.ReceiptIdButton);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shuppinsha);
-            colinfo.sortComparison = delegate(DataGridViewCell c1, DataGridViewCell c2)
-            {
-                return String.Compare((string)c1.Tag, (string)c2.Tag, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.CompareOptions.Ordinal);
-            };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                Receipt r = ((Item)obj).item__Receipt;
-
-                cell.Value = r.getSellerString();
-                cell.Tag = r.getSellerSortKey();
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 18;
-            this.dataGridView1.Columns.Add(col);
-
-
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.shouhinMei);
-            colinfo.imeMode = ImeMode.On;
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_name = Globals.strNoNull((string)val); };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_name;
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.Width = GlobalData.moziWidth * 20;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.teika);
-            colinfo.imeMode = ImeMode.Off;
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_tagprice = (val is UInt32) ? (UInt32)val : 0; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_tagprice;
-            };
-            col = colinfo.col;
-            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            col.ValueType = typeof(UInt32);
-            col.Width = GlobalData.moziWidth * 6;
-            this.dataGridView1.Columns.Add(col);
-
-
-            colinfo = this.newColumn<DataGridViewCheckBoxColumn>(ColumnName.henpin);
-            col = colinfo.col;
-            colinfo.defaultVal = Globals.check_falseVal;
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_return = Globals.getBoolFromCheckboxString((string)val); };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = Globals.getCheckboxStringNoNull(((Item)obj).item_return, false);
-            };
-            col.ValueType = typeof(string);
-            ((DataGridViewCheckBoxColumn)col).ThreeState = false;
-            ((DataGridViewCheckBoxColumn)col).TrueValue = Globals.check_trueVal;
-            ((DataGridViewCheckBoxColumn)col).FalseValue = Globals.check_falseVal;
-            //((DataGridViewCheckBoxColumn)col).IndeterminateValue = Globals.check_unkVal;
-            col.Width = GlobalData.moziWidth * 8;
-            col.SortMode = DataGridViewColumnSortMode.Automatic;
-            this.dataGridView1.Columns.Add(col);
-
-
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.uketsukeNitizi);
-            colinfo.sortComparison = ColumnInfo.DateTimeCellComp;
-
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                Globals.setCellByDateTimeN(cell, ((Item)obj).item_receipt_time, "不明");
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 11;
-            this.dataGridView1.Columns.Add(col);
-
-
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.comment);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_comment = (string)val; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_comment;
-            };
-            col = colinfo.col;
-            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            col.ValueType = typeof(string);
-            col.Width = GlobalData.moziWidth * 18;
-            this.dataGridView1.Columns.Add(col);
-
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.baika);
-            colinfo.imeMode = ImeMode.Off;
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_sellprice = Globals.convToUInt32(val); };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_sellprice;
-            };
-            col = colinfo.col;
-            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            col.ValueType = typeof(UInt32);
-            col.Width = GlobalData.moziWidth * 6;
-            this.dataGridView1.Columns.Add(col);
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.hanbaiNitizi);
-            colinfo.sortComparison = ColumnInfo.DateTimeCellComp;
-
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                Item it = (Item)obj;
-                if (it.item_selltime.HasValue)
-                {
-                    cell.Tag = it.item_selltime.Value;
-                    cell.Value = Globals.getTimeString(it.item_selltime);
-                }
-                else
-                {
-                    cell.Tag = DateTime.MinValue;
-                    cell.Value = "";
-                }
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Width = GlobalData.moziWidth * 11;
-            this.dataGridView1.Columns.Add(col);
-
-
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.hanbaiComment);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Item)obj).item_sellcomment = (string)val; };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = ((Item)obj).item_sellcomment;
-            };
-            col = colinfo.col;
-            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            col.ValueType = typeof(string);
-            col.Width = GlobalData.moziWidth * 18;
-            this.dataGridView1.Columns.Add(col);
+            this.AddColumn(this.dataGridView1, ColumnType.SellerName);
+            this.AddColumn(this.dataGridView1, ColumnType.ItemName);
+            this.AddColumn(this.dataGridView1, ColumnType.TagPrice);
+            this.AddColumn(this.dataGridView1, ColumnType.IsHenpin);
+            this.AddColumn(this.dataGridView1, ColumnType.ItemReceiveTime);
+            this.AddColumn(this.dataGridView1, ColumnType.ItemComment);
+            this.AddColumn(this.dataGridView1, ColumnType.SellPrice);
+            this.AddColumn(this.dataGridView1, ColumnType.SellTime);
 
             this.addDGVEvents(this.dataGridView1);
         }
