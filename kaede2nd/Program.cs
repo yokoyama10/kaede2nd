@@ -33,11 +33,6 @@ namespace kaede2nd
 }
 
 /*
-
-・返品わすれる
-・１６ごと印刷
-・IMEバーコードで2回Enter?
-・バーコード打鍵速度
-
+SELECT date(item_selltime) as SellDate, sum(item_sellprice) FROM en_gara.item WHERE item_sellprice IS NOT NULL GROUP BY SellDate
 
 */

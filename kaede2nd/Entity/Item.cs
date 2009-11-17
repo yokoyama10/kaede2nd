@@ -95,7 +95,7 @@ namespace kaede2nd.Entity
 
         public static string GetCSVHeader()
         {
-            return "id,出品者,商品名,定価,売価,返す?,売却日時,コメント,監査終了日時";
+            return "id,票番,出品者,商品名,定価,売価,返す?,売却日時,コメント,監査終了日時";
         }
 
         public string GetCSVLine()
@@ -103,6 +103,7 @@ namespace kaede2nd.Entity
             List<string> rets = new List<string>();
 
             rets.Add(this.item_id.ToString("00000"));
+            rets.Add("R" + this.item_receipt_id.ToString("0000"));
             rets.Add(this.item__Receipt.getSellerString().ToCSVString());
             rets.Add(this.item_name.ToCSVString());
             rets.Add(this.item_tagprice.ToString());

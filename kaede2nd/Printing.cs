@@ -103,7 +103,7 @@ namespace kaede2nd
 
             double allpages = Math.Ceiling((double)this.pitems.Count / (colpp * rowpp));
 
-            this.DocumentName = GlobalData.Instance.bumonName + " 全 " + ((int)allpages).ToString() + " ページ";
+            this.DocumentName = GlobalData.Instance.data.bumonName + " 全 " + ((int)allpages).ToString() + " ページ";
 
             this.count = 0;
             
@@ -238,7 +238,7 @@ namespace kaede2nd
             }
 
 
-            e.Graphics.DrawString("筑駒58期縁日班" + GlobalData.Instance.bumonName, new Font("MS Mincho", 2.2f, FontStyle.Regular, GraphicsUnit.Millimeter),
+            e.Graphics.DrawString("筑駒58期縁日班" + GlobalData.Instance.data.bumonName, new Font("MS Mincho", 2.2f, FontStyle.Regular, GraphicsUnit.Millimeter),
                 Brushes.Black, x + 46, y + 3.5f + (5.25f) * 3 + 10.9f);
 
 
@@ -318,7 +318,7 @@ namespace kaede2nd
 
             tableWidth = ((int)this.printArea.Width - 10) - (wmargin + 30);
 
-            this.DocumentName = GlobalData.Instance.bumonName + " 全 " + allpages.ToString() + " ページ";
+            this.DocumentName = GlobalData.Instance.data.bumonName + " 全 " + allpages.ToString() + " ページ";
 
             this.pagecount = 1;
             this.count = 0;
@@ -333,7 +333,7 @@ namespace kaede2nd
                 new Font("MS Gothic", 8.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
                 new PointF(wmargin + 15, 7));
 
-            g.DrawString("(" + GlobalData.Instance.bumonName + ") " + this.pagecount.ToString() + " / " + allpages.ToString() + " ページ",
+            g.DrawString("(" + GlobalData.Instance.data.bumonName + ") " + this.pagecount.ToString() + " / " + allpages.ToString() + " ページ",
                 new Font("MS Gothic", 6.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
                 new PointF(wmargin + 15 + 35, 9));
 
@@ -394,17 +394,44 @@ namespace kaede2nd
 
     public class ReturnListPrintDocument : PrintUtils.MyPrintDocument
     {
+        public enum PrintType
+        {
+            Return, Meisai, MeisaiWithoutReturn
+        };
+
+        public enum SortType
+        {
+            None, SellPriceDesc, ItemId
+        };
+
         private List<IGrouping<string, Item>> list;
 
         private const int rowheight = 6; //mm
         private const float fontheight = 4f; //mm
 
-        public ReturnListPrintDocument(List<IGrouping<string, Item>> list, PageSettings pageSettings, PrinterSettings printerSettings)
+        private readonly PrintType printType;
+        private readonly string printTypeStr;
+        private readonly SortType sortType;
+
+        public ReturnListPrintDocument(List<IGrouping<string, Item>> list, PageSettings pageSettings, PrinterSettings printerSettings,
+            PrintType type, SortType sort)
             : base(pageSettings, printerSettings)
         {
+            this.printType = type;
 
             if (list == null) { throw new NullReferenceException("list"); }
             this.list = list;
+
+            if (this.printType == PrintType.Meisai || this.printType == PrintType.MeisaiWithoutReturn)
+            {
+                this.printTypeStr = "明細書";
+            }
+            else if (this.printType == PrintType.Return)
+            {
+                this.printTypeStr = "返品リスト";
+            }
+
+            this.sortType = sort;
 
             this.BeginPrint += new PrintEventHandler(ReturnListPrintDocument_BeginPrint);
             this.PrintPage += new PrintPageEventHandler(ReturnListPrintDocument_PrintPage);
@@ -421,14 +448,14 @@ namespace kaede2nd
         private int pageInGrpCount = 1;
         private int allPageCount = 0;
 
-        
+
         void ReturnListPrintDocument_BeginPrint(object sender, PrintEventArgs e)
         {
             if (list.Count == 0) { e.Cancel = true; }
-            itemPerPage = (int)((this.printArea.Height - 50) / rowheight);
+            itemPerPage = (int)((this.printArea.Height - 44) / rowheight);
             tableWidth = ((int)this.printArea.Width - 10) - (wmargin + 10);
 
-            this.DocumentName = GlobalData.Instance.bumonName + " 返品リスト";
+            this.DocumentName = GlobalData.Instance.data.bumonName + " " + this.printTypeStr;
 
             this.allPageCount = 0;
             this.grpPointer = -1;
@@ -451,11 +478,41 @@ namespace kaede2nd
                     return false;
                 }
 
-                this.curGrpItems = (from i in this.list[grpPointer] where i.item_sellprice.HasValue == false select i).ToList();
+                IEnumerable<Item> itemEnum;
+                if (this.printType == PrintType.Meisai)
+                {
+                    itemEnum = (from i in this.list[grpPointer] select i).ToList();
+                }
+                else if (this.printType == PrintType.Return)
+                {
+                    itemEnum = (from i in this.list[grpPointer] where i.item_sellprice.HasValue == false select i).ToList();
+                }
+                else if (this.printType == PrintType.MeisaiWithoutReturn)
+                {
+                    itemEnum = (from i in this.list[grpPointer] where i.item_sellprice.HasValue == true select i).ToList();
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+
+                if (this.sortType == SortType.ItemId)
+                {
+                    this.curGrpItems = itemEnum.OrderBy(it => it.item_id).ToList();
+                }
+                else if (this.sortType == SortType.SellPriceDesc)
+                {
+                    this.curGrpItems = itemEnum.OrderByDescending(it => it.item_sellprice).ToList();
+                }
+                else
+                {
+                    this.curGrpItems = itemEnum.ToList();
+                }
+
+
                 if (this.curGrpItems.Count == 0)
                 {
                     this.curGrpItems = null;
-                    this.grpPointer++;
                     return this.prepareNewPage();
                 }
 
@@ -477,11 +534,11 @@ namespace kaede2nd
             Graphics g = e.Graphics;
             g.PageUnit = GraphicsUnit.Millimeter;
 
-            g.DrawString("返品リスト",
+            g.DrawString(this.printTypeStr,
                 new Font("MS Gothic", 8.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
                 new PointF(wmargin + 15, 7));
 
-            g.DrawString("(" + GlobalData.Instance.bumonName + ") " + this.pageInGrpCount.ToString() + " / " + 
+            g.DrawString("(" + GlobalData.Instance.data.bumonName + ") " + this.pageInGrpCount.ToString() + " / " + 
                 Globals.CalcAllPages(this.curGrpItems.Count, this.itemPerPage).ToString() + " ページ",
                 new Font("MS Gothic", 6.0f, FontStyle.Regular, GraphicsUnit.Millimeter), Brushes.Black,
                 new PointF(wmargin + 15 + 48, 9));
@@ -499,9 +556,16 @@ namespace kaede2nd
             );
             */
 
+            if (this.printType == PrintType.Meisai || this.printType == PrintType.MeisaiWithoutReturn)
+            {
+                g.DrawString("売価", font, Brushes.Black, new PointF(wmargin + 18 + tableWidth - 30, hmargin + 25));
+            }
+            else if (this.printType == PrintType.Return)
+            {
+                g.DrawString("定価", font, Brushes.Black, new PointF(wmargin + 18 + tableWidth - 30, hmargin + 25));
+            }
             Pen pline = new Pen(Color.Black, 0.1f);
-
-            g.DrawLine(pline, new Point(wmargin + 10, hmargin + 40), new Point(wmargin + 10 + tableWidth, hmargin + 40));
+            g.DrawLine(pline, new Point(wmargin + 10, hmargin + 30), new Point(wmargin + 10 + tableWidth, hmargin + 30));
 
             Region infClip = g.Clip;
 
@@ -512,7 +576,7 @@ namespace kaede2nd
                 Item it = this.curGrpItems[this.itemInGrpPointer];
 
                 int x = wmargin + 18;
-                int y = hmargin + 40 + rowheight * i + 1;
+                int y = hmargin + 30 + rowheight * i + 1;
 
                 g.DrawString(String.Format("{0,2}", this.itemInGrpPointer+1) + ".", font, Brushes.Black, new PointF(x + 1, y));
                 if (receiptId != it.item_receipt_id)
@@ -527,11 +591,28 @@ namespace kaede2nd
                 g.DrawString(it.item_name, font, Brushes.Black, new PointF(x + 38, y));
                 g.Clip = infClip;
 
-                g.DrawString(it.item_tagprice.ToString("#,##0").PadLeft(6, ' ') + "円", font, Brushes.Black, new PointF(x + tableWidth - 34, y));
+                if (this.printType == PrintType.Meisai || this.printType == PrintType.MeisaiWithoutReturn)
+                {
+                    if (it.item_sellprice.HasValue)
+                    {
+                        g.DrawString(it.item_sellprice.Value.ToString("#,##0").PadLeft(6, ' ') + "円", font, Brushes.Black, new PointF(x + tableWidth - 34, y));
+                    }
+                    else
+                    {
+                        g.DrawString("未売", font, Brushes.Black, new PointF(x + tableWidth - 30, y));
+                    }
+                }
+                else if (this.printType == PrintType.Return)
+                {
+                    g.DrawString(it.item_tagprice.ToString("#,##0").PadLeft(6, ' ') + "円", font, Brushes.Black, new PointF(x + tableWidth - 34, y));
+                }
+
                 if (it.item_return == true)
                 {
-                    g.DrawString("返品", font, Brushes.Black, new PointF(x + tableWidth - 14, y));
+                    g.DrawString("返品", font, Brushes.Black, new PointF(x + tableWidth - 17, y));
                 }
+
+
 
                 g.DrawLine(pline, new Point(wmargin + 10, y + rowheight - 1), new Point(wmargin + 10 + tableWidth, y + rowheight - 1));
 
@@ -539,6 +620,13 @@ namespace kaede2nd
 
                 if (this.itemInGrpPointer + 1 >= this.curGrpItems.Count())
                 {
+                    if (this.printType == PrintType.Meisai || this.printType == PrintType.MeisaiWithoutReturn)
+                    {
+                        long sum = this.curGrpItems.Sum(_it => (long)(_it.item_sellprice ?? 0));
+                        g.DrawString("合計金額 " + sum.ToString("#,##0") + "円", font,
+                            Brushes.Black, new PointF(x + 10, hmargin + 30 + rowheight * (i + 1) + 1));
+                    }
+
                     this.curGrpItems = null;
                     break;
                 }

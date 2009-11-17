@@ -16,9 +16,9 @@ namespace kaede2nd
         public KansaSelect()
         {
             InitializeComponent();
-            this.button1.Text = GlobalData.Instance.bumonName + " #1";
-            this.button2.Text = GlobalData.Instance.bumonName + " #2";
-            this.button3.Text = GlobalData.Instance.bumonName + " #3";
+            this.button1.Text = GlobalData.Instance.data.bumonName + " #1";
+            this.button2.Text = GlobalData.Instance.data.bumonName + " #2";
+            this.button3.Text = GlobalData.Instance.data.bumonName + " #3";
         }
 
         private void button1_Click(object sender, EventArgs e)

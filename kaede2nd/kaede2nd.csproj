@@ -79,6 +79,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entity\Operator.cs" />
+    <Compile Include="GassanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GassanForm.Designer.cs">
+      <DependentUpon>GassanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -160,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_ItemList.resx">
       <DependentUpon>Form_ItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GassanForm.resx">
+      <DependentUpon>GassanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HenkinForm.resx">
       <DependentUpon>HenkinForm.cs</DependentUpon>

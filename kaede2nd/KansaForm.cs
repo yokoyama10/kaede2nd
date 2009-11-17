@@ -31,7 +31,7 @@ namespace kaede2nd
             {
                 InitializeComponent();
                 this.kansa_flagnum = flagnum;
-                this.Text = "監査 #" + flagnum.ToString() + " (" + GlobalData.Instance.bumonName + ")";
+                this.Text = "監査 #" + flagnum.ToString() + " (" + GlobalData.Instance.data.bumonName + ")";
                 this.label_kansacnt.Text = this.Text;
             }
             else

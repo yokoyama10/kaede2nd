@@ -26,7 +26,7 @@ namespace kaede2nd
         public SellForm()
         {
             InitializeComponent();
-            this.Text = "売却 (" + GlobalData.Instance.bumonName + ")";
+            this.Text = "売却 (" + GlobalData.Instance.data.bumonName + ")";
         }
 
         private void textBox_Enter(object sender, EventArgs e)

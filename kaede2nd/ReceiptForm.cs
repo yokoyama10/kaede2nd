@@ -23,7 +23,7 @@ namespace kaede2nd
             InitializeComponent();
 
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
 
             this.dataGridView1.enterToTab = GlobalData.Instance.enterToTab;
             this.商品名編集Enterで右移動ToolStripMenuItem.Checked = GlobalData.Instance.enterToTab;
@@ -50,7 +50,7 @@ namespace kaede2nd
             this.combo_operator.SelectedValue = GlobalData.Instance.nowOperator;
             */
 
-            this.Text = "受付票: 新規" + " (" + GlobalData.Instance.bumonName + ")";
+            this.Text = "受付票: 新規" + " (" + GlobalData.Instance.data.bumonName + ")";
             this.text_rid.Text = "新規";
             this.isNewReceipt = true;
 
@@ -87,7 +87,7 @@ namespace kaede2nd
             this.isNewReceipt = false;
             this.label_sakini.Visible = false;
 
-            this.Text = "受付票: " + r.receipt_id.ToString("'R'0000") + " (" + GlobalData.Instance.bumonName + ")";
+            this.Text = "受付票: " + r.receipt_id.ToString("'R'0000") + " (" + GlobalData.Instance.data.bumonName + ")";
             this.text_rid.Text = r.receipt_id.ToString("'R'0000");
             this.text_pass.Text = r.receipt_pass;
 

@@ -20,7 +20,7 @@ namespace kaede2nd
         public OperatorList()
         {
             InitializeComponent();
-            this.Text += " (" + GlobalData.Instance.bumonName + ")";
+            this.Text += " (" + GlobalData.Instance.data.bumonName + ")";
 
             this.AddColumn(this.dataGridView1, ColumnType.OperatorId);
             this.AddColumn(this.dataGridView1, ColumnType.OperatorName);

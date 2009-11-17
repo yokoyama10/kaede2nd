@@ -11,6 +11,7 @@ namespace kaede2nd
 {
     public partial class LoginForm : Form
     {
+        private readonly Action<DatabaseAccess> DbAccessSetter = null;
 
         public LoginForm()
         {
@@ -23,6 +24,12 @@ namespace kaede2nd
             this.comboBox1.SelectedIndex = 0;
         }
 
+        public LoginForm(Action<DatabaseAccess> setter, string formTitle) : this()
+        {
+            this.DbAccessSetter = setter;
+            this.Text = formTitle;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             /*
@@ -31,39 +38,64 @@ namespace kaede2nd
                 + ";database=" + text_dbname.Text + ";charset=utf8;");
             */
 
-            GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+            DatabaseAccess data;
+            if (this.DbAccessSetter == null)
+            {
+                GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                data = GlobalData.Instance.data;
+            }
+            else
+            {
+                data = new DatabaseAccess(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                this.DbAccessSetter(data);
+            }
 
-            GlobalData.Instance.barcodePrefix = "58";
 
-            string deity = "ゆかり姫";
+            bool itemNameImeOn, enterToTab;
+
+            string deity = "ゆかり姫"; //部門ごとに神が違うなら
+            string barcodePrefix = "58"; //部門ごとに分けたいなら
+
             if (this.comboBox1.SelectedIndex == 0)
             {
-                GlobalData.Instance.itemNameImeOn = true;
-                GlobalData.Instance.enterToTab = false;
-                GlobalData.Instance.bumonName = "ガラクタ部門";
-                GlobalData.Instance.symbolColor = Color.MistyRose;
+                itemNameImeOn = true;
+                enterToTab = false;
+                data.bumonName = "ガラクタ部門";
+                data.symbolColor = Color.MistyRose;
             }
             else if (this.comboBox1.SelectedIndex == 1)
             {
-                GlobalData.Instance.itemNameImeOn = false;
-                GlobalData.Instance.enterToTab = true;
-                GlobalData.Instance.bumonName = "古本部門";
-                GlobalData.Instance.symbolColor = Color.LightCyan;
+                itemNameImeOn = false;
+                enterToTab = true;
+                data.bumonName = "古本部門";
+                data.symbolColor = Color.LightCyan;
             }
             else if (this.comboBox1.SelectedIndex == 2)
             {
-                GlobalData.Instance.itemNameImeOn = true;
-                GlobalData.Instance.enterToTab = false;
-                GlobalData.Instance.bumonName = "テスト部門";
+                itemNameImeOn = true;
+                enterToTab = false;
+                data.bumonName = "テスト部門";
             }
             else if (this.comboBox1.SelectedIndex == 3)
             {
-                GlobalData.Instance.itemNameImeOn = true;
-                GlobalData.Instance.enterToTab = false;
-                GlobalData.Instance.bumonName = "松代実験場";
+                itemNameImeOn = true;
+                enterToTab = false;
+                data.bumonName = "松代実験場";
+            }
+            else
+            {
+                itemNameImeOn = true;
+                enterToTab = false;
+                data.bumonName = "不明な部門";
             }
 
-            GlobalData.Instance.windowTitle = deity + "萌え萌えソフトウェア";
+            if (this.DbAccessSetter == null)
+            {
+                GlobalData.Instance.barcodePrefix = barcodePrefix;
+                GlobalData.Instance.itemNameImeOn = itemNameImeOn;
+                GlobalData.Instance.enterToTab = enterToTab;
+                GlobalData.Instance.windowTitle = deity + "萌え萌えソフトウェア";
+            }
 
         }
 

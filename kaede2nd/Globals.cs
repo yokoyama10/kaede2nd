@@ -150,6 +150,12 @@ namespace kaede2nd
         public const string check_falseVal = "FALSE";
         public const string check_unkVal = "UNK";
 
+        public static Comparison<DataGridViewCell> longCellComparison
+                = delegate(DataGridViewCell c1, DataGridViewCell c2)
+                {
+                    return ((long)c1.Tag).CompareTo((long)c2.Tag);
+                };
+
 
         public static string getTimeString(DateTime? dt)
         {
@@ -472,7 +478,67 @@ namespace kaede2nd
         public readonly static string henkinGaku = "返金額";
         public readonly static string henpinKosuu = "返品個数";
 
+
     }
+
+    public class DatabaseAccess
+    {
+        //DBConnectInfo
+        public readonly string db_host, db_port, db_user, db_pass, db_dbname;
+
+        public Seasar.Framework.Container.IS2Container container;
+        public Seasar.Extension.Tx.Impl.TxDataSource txDataSource;
+
+        public string bumonName = "不明な部門";
+        public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
+
+        public DatabaseAccess(string host, string port, string user, string pass, string dbname)
+        {
+            string con = "host=" + host + ";port=" + port
+                + ";user id=" + user + ";password=" + pass
+                + ";database=" + dbname + ";charset=utf8;";
+
+            this.db_host = host;
+            this.db_port = port;
+            this.db_user = user;
+            this.db_pass = pass;
+            this.db_dbname = dbname;
+
+            this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao.dicon");
+
+            this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
+                this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
+            this.txDataSource.ConnectionString = con;
+
+            this.container.Init();
+        }
+
+        public T getIDao<T>()
+        {
+            return (T)this.container.GetComponent(typeof(T));
+        }
+
+    }
+
+    /*
+    public static class ItemGroupTools
+    {
+        public static IEnumerable<IGrouping<string, Item>> GetItemGroup(DatabaseAccess data)
+        {
+            var iDao = data.getIDao<kaede2nd.Dao.IItemDao>();
+            List<Item> items = iDao.GetAll();
+
+            return (from i in items
+                              group i by i.item__Receipt.getSellerString())
+                              .OrderByDescending(g => ItemGroupTools.countHenpinItems(g));
+        }
+
+        public static int countHenpinItems(IGrouping<string, Item> grp)
+        {
+            return (from i in grp where i.item_sellprice.HasValue == false select i).Count();
+        }
+    }
+    */
 
     public class GlobalData
     {
@@ -480,15 +546,7 @@ namespace kaede2nd
 
         public const int moziWidth = 8;
 
-        //DBConnectInfo
-        public string db_host, db_port, db_user, db_pass, db_dbname;
-
-        public Seasar.Framework.Container.IS2Container container;
-        public Seasar.Extension.Tx.Impl.TxDataSource txDataSource;
-        public List<kaede2nd.Entity.Operator> operators;
-        public List<kaede2nd.Entity.External> externals;
-        public UInt32 nowOperator;
-        //public System.Data.DataTable operators;
+        public DatabaseAccess data;
 
         public RecentItem recentItemForm;
 
@@ -500,8 +558,6 @@ namespace kaede2nd
         public System.Drawing.Printing.PageSettings receipt_pageSettings;
         public System.Drawing.Printing.PrinterSettings receipt_printerSettings;
 
-        public string bumonName = "不明な部門";
-        public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
         public string windowTitle = "ゆかり姫萌え萌えソフトウェア";
         public string barcodePrefix = "00"; //数字二文字 \d\d
 
@@ -515,21 +571,7 @@ namespace kaede2nd
 
         public static T getIDao<T>()
         {
-            return (T)GlobalData.Instance.container.GetComponent(typeof(T));
-        }
-
-
-        public static void makeInstance(string host, string port, string user, string pass, string dbname)
-        {
-            GlobalData.makeInstance("host=" + host + ";port=" + port
-                + ";user id=" + user + ";password=" + pass
-                + ";database=" + dbname + ";charset=utf8;");
-
-            GlobalData.Instance.db_host = host;
-            GlobalData.Instance.db_port = port;
-            GlobalData.Instance.db_user = user;
-            GlobalData.Instance.db_pass = pass;
-            GlobalData.Instance.db_dbname = dbname;
+            return (T)GlobalData.Instance.data.getIDao<T>();
         }
 
         public static void disposeInstance()
@@ -538,36 +580,13 @@ namespace kaede2nd
             instance = null;
         }
 
-        private static void makeInstance(string connectStr)
+        public static void makeInstance(string host, string port, string user, string pass, string dbname)
         {
             if (instance == null)
             {
                 instance = new GlobalData();
-                instance.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao.dicon");
 
-                instance.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
-                    instance.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
-                instance.txDataSource.ConnectionString = connectStr;
-
-                instance.container.Init();
-
-                instance.nowOperator = 2;
-                /*instance.operators = new System.Data.DataTable();
-                instance.operators.Columns.Add("ID", typeof(UInt32));
-                instance.operators.Columns.Add("NAME", typeof(string));
-                instance.operators.Columns.Add("COMMENT", typeof(string));*/
-
-
-                var opeDao = GlobalData.getIDao<kaede2nd.Dao.IOperatorDao>();
-                instance.operators = opeDao.GetAll();
-                instance.operators.Insert(0, new kaede2nd.Entity.Operator() { operator_id = 0, operator_name = "不明" });
-
-                var extDao = GlobalData.getIDao<kaede2nd.Dao.IExternalDao>();
-                instance.externals = extDao.GetAll();
-                instance.externals.Sort(delegate(kaede2nd.Entity.External x, kaede2nd.Entity.External y)
-                {
-                    return String.Compare(x.external_type, y.external_type);
-                });
+                instance.data = new DatabaseAccess(host, port, user, pass, dbname);
 
                 instance.recentItemForm = new RecentItem();
                 instance.mainForm = null;
@@ -601,12 +620,7 @@ namespace kaede2nd
                     }
                     instance.crcTable[n] = c;
                 }
-                //instance.externals.Insert(0, new kaede2nd.Entity.External() { external_id = 0, external_name = "新規..." });
-
-                /*foreach (var op in oplist)
-                {
-                    instance.operators.Rows.Add(op.operator_id, op.operator_name, op.operator_comment);
-                }*/
+                
             }
         }
 

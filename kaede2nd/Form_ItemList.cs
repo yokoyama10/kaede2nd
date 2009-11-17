@@ -39,7 +39,7 @@ namespace kaede2nd
             InitializeComponent();
 
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
             this.dataGridView1.RowTemplate.Height = 20;
 
             this.AddColumn(this.dataGridView1, ColumnType.ItemId);
@@ -196,7 +196,7 @@ namespace kaede2nd
             if (this.itemReturner == null) { return; }
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = GlobalData.Instance.bumonName + "_" + csvname + ".csv";
+            sfd.FileName = GlobalData.Instance.data.bumonName + "_" + csvname + ".csv";
             sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
             sfd.Filter = "CSVファイル (*.csv)|*.csv";
             sfd.RestoreDirectory = true;

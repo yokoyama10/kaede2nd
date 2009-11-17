@@ -22,7 +22,7 @@ namespace kaede2nd
             InitializeComponent();
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
             this.dataGridView1.RowTemplate.Height = 20;
 
             ColumnInfo colinfo = null;
@@ -86,7 +86,7 @@ namespace kaede2nd
             colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
             {
                 var g = (IGrouping<string, Item>)obj;
-                cell.Value = (from i in g where i.item_sellprice.HasValue == false select i).Count();
+                cell.Value = this.countHenpinItems(g);
             };
             col = colinfo.col;
             col.ValueType = typeof(Int32);
@@ -109,7 +109,8 @@ namespace kaede2nd
             List<Item> items = iDao.GetAll();
 
             this.itemGroup = (from i in items
-                              group i by i.item__Receipt.getSellerString());
+                              group i by i.item__Receipt.getSellerString())
+                              .OrderByDescending(g => this.countHenpinItems(g));
 
             this.dataGridView1.Rows.Clear();
             foreach (var g in this.itemGroup)
@@ -162,31 +163,60 @@ namespace kaede2nd
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private List<IGrouping<string, Item>> getGrpListSelected()
+        {
+            if (this.dataGridView1.SelectedRows.Count == 0)
+            {
+                return this.itemGroup.ToList();
+            }
+            else
+            {
+                var list = new List<IGrouping<string, Item>>();
+
+                for (int i = 0; i < this.dataGridView1.SelectedRows.Count; i++)
+                {
+                    DataGridViewRow row = this.dataGridView1.SelectedRows[i];
+                    object shupp = row.Cells[ColumnName.shuppinsha].Value;
+                    if (shupp == null) { return null; }
+
+                    var grps = from gg in this.itemGroup where gg.Key == (string)shupp select gg;
+                    if (grps.Count() == 0) { return null; }
+
+                    list.Add(grps.Single());
+                }
+
+                return list;
+            }
+        }
+
+        private void button_print_Click(object sender, EventArgs e)
         {
 
             if (this.itemGroup == null) { return; }
             DataGridView dgv = this.dataGridView1;
             if (!dgv.Enabled) { return; }
 
-            var list = new List<IGrouping<string, Item>>();
-            if (this.dataGridView1.SelectedRows.Count == 0)
+            var list = this.getGrpListSelected();
+            if (list == null) { return; }
+
+
+            ReturnListPrintDocument.PrintType type;
+            ReturnListPrintDocument.SortType sort = ReturnListPrintDocument.SortType.ItemId;
+            if (sender == this.button_return_print)
             {
-                list = this.itemGroup.ToList();
+                type = ReturnListPrintDocument.PrintType.Return;
+            }
+            else if (sender == this.button_meisai_print)
+            {
+                type = ReturnListPrintDocument.PrintType.MeisaiWithoutReturn;
+                if (MessageBox.Show("売価の高い順に並び替えますか？", "明細印刷", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    sort = ReturnListPrintDocument.SortType.SellPriceDesc;
+                }
             }
             else
             {
-                for (int i = 0; i < this.dataGridView1.SelectedRows.Count; i++)
-                {
-                    DataGridViewRow row = this.dataGridView1.SelectedRows[i];
-                    object shupp = row.Cells[ColumnName.shuppinsha].Value;
-                    if (shupp == null) { return; }
-
-                    var grps = from gg in this.itemGroup where gg.Key == (string)shupp select gg;
-                    if (grps.Count() == 0) { return; }
-
-                    list.Add(grps.Single());
-                }
+                throw new InvalidOperationException();
             }
 
             PageSetupDialog psd = new PageSetupDialog();
@@ -199,7 +229,10 @@ namespace kaede2nd
             PrintDialog prid = new PrintDialog();
             prid.PrinterSettings = GlobalData.Instance.receipt_printerSettings;
             prid.UseEXDialog = true;
-            prid.Document = new ReturnListPrintDocument(list, GlobalData.Instance.receipt_pageSettings, GlobalData.Instance.receipt_printerSettings);
+
+
+            prid.Document = new ReturnListPrintDocument(list, GlobalData.Instance.receipt_pageSettings,
+                GlobalData.Instance.receipt_printerSettings, type, sort);
             DialogResult pdres = prid.ShowDialog();
 
             if (pdres != DialogResult.OK) { return; }
@@ -224,18 +257,24 @@ namespace kaede2nd
             this.RefreshData();
         }
 
+        private int countHenpinItems(IGrouping<string, Item> grp)
+        {
+            return (from i in grp where i.item_sellprice.HasValue == false select i).Count();
+        }
+
         private void button_csv_Click(object sender, EventArgs e)
         {
             if (this.itemGroup == null) { return; }
 
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = GlobalData.Instance.bumonName + "_返金返品.csv";
+            sfd.FileName = GlobalData.Instance.data.bumonName + "_返金返品.csv";
             sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
             sfd.Filter = "CSVファイル (*.csv)|*.csv";
             sfd.RestoreDirectory = true;
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+
                 using (Stream st = sfd.OpenFile())
                 {
                     using (StreamWriter stw = new StreamWriter(st, Encoding.GetEncoding(932)))
@@ -245,9 +284,8 @@ namespace kaede2nd
                         for(int i = 0; i < this.dataGridView1.Rows.Count; i++)
                         {
                             var r = this.dataGridView1.Rows[i];
-                            stw.Write("\"");
-                            stw.Write(r.Cells[ColumnName.shuppinsha].Value);
-                            stw.Write("\",");
+                            stw.Write(((string)r.Cells[ColumnName.shuppinsha].Value).ToCSVString());
+                            stw.Write(",");
                             stw.Write(r.Cells[ColumnName.uriageGaku].Value.ToString());
                             stw.Write(",");
                             stw.Write(r.Cells[ColumnName.henpinKosuu].Value.ToString());
@@ -260,5 +298,68 @@ namespace kaede2nd
                 }
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (this.itemGroup == null) { return; }
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = GlobalData.Instance.data.bumonName + "_返品リスト.csv";
+            sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+            sfd.Filter = "CSVファイル (*.csv)|*.csv";
+            sfd.RestoreDirectory = true;
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+
+                var list = this.getGrpListSelected();
+                using (Stream st = sfd.OpenFile())
+                {
+                    using (StreamWriter stw = new StreamWriter(st, Encoding.GetEncoding(932)))
+                    {
+                        stw.WriteLine(",票番,品番,商品名,定価,返品?");
+                        foreach (var g in list)
+                        {
+                            var its = (from i in g where i.item_sellprice.HasValue == false select i).ToList();
+                            if (its.Count == 0) { continue; }
+
+                            stw.WriteLine(g.Key.ToCSVString());
+
+                            uint reid = 0;
+                            int count = 1;
+                            foreach (Item it in its)
+                            {
+                                stw.Write(count.ToString());
+                                stw.Write(",");
+                                if (reid != it.item_receipt_id)
+                                {
+                                    stw.Write("R" + it.item_receipt_id.ToString("0000"));
+                                    reid = it.item_receipt_id;
+                                }
+                                stw.Write(",");
+                                stw.Write(it.item_id.ToString("00000"));
+                                stw.Write(",");
+                                stw.Write(it.item_name.ToCSVString());
+                                stw.Write(",");
+                                stw.Write(it.item_tagprice.ToString());
+                                stw.Write(",");
+                                if (it.item_return == true)
+                                {
+                                    stw.Write("返品");
+                                }
+                                stw.Write("\n");
+                                count++;
+                            }
+                            stw.Write("\n");
+                        }
+
+                        stw.Close();
+                    }
+                    st.Close();
+                }
+            }
+        }
+
     }
 }

@@ -45,15 +45,15 @@ namespace kaede2nd
             GlobalData.Instance.mainForm = this;
             //GlobalDataセット完了
 
-            IOperatorDao opDao = (IOperatorDao)GlobalData.Instance.container.GetComponent(typeof(IOperatorDao));
+            IOperatorDao opDao = GlobalData.getIDao<IOperatorDao>();
 
             //Form Init...
             InitializeComponent();
 
-            this.Text = GlobalData.Instance.bumonName + " - " + GlobalData.Instance.windowTitle;
+            this.Text = GlobalData.Instance.data.bumonName + " - " + GlobalData.Instance.windowTitle;
 
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
 
             
 
@@ -276,7 +276,7 @@ namespace kaede2nd
         private void kaedeOutput(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = GlobalData.Instance.bumonName + ".kae";
+            sfd.FileName = GlobalData.Instance.data.bumonName + ".kae";
             sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
             sfd.Filter = "楓ちゃん萌え萌え filez (*.kae)|*.kae";
             sfd.RestoreDirectory = true;
@@ -498,7 +498,7 @@ namespace kaede2nd
             }
 
             //FIXME: ディレクトリトラバーサルとか
-            string dumpdbDest = Path.Combine(dumpFullPath, GlobalData.Instance.db_dbname);
+            string dumpdbDest = Path.Combine(dumpFullPath, GlobalData.Instance.data.db_dbname);
             DirectoryInfo dbdestInfo = new DirectoryInfo(dumpdbDest);
             if (dbdestInfo.Exists != true)
             {
@@ -506,15 +506,15 @@ namespace kaede2nd
             }
 
 
-            string destdest = GlobalData.Instance.db_dbname + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".sql";
+            string destdest = GlobalData.Instance.data.db_dbname + "_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".sql";
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
             //psi.RedirectStandardOutput = true;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
             psi.FileName = mysqldumpPath;
-            psi.Arguments = "--host=" + GlobalData.Instance.db_host + " --port=" + GlobalData.Instance.db_port +
-                " --user=" + GlobalData.Instance.db_user + " --password=" + GlobalData.Instance.db_pass +
-                " --dump-date --result-file=\"" + Path.Combine(dumpdbDest, destdest) + "\" " + GlobalData.Instance.db_dbname;
+            psi.Arguments = "--host=" + GlobalData.Instance.data.db_host + " --port=" + GlobalData.Instance.data.db_port +
+                " --user=" + GlobalData.Instance.data.db_user + " --password=" + GlobalData.Instance.data.db_pass +
+                " --dump-date --result-file=\"" + Path.Combine(dumpdbDest, destdest) + "\" " + GlobalData.Instance.data.db_dbname;
 
             System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
 
@@ -704,36 +704,23 @@ namespace kaede2nd
         }
 
 
-        /*
-        private void button3_Click(object sender, EventArgs e)
+        private void 各部門の返金額合算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.list_receipt.SelectedItems.Count != 0)
+            foreach (Form f in Application.OpenForms)
             {
-                Receipt r = (Receipt)this.list_receipt.SelectedItems[0].Tag;
-                r.Comment = "てす'☆'とし";
-                r.Time = DateTime.Now;
-                r.Seller_Branch = 4;
-                sql.UpdateTableItem(r);
-
+                if (f is GassanForm)
+                {
+                    f.Activate();
+                    return;
+                }
             }
+
+            Form ff = new GassanForm();
+            if (ff.IsDisposed) { return; }
+            ff.Show();
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Receipt br = new Receipt(this.sql);
-            br.Seller = "1115";
-            br.Pass = "PaSs";
-            br.Time = DateTime.Now;
-
-            sql.InsertTableItem(br);
-            Receipt newr = sql.GetReceipt(sql.GetLastInsertId());
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            kaedecsv.fromkaedecsv(this.sql);
-        }
-        */
+        
     }
 
 }

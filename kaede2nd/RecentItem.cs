@@ -73,7 +73,7 @@ namespace kaede2nd
 
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.symbolColor;
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
             this.dataGridView1.RowTemplate.Height = 20;
 
 
@@ -188,7 +188,7 @@ namespace kaede2nd
 
         private void RecentItem_Shown(object sender, EventArgs e)
         {
-            this.Text = "最近追加された商品リスト (" + GlobalData.Instance.bumonName + ")";
+            this.Text = "最近追加された商品リスト (" + GlobalData.Instance.data.bumonName + ")";
         }
 
         private void 選択した商品を印刷SToolStripMenuItem_Click(object sender, EventArgs e)
