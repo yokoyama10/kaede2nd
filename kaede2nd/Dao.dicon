@@ -51,6 +51,10 @@
   <component class="kaede2nd.Dao.IExternalDao">
     <aspect>DaoInterceptor</aspect>
   </component>
+
+  <component class="kaede2nd.Dao.IConfigDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
   
   <component class="Seasar.Dao.Impl.FieldAnnotationReaderFactory" />
 

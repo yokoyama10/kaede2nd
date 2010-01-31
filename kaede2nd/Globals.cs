@@ -490,6 +490,7 @@ namespace kaede2nd
         public Seasar.Extension.Tx.Impl.TxDataSource txDataSource;
 
         public string bumonName = "不明な部門";
+        public string companyName = "不明な縁日班不明部門";
         public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
 
         public DatabaseAccess(string host, string port, string user, string pass, string dbname)

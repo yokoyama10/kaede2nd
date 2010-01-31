@@ -56,7 +56,7 @@ namespace kaede2nd
         }
 
         private readonly List<PrintItem> pitems;
-        
+
         private const int cellwidth = 90; //mm
         private const int cellheight = 36; //mm
 
@@ -106,7 +106,7 @@ namespace kaede2nd
             this.DocumentName = GlobalData.Instance.data.bumonName + " 全 " + ((int)allpages).ToString() + " ページ";
 
             this.count = 0;
-            
+
         }
 
         void ItemsPrintDocument_PrintPage(object sender, PrintPageEventArgs e)
@@ -153,92 +153,75 @@ namespace kaede2nd
 
             Item it = printit.item;
 
-            bool isan = false;
-
             e.Graphics.Clip = new Region(new Rectangle(x, y, cellwidth, cellheight));
             Font fnt = new Font("MS Gothic", 3.5f, FontStyle.Regular, GraphicsUnit.Millimeter);
 
-            if (isan)
+
+            //e.Graphics.DrawString("*-*-*-`-" + it.item_id.ToString("0000"), fnt, Brushes.Black, x + 2, y + 3.5f);
+            e.Graphics.DrawString("品名: " + it.item_name, fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 0);
+            e.Graphics.DrawString("コメント: " + it.item_comment, fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 1);
+
+            e.Graphics.DrawString("価格: " + it.item_tagprice.ToString("#,##0") + "円",
+                fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 2);
+
+
+            /*
+            if (!it.item_tataki.HasValue)
             {
-                e.Graphics.DrawString("10円", new Font("MS Gothic", 10.0f, FontStyle.Regular, GraphicsUnit.Millimeter),
-                    Brushes.Black, x + 5, y + 3.5f);
-
-                e.Graphics.DrawString("値引: ○", fnt, Brushes.Black, x + 50, y + 3.5f + (5.25f) * 2);
-
+                e.Graphics.DrawString("値引: ？", fnt, new SolidBrush(Color.Cyan), x + 30, y + 3.5f + (5.25f) * 2);
+            }
+            else */
+            if (it.item_return /*FIXME*/ == false)
+            {
+                e.Graphics.DrawString("値引: ○", fnt, Brushes.Black, x + 30, y + 3.5f + (5.25f) * 2);
             }
             else
             {
-
-
-
-                //e.Graphics.DrawString("*-*-*-`-" + it.item_id.ToString("0000"), fnt, Brushes.Black, x + 2, y + 3.5f);
-                e.Graphics.DrawString("品名: " + it.item_name, fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 0);
-                e.Graphics.DrawString("コメント: " + it.item_comment, fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 1);
-
-                e.Graphics.DrawString("価格: " + it.item_tagprice.ToString("#,##0") + "円",
-                    fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 2);
-
-
-                /*
-                if (!it.item_tataki.HasValue)
-                {
-                    e.Graphics.DrawString("値引: ？", fnt, new SolidBrush(Color.Cyan), x + 30, y + 3.5f + (5.25f) * 2);
-                }
-                else */
-                if (it.item_return /*FIXME*/ == false)
-                {
-                    e.Graphics.DrawString("値引: ○", fnt, Brushes.Black, x + 30, y + 3.5f + (5.25f) * 2);
-                }
-                else
-                {
-                    e.Graphics.DrawString("値引: ×", fnt, new SolidBrush(Color.Magenta), x + 30, y + 3.5f + (5.25f) * 2);
-                }
-
-                e.Graphics.DrawString("品番: " + it.item_id.ToString("00000"), fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 3 + 10.0f);
-
-
-                string s = "";
-
-                switch (it.item__Receipt.receipt_seller)
-                {
-                    case kaede2nd.Entity.Receipt.seller_EXT:
-                        {
-                            s += "EX";
-                            break;
-                        }
-                    case kaede2nd.Entity.Receipt.seller_LAGACY:
-                        {
-                            s += "LG";
-                            break;
-                        }
-                    case kaede2nd.Entity.Receipt.seller_DONATE:
-                        {
-                            s += "DN";
-                            break;
-                        }
-                    default:
-                        {
-                            string kumi = it.item__Receipt.receipt_seller.Substring(1, 1);
-
-                            if (Globals.isChugaku(kumi)) { s += "C"; }
-                            else { s += "K"; }
-
-                            s += it.item__Receipt.receipt_seller.Substring(0, 1);
-
-                            break;
-                        }
-                }
-
-                s += it.item_receipt_id.ToString("'-R'0000");
-
-
-                e.Graphics.DrawString(s, new Font("MS Gothic", 3.0f, FontStyle.Italic, GraphicsUnit.Millimeter),
-                    Brushes.Black, x + 30, y + 3.5f + (5.25f) * 3 + 10.0f + 0.4f);
-
+                e.Graphics.DrawString("値引: ×", fnt, new SolidBrush(Color.Magenta), x + 30, y + 3.5f + (5.25f) * 2);
             }
 
+            e.Graphics.DrawString("品番: " + it.item_id.ToString("00000"), fnt, Brushes.Black, x + 2, y + 3.5f + (5.25f) * 3 + 10.0f);
 
-            e.Graphics.DrawString("筑駒58期縁日班" + GlobalData.Instance.data.bumonName, new Font("MS Mincho", 2.2f, FontStyle.Regular, GraphicsUnit.Millimeter),
+
+            string s = "";
+
+            switch (it.item__Receipt.receipt_seller)
+            {
+                case kaede2nd.Entity.Receipt.seller_EXT:
+                    {
+                        s += "EX";
+                        break;
+                    }
+                case kaede2nd.Entity.Receipt.seller_LAGACY:
+                    {
+                        s += "LG";
+                        break;
+                    }
+                case kaede2nd.Entity.Receipt.seller_DONATE:
+                    {
+                        s += "DN";
+                        break;
+                    }
+                default:
+                    {
+                        string kumi = it.item__Receipt.receipt_seller.Substring(1, 1);
+
+                        if (Globals.isChugaku(kumi)) { s += "C"; }
+                        else { s += "K"; }
+
+                        s += it.item__Receipt.receipt_seller.Substring(0, 1);
+
+                        break;
+                    }
+            }
+
+            s += it.item_receipt_id.ToString("'-R'0000");
+
+
+            e.Graphics.DrawString(s, new Font("MS Gothic", 3.0f, FontStyle.Italic, GraphicsUnit.Millimeter),
+                Brushes.Black, x + 30, y + 3.5f + (5.25f) * 3 + 10.0f + 0.4f);
+
+            e.Graphics.DrawString(GlobalData.Instance.data.companyName, new Font("MS Mincho", 2.2f, FontStyle.Regular, GraphicsUnit.Millimeter),
                 Brushes.Black, x + 46, y + 3.5f + (5.25f) * 3 + 10.9f);
 
 
