@@ -72,11 +72,9 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="Dao\IConfigDao.cs" />
     <Compile Include="Entity\ConfigEntity.cs" />
-    <Compile Include="Dao\IExternalDao.cs" />
     <Compile Include="Dao\IItemDao.cs" />
     <Compile Include="Dao\IOperatorDao.cs" />
     <Compile Include="Dao\IReceiptDao.cs" />
-    <Compile Include="Entity\External.cs" />
     <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\Receipt.cs">
       <SubType>Code</SubType>
