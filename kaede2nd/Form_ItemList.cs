@@ -53,6 +53,9 @@ namespace kaede2nd
             this.AddColumn(this.dataGridView1, ColumnType.SellPrice);
             this.AddColumn(this.dataGridView1, ColumnType.SellTime);
 
+            this.まとめて設定toolStripMenuItem1.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.アイテムを削除ToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
+
             this.addDGVEvents(this.dataGridView1);
         }
 
@@ -84,25 +87,37 @@ namespace kaede2nd
 
             this.itemList = this.itemReturner();
 
+            string[] token = null;
+            if (!string.IsNullOrEmpty(this.searchText))
+            {
+                token = this.searchText.Split(' ', '　');
+            }
+
             foreach (Item it in this.itemList)
             {
-                if (this.searchText != null)
+                if (!string.IsNullOrEmpty(this.searchText))
                 {
                     if (this.useRegex)
                     {
-                        if (!reg.IsMatch(it.item_name)) { continue; }
+                        if (!reg.IsMatch(it.item_name)) { goto nextItem; }
                     }
                     else
                     {
-                        if (!it.item_name.Contains(this.searchText))
+                        foreach (string t in token)
                         {
-                            continue;
+                            if (!it.item_name.Contains(t))
+                            {
+                                goto nextItem;
+                            }
                         }
                     }
                 }
 
                 DataGridViewRow row = this.dataGridView1.Rows[this.dataGridView1.Rows.Add()];
                 this.setRowValue(row, it);
+
+            nextItem:
+                continue;
             }
 
             this.dataGridView1.VirtualMode = true;

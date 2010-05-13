@@ -36,12 +36,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.checkBox_readonly = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // text_host
@@ -51,7 +51,7 @@
             this.text_host.Name = "text_host";
             this.text_host.Size = new System.Drawing.Size(100, 19);
             this.text_host.TabIndex = 0;
-            this.text_host.Text = "chihaya";
+            this.text_host.Text = "hostname";
             // 
             // text_port
             // 
@@ -69,7 +69,7 @@
             this.text_user.Name = "text_user";
             this.text_user.Size = new System.Drawing.Size(100, 19);
             this.text_user.TabIndex = 2;
-            this.text_user.Text = "ennichi";
+            this.text_user.Text = "user";
             // 
             // text_pass
             // 
@@ -78,7 +78,7 @@
             this.text_pass.Name = "text_pass";
             this.text_pass.Size = new System.Drawing.Size(100, 19);
             this.text_pass.TabIndex = 3;
-            this.text_pass.Text = "itsuki";
+            this.text_pass.Text = "pass";
             // 
             // text_dbname
             // 
@@ -92,7 +92,7 @@
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(129, 185);
+            this.button1.Location = new System.Drawing.Point(129, 198);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -103,7 +103,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(129, 214);
+            this.button2.Location = new System.Drawing.Point(129, 227);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -120,16 +120,6 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 7;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(172, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(99, 20);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "backupのほう";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -176,6 +166,16 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Db";
             // 
+            // checkBox_readonly
+            // 
+            this.checkBox_readonly.AutoSize = true;
+            this.checkBox_readonly.Location = new System.Drawing.Point(104, 170);
+            this.checkBox_readonly.Name = "checkBox_readonly";
+            this.checkBox_readonly.Size = new System.Drawing.Size(91, 16);
+            this.checkBox_readonly.TabIndex = 14;
+            this.checkBox_readonly.Text = "読み取り専用";
+            this.checkBox_readonly.UseVisualStyleBackColor = true;
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.button1;
@@ -184,12 +184,12 @@
             this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(292, 273);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBox_readonly);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -216,11 +216,11 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox checkBox_readonly;
     }
 }

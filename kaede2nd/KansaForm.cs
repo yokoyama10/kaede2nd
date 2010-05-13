@@ -17,27 +17,13 @@ namespace kaede2nd
         private Item curItem = null;
 
         private Operator nowOperator = null;
-        private uint kansa_flagnum = 1;
 
         private Timer timer1;
 
-        public KansaForm() : this(1)
+        public KansaForm()
         {
-        }
-
-        public KansaForm(uint flagnum)
-        {
-            if (1 <= flagnum && flagnum <= 3)
-            {
-                InitializeComponent();
-                this.kansa_flagnum = flagnum;
-                this.Text = "監査 #" + flagnum.ToString() + " (" + GlobalData.Instance.data.bumonName + ")";
-                this.label_kansacnt.Text = this.Text;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+            InitializeComponent();
+            this.Text = "監査  (" + GlobalData.Instance.data.bumonName + ")";
 
             this.timer1 = new Timer();
             timer1.Interval = 5 * 1000;
@@ -59,20 +45,7 @@ namespace kaede2nd
                 IItemDao itDao = GlobalData.getIDao<IItemDao>();
                 UInt32 cnt;
 
-                switch (this.kansa_flagnum)
-                {
-                    case 1:
-                        cnt = itDao.CountNeedKansaItem_NotFlagged1();
-                        break;
-                    case 2:
-                        cnt = itDao.CountNeedKansaItem_NotFlagged2();
-                        break;
-                    case 3:
-                        cnt = itDao.CountNeedKansaItem_NotFlagged3();
-                        break;
-                    default:
-                        throw new InvalidOperationException();
-                }
+                cnt = itDao.CountNeedKansaItem_NotFlagged();
 
                 ControlUtil.SafelyOperated(this.textBox_remain, (MethodInvoker)delegate()
                 {
@@ -306,37 +279,14 @@ namespace kaede2nd
         {
             if (it == null) { throw new NullReferenceException(); }
 
-            switch (this.kansa_flagnum)
-            {
-                case 1:
-                    return it.item_kansa_flag1;
-                case 2:
-                    return it.item_kansa_flag2;
-                case 3:
-                    return it.item_kansa_flag3;
-                default:
-                    throw new InvalidOperationException();
-            }
+            return it.item_kansa_flag1;
         }
 
         private void SetKansaFlag(Item it, uint? val)
         {
             if (it == null) { throw new NullReferenceException(); }
 
-            switch (this.kansa_flagnum)
-            {
-                case 1:
-                    it.item_kansa_flag1 = val;
-                    return;
-                case 2:
-                    it.item_kansa_flag2 = val;
-                    return;
-                case 3:
-                    it.item_kansa_flag3 = val;
-                    return;
-                default:
-                    throw new InvalidOperationException();
-            }
+            it.item_kansa_flag1 = val;
         }
 
         private void button_teisei_Click(object sender, EventArgs e)
@@ -395,17 +345,7 @@ namespace kaede2nd
                     {
                         var itemDao = GlobalData.getIDao<IItemDao>();
 
-                        switch (this.kansa_flagnum)
-                        {
-                            case 1:
-                                return itemDao.GetNeedKansaItem_NotFlagged1();
-                            case 2:
-                                return itemDao.GetNeedKansaItem_NotFlagged2();
-                            case 3:
-                                return itemDao.GetNeedKansaItem_NotFlagged3();
-                            default:
-                                throw new InvalidOperationException();
-                        }
+                        return itemDao.GetNeedKansaItem_NotFlagged();
 
                     }, "未" + this.Text, "未監査");
             }

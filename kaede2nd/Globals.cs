@@ -489,6 +489,8 @@ namespace kaede2nd
         public Seasar.Framework.Container.IS2Container container;
         public Seasar.Extension.Tx.Impl.TxDataSource txDataSource;
 
+        public bool isReadonly;
+
         public string bumonName = "不明な部門";
         public string companyName = "不明な縁日班不明部門";
         public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
@@ -564,6 +566,8 @@ namespace kaede2nd
 
         public bool itemNameImeOn = true;
         public bool enterToTab = false;
+
+        public bool showPrintDialog = true;
 
         public uint[] crcTable;
 

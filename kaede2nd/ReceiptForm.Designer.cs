@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReceiptForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new kaede2nd.MyDataGridView();
@@ -49,7 +48,6 @@
             this.text_zai_ban = new System.Windows.Forms.TextBox();
             this.label_external = new System.Windows.Forms.Label();
             this.label_sakini = new System.Windows.Forms.Label();
-            this.check_payback = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.contextMenuStrip_temp = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.商品名でIMEオンToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +57,7 @@
             this.商品リストを表示LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.受付票を印刷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.text_external = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip_temp.SuspendLayout();
             this.SuspendLayout();
@@ -94,7 +93,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 70);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(672, 331);
+            this.dataGridView1.Size = new System.Drawing.Size(672, 310);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
@@ -263,23 +262,11 @@
             this.label_sakini.TabIndex = 79;
             this.label_sakini.Text = "先に↑の情報を確定させてください";
             // 
-            // check_payback
-            // 
-            this.check_payback.AutoSize = true;
-            this.check_payback.Location = new System.Drawing.Point(501, 17);
-            this.check_payback.Name = "check_payback";
-            this.check_payback.Size = new System.Drawing.Size(76, 16);
-            this.check_payback.TabIndex = 10;
-            this.check_payback.TabStop = false;
-            this.check_payback.Text = "返金済(&B)";
-            this.check_payback.ThreeState = true;
-            this.check_payback.UseVisualStyleBackColor = true;
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(518, 39);
+            this.button2.Location = new System.Drawing.Point(518, 32);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(59, 19);
+            this.button2.Size = new System.Drawing.Size(59, 26);
             this.button2.TabIndex = 80;
             this.button2.Text = "メニュー";
             this.button2.UseVisualStyleBackColor = true;
@@ -354,11 +341,23 @@
             this.text_external.TabIndex = 4;
             this.text_external.Enter += new System.EventHandler(this.text_Enter_SelectAll);
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label4.Location = new System.Drawing.Point(6, 385);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(405, 12);
+            this.label4.TabIndex = 81;
+            this.label4.Text = "セットもの書籍はバーコード入力後に Ctrl+S で巻数拡張 / Ctrl+D で行メニュー表示";
+            // 
             // ReceiptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 401);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label_sakini);
             this.Controls.Add(this.text_external);
@@ -370,7 +369,6 @@
             this.Controls.Add(this.label_nen);
             this.Controls.Add(this.text_zai_nen);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.check_payback);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.radio_external);
             this.Controls.Add(this.radio_donate);
@@ -413,7 +411,6 @@
         private System.Windows.Forms.Label label_external;
         private System.Windows.Forms.Label label_sakini;
         private MyDataGridView dataGridView1;
-        private System.Windows.Forms.CheckBox check_payback;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_temp;
         private System.Windows.Forms.ToolStripMenuItem 商品名でIMEオンToolStripMenuItem;
@@ -423,5 +420,6 @@
         private System.Windows.Forms.ToolStripMenuItem 受付票を印刷ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 最新の情報に更新RToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 商品リストを表示LToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
     }
 }

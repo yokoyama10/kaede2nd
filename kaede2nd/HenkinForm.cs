@@ -242,6 +242,7 @@ namespace kaede2nd
             ppp.Show();
             return;
 
+            /*
             try
             {
                 prid.Document.Print();
@@ -250,6 +251,7 @@ namespace kaede2nd
             {
                 MessageBox.Show("印刷が実行できませんでした: " + iex.ToString());
             }
+            */
         }
 
         private void button_refresh_Click(object sender, EventArgs e)

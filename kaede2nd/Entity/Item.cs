@@ -18,8 +18,8 @@ namespace kaede2nd.Entity
          * 
          * ALTER TABLE item ADD COLUMN `item_kansa_end` DATETIME DEFAULT NULL AFTER item_sell_operator;
          * ALTER TABLE item ADD COLUMN `item_kansa_flag1` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_end;
-         * ALTER TABLE item ADD COLUMN `item_kansa_flag2` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag1;
-         * ALTER TABLE item ADD COLUMN `item_kansa_flag3` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag2;
+         * //ALTER TABLE item ADD COLUMN `item_kansa_flag2` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag1;
+         * //ALTER TABLE item ADD COLUMN `item_kansa_flag3` INT(10) UNSIGNED DEFAULT NULL AFTER item_kansa_flag2;
          */
 
         /*
@@ -39,8 +39,6 @@ namespace kaede2nd.Entity
        `item_sell_operator` int(10) unsigned DEFAULT NULL,
        `item_kansa_end` DATETIME DEFAULT NULL,
        `item_kansa_flag1` int(10) unsigned DEFAULT NULL,
-       `item_kansa_flag2` int(10) unsigned DEFAULT NULL,
-       `item_kansa_flag3` int(10) unsigned DEFAULT NULL,
        `item_adjust` int(11),
        `item_isbn` bigint(20) unsigned,
        `item_volumes` int(10) unsigned DEFAULT NULL,
@@ -84,8 +82,6 @@ namespace kaede2nd.Entity
 
         public DateTime? item_kansa_end { get; set; }
         public UInt32? item_kansa_flag1 { get; set; }
-        public UInt32? item_kansa_flag2 { get; set; }
-        public UInt32? item_kansa_flag3 { get; set; }
         public Int32? item_adjust { get; set; }
         public Decimal? item_isbn { get; set; }
         public UInt32? item_volumes { get; set; }

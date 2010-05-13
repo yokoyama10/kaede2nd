@@ -18,14 +18,6 @@ namespace kaede2nd
         {
             InitializeComponent();
 
-            /*
-            text_host.Text = "halfed-note";
-            text_port.Text = "3306";
-            text_user.Text = "ennichi";
-            text_pass.Text = "itsuki";
-            this.comboBox1.SelectedIndex = 0;
-            */
-
             this.connectList = Program.config.ConnectList;
             if (this.connectList == null) { this.connectList = new List<AppConfig.Connection>(); }
             if (this.connectList.Count == 0)
@@ -37,7 +29,8 @@ namespace kaede2nd
                     port = "3306",
                     user = "username",
                     pass = "password",
-                    dbname = "database_name"
+                    dbname = "database_name",
+                    is_readonly = false
                 });
             }
 
@@ -67,11 +60,13 @@ namespace kaede2nd
             if (this.DbAccessSetter == null)
             {
                 GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                GlobalData.Instance.data.isReadonly = checkBox_readonly.Checked;
                 data = GlobalData.Instance.data;
             }
             else
             {
                 data = new DatabaseAccess(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                data.isReadonly = true;
                 this.DbAccessSetter(data);
             }
 
@@ -155,6 +150,7 @@ namespace kaede2nd
             this.text_user.Text = c.user;
             this.text_pass.Text = c.pass;
             this.text_dbname.Text = c.dbname;
+            this.checkBox_readonly.Checked = c.is_readonly;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -163,32 +159,6 @@ namespace kaede2nd
             {
                 this.setTextbox(this.comboBox1.SelectedIndex);
             }
-
-            /*
-            if (this.comboBox1.SelectedIndex == 0)
-            {
-                text_dbname.Text = "en_gara";
-            }
-            else if (this.comboBox1.SelectedIndex == 1)
-            {
-                text_dbname.Text = "en_furu";
-            }
-            else if (this.comboBox1.SelectedIndex == 2)
-            {
-                text_dbname.Text = "en_test2";
-            }
-            else if (this.comboBox1.SelectedIndex == 3)
-            {
-                text_host.Text = "localhost";
-                text_dbname.Text = "en_test";
-            }
-            */
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            text_host.Text = "ma.hocha.org";
-            text_port.Text = "3307";
         }
 
     }

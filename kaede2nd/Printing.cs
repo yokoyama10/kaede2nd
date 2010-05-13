@@ -21,12 +21,19 @@ namespace kaede2nd
             PrintDialog prid = new PrintDialog();
             prid.PrinterSettings = GlobalData.Instance.printerSettings;
             prid.UseEXDialog = true;
-            prid.Document = new ItemsPrintDocument(items, GlobalData.Instance.pageSettings, GlobalData.Instance.printerSettings);
-            DialogResult pdres = prid.ShowDialog();
 
-            if (pdres != DialogResult.OK) { return; }
+            if (GlobalData.Instance.showPrintDialog == true)
+            {
+                DialogResult pdres = prid.ShowDialog();
+                if (pdres != DialogResult.OK) { return; }
+            }
 
-            prid.Document.Print();
+            System.Threading.Thread t = new System.Threading.Thread(
+                (delegate() {
+                    prid.Document = new ItemsPrintDocument(items, GlobalData.Instance.pageSettings, GlobalData.Instance.printerSettings);
+                    prid.Document.Print();
+                }));
+            t.Start();
 
             /*
             PrintPreviewDialog pprediag = new PrintPreviewDialog();

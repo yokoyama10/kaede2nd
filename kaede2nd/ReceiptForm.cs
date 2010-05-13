@@ -42,13 +42,11 @@ namespace kaede2nd
             this.AddColumn(this.dataGridView1, ColumnType.SellTime);
 
             this.addDGVEvents(this.dataGridView1);
+
+            this.button1.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.まとめて設定toolStripMenuItem1.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.アイテムを削除ToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
             
-            /*
-            this.combo_operator.DataSource = GlobalData.Instance.operators;
-            this.combo_operator.DisplayMember = "operator_name";
-            this.combo_operator.ValueMember = "operator_id";
-            this.combo_operator.SelectedValue = GlobalData.Instance.nowOperator;
-            */
 
             this.Text = "受付票: 新規" + " (" + GlobalData.Instance.data.bumonName + ")";
             this.text_rid.Text = "新規";
@@ -123,11 +121,6 @@ namespace kaede2nd
                     this.text_external.Text = r.receipt_seller_exname;
                     break;
             }
-
-            this.check_payback.CheckState = Globals.getCheckboxCheckState(r.receipt_payback);
-
-            //this.combo_operator.SelectedValue =
-            //    (r.receipt__Operator != null ? r.receipt__Operator.operator_id : 0);
 
             this.dataGridView1.Enabled = false;
             this.dataGridView1.Rows.Clear();
@@ -346,13 +339,6 @@ namespace kaede2nd
                     receipt.receipt_seller_exname = this.text_external.Text;
                 }
 
-                receipt.receipt_payback = Globals.getBoolFromCheckState(this.check_payback.CheckState);
-
-                //this.combo_operator.SelectedValue =
-                //    (r.receipt__Operator != null ? r.receipt__Operator.operator_id : 0);
-
-                //GlobalData.Instance.mainForm.DoRefresh();
-
 
             }
             catch (Exception excep)
@@ -481,6 +467,8 @@ namespace kaede2nd
 
             if (e.KeyCode == Keys.S && e.Control && !e.Shift && !e.Alt)
             {
+                if (this.IsEditable() == false) { return; }
+
                 DataGridViewSelectedCellCollection cells = dgv.SelectedCells;
                 if (cells.Count > 0)
                 {
@@ -543,19 +531,16 @@ namespace kaede2nd
             PrintDialog prid = new PrintDialog();
             prid.PrinterSettings = GlobalData.Instance.receipt_printerSettings;
             prid.UseEXDialog = true;
-            prid.Document = new ReceiptPrintDocument(this.receipt, GlobalData.Instance.receipt_pageSettings, GlobalData.Instance.receipt_printerSettings);
             DialogResult pdres = prid.ShowDialog();
-
             if (pdres != DialogResult.OK) { return; }
 
-            try
+            System.Threading.Thread t = new System.Threading.Thread(
+                (delegate()
             {
+                prid.Document = new ReceiptPrintDocument(this.receipt, GlobalData.Instance.receipt_pageSettings, GlobalData.Instance.receipt_printerSettings);
                 prid.Document.Print();
-            }
-            catch (Exception iex)
-            {
-                MessageBox.Show("印刷が実行できませんでした: " + iex.ToString());
-            }
+            }));
+            t.Start();
         }
 
         private void 最新の情報に更新RToolStripMenuItem_Click(object sender, EventArgs e)

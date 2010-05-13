@@ -51,6 +51,7 @@ namespace kaede2nd
             InitializeComponent();
 
             this.Text = GlobalData.Instance.data.bumonName + " - " + GlobalData.Instance.windowTitle;
+            this.label_company.Text = GlobalData.Instance.data.companyName;
 
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
@@ -131,6 +132,11 @@ namespace kaede2nd
             */
 
             this.addDGVEvents(this.dataGridView1);
+            this.button3.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.新Receiptを追加UToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.売却ウィンドウSToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.監査ウィンドウWToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
 
             this.renewReceipts();
 
@@ -514,11 +520,22 @@ namespace kaede2nd
             psi.FileName = mysqldumpPath;
             psi.Arguments = "--host=" + GlobalData.Instance.data.db_host + " --port=" + GlobalData.Instance.data.db_port +
                 " --user=" + GlobalData.Instance.data.db_user + " --password=" + GlobalData.Instance.data.db_pass +
-                " --dump-date --result-file=\"" + Path.Combine(dumpdbDest, destdest) + "\" " + GlobalData.Instance.data.db_dbname;
+                " --dump-date --skip-lock-tables --result-file=\"" + Path.Combine(dumpdbDest, destdest) + "\" " + GlobalData.Instance.data.db_dbname;
 
             System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
+            p.WaitForExit();
 
+            System.IO.FileInfo fi = new System.IO.FileInfo(Path.Combine(dumpdbDest, destdest));
 
+            string loc = dumpDest + "\\" + GlobalData.Instance.data.db_dbname + "\\" + destdest;
+            try
+            {
+                MessageBox.Show(fi.Length.ToString("#,##0") + " バイトを " + loc + " にバックアップしました。サイズが小さすぎると失敗（かも）", "バックアップ完了");
+            }
+            catch
+            {
+                MessageBox.Show(loc + "のファイルサイズが取得できませんでした。バックアップに失敗した（かも）。", "バックアップ失敗");
+            }
             /*
             System.Threading.Thread t = new System.Threading.Thread(
                 delegate() { 
@@ -598,7 +615,6 @@ namespace kaede2nd
 
         private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return;
             (new Version()).ShowDialog();
         }
 
@@ -657,13 +673,7 @@ namespace kaede2nd
                 }
             }
 
-            KansaSelect kansele = new KansaSelect();
-            kansele.ShowDialog();
-
-            if (kansele.fkansa != null)
-            {
-                kansele.fkansa.Show();
-            }
+            (new KansaForm()).Show();
 
         }
 
@@ -718,6 +728,11 @@ namespace kaede2nd
             Form ff = new GassanForm();
             if (ff.IsDisposed) { return; }
             ff.Show();
+        }
+
+        private void タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GlobalData.Instance.showPrintDialog = this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked;
         }
 
         

@@ -42,7 +42,7 @@ namespace kaede2nd
         }
 
 
-        private bool IsEditable()
+        protected bool IsEditable()
         {
             if (this.formDGV == null) { return false; }
             return this.IsEditableImpl();
@@ -50,6 +50,7 @@ namespace kaede2nd
 
         protected virtual bool IsEditableImpl()
         {
+            if (GlobalData.Instance.data.isReadonly) { return false; }
             return true;
         }
 

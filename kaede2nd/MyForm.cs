@@ -386,6 +386,7 @@ namespace kaede2nd
         //for DGV event
         protected virtual void addDGVEvents(DataGridView dgv)
         {
+            dgv.ReadOnly = GlobalData.Instance.data.isReadonly;
             dgv.DefaultValuesNeeded += dataGridView_DefaultValuesNeeded;
             dgv.RowsAdded += this.dataGridView_RowsAdded;
             dgv.CellEnter += this.dataGridView_CellEnter;

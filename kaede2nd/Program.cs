@@ -32,7 +32,8 @@ namespace kaede2nd
                     port = "3306",
                     user = "username",
                     pass = "password",
-                    dbname = "database_name"
+                    dbname = "database_name",
+                    is_readonly = false
                 });
                 System.IO.FileStream fs = new System.IO.FileStream(cfgFullPath, System.IO.FileMode.OpenOrCreate);
 
@@ -46,6 +47,7 @@ namespace kaede2nd
             {
                 System.IO.FileStream fs = new System.IO.FileStream(cfgFullPath, System.IO.FileMode.Open);
                 config = (AppConfig)seri.Deserialize(fs);
+                fs.Close();
             }
             catch (Exception e)
             {

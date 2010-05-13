@@ -45,21 +45,10 @@ namespace kaede2nd.Dao
         UInt32 SumNeedKansaItem_SellPrice();
 
         [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag1 IS NULL")]
-        List<Item> GetNeedKansaItem_NotFlagged1();
+        List<Item> GetNeedKansaItem_NotFlagged();
         [Sql("SELECT COUNT(*) FROM item WHERE " +
                "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag1 IS NULL")]
-        UInt32 CountNeedKansaItem_NotFlagged1();
+        UInt32 CountNeedKansaItem_NotFlagged();
 
-        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag2 IS NULL")]
-        List<Item> GetNeedKansaItem_NotFlagged2();
-        [Sql("SELECT COUNT(*) FROM item WHERE " +
-               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag2 IS NULL")]
-        UInt32 CountNeedKansaItem_NotFlagged2();
-
-        [Query("item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag3 IS NULL")]
-        List<Item> GetNeedKansaItem_NotFlagged3();
-        [Sql("SELECT COUNT(*) FROM item WHERE " +
-               "item_kansa_end IS NULL   AND   item_sellprice IS NOT NULL   AND   item_kansa_flag3 IS NULL")]
-        UInt32 CountNeedKansaItem_NotFlagged3();
     }
 }

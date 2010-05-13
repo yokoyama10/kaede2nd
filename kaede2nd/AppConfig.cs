@@ -30,6 +30,7 @@ namespace kaede2nd
             public string user;
             public string pass;
             public string dbname;
+            public bool is_readonly;
         }
     }
 }
