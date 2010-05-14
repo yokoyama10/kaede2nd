@@ -567,8 +567,6 @@ namespace kaede2nd
         public bool itemNameImeOn = true;
         public bool enterToTab = false;
 
-        public uint[] crcTable;
-
 
         private GlobalData() { }
 
@@ -603,27 +601,7 @@ namespace kaede2nd
                 instance.receipt_pageSettings = new System.Drawing.Printing.PageSettings();
                 instance.receipt_pageSettings.Color = false;
                 instance.receipt_printerSettings = new System.Drawing.Printing.PrinterSettings();
-
-
-                instance.crcTable = new uint[256];
-
-                for (uint n = 0; n < 256; n++)
-                {
-                    uint c = n;
-                    for (uint k = 0; k < 8; k++)
-                    {
-                        if ((c & 1) != 0)
-                        {
-                            c = 0xedb88320U ^ (c >> 1);
-                        }
-                        else
-                        {
-                            c = c >> 1;
-                        }
-                    }
-                    instance.crcTable[n] = c;
-                }
-                
+              
             }
         }
 
@@ -636,28 +614,6 @@ namespace kaede2nd
             }
         }
 
-    }
-
-    public class KaedeFileStream : FileStream
-    {
-        public uint not_crc;
-
-        public KaedeFileStream(string path, FileMode mode)
-            : base(path, mode)
-        {
-            this.not_crc = 0xffffffff;
-        }
-
-        public uint getCrc()
-        {
-            return ~this.not_crc;
-        }
-
-        public override void WriteByte(byte value)
-        {
-            this.not_crc = GlobalData.Instance.crcTable[((this.not_crc) ^ (value)) & 0xff] ^ ((this.not_crc) >> 8);
-            base.WriteByte(value);
-        }
     }
 
 }

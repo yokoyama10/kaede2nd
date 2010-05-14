@@ -392,6 +392,24 @@ namespace kaede2nd
 
                 }
 
+                uint[] crcTable = new uint[256];
+                for (uint n = 0; n < 256; n++)
+                {
+                    uint c = n;
+                    for (uint k = 0; k < 8; k++)
+                    {
+                        if ((c & 1) != 0)
+                        {
+                            c = 0xedb88320U ^ (c >> 1);
+                        }
+                        else
+                        {
+                            c = c >> 1;
+                        }
+                    }
+                    crcTable[n] = c;
+                }
+
                 using (FileStream fs = new FileStream(sfd.FileName, FileMode.Open, FileAccess.ReadWrite))
                 {
                     uint not_crc = 0xffffffff;
@@ -401,7 +419,7 @@ namespace kaede2nd
                     while (fs.Position < fs.Length)
                     {
                         byte data = br.ReadByte();
-                        not_crc = GlobalData.Instance.crcTable[((not_crc) ^ (data)) & 0xff] ^ ((not_crc) >> 8);
+                        not_crc = crcTable[((not_crc) ^ (data)) & 0xff] ^ ((not_crc) >> 8);
                     }
 
 
