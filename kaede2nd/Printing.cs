@@ -22,7 +22,7 @@ namespace kaede2nd
             prid.PrinterSettings = GlobalData.Instance.printerSettings;
             prid.UseEXDialog = true;
 
-            if (GlobalData.Instance.showPrintDialog == true)
+            if (Program.config.ShowPrintDialog_AtTagPrint == true)
             {
                 DialogResult pdres = prid.ShowDialog();
                 if (pdres != DialogResult.OK) { return; }

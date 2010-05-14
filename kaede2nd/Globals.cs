@@ -567,8 +567,6 @@ namespace kaede2nd
         public bool itemNameImeOn = true;
         public bool enterToTab = false;
 
-        public bool showPrintDialog = true;
-
         public uint[] crcTable;
 
 

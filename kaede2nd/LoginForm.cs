@@ -70,42 +70,6 @@ namespace kaede2nd
                 this.DbAccessSetter(data);
             }
 
-
-            /*
-            if (this.comboBox1.SelectedIndex == 0)
-            {
-                itemNameImeOn = true;
-                enterToTab = false;
-                data.bumonName = "ガラクタ部門";
-                data.symbolColor = Color.MistyRose; //-6943
-            }
-            else if (this.comboBox1.SelectedIndex == 1)
-            {
-                itemNameImeOn = false;
-                enterToTab = true;
-                data.bumonName = "古本部門";
-                data.symbolColor = Color.LightCyan; //-2031617
-            }
-            else if (this.comboBox1.SelectedIndex == 2)
-            {
-                itemNameImeOn = true;
-                enterToTab = false;
-                data.bumonName = "テスト部門";
-            }
-            else if (this.comboBox1.SelectedIndex == 3)
-            {
-                itemNameImeOn = true;
-                enterToTab = false;
-                data.bumonName = "松代実験場";
-            }
-            else
-            {
-                itemNameImeOn = true;
-                enterToTab = false;
-                data.bumonName = "不明な部門";
-            }
-            */
-
             //Config取得
             var icdao = data.getIDao<kaede2nd.Dao.IConfigDao>();
             var lc = icdao.Get();
@@ -139,7 +103,7 @@ namespace kaede2nd
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Environment.Exit(0);
         }
 
         private void setTextbox(int index)

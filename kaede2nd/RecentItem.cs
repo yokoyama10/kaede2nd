@@ -93,6 +93,11 @@ namespace kaede2nd
         {
             e.Cancel = true;
             this.Hide();
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Program.config.ShowForm_RecentItem = false;
+            }
         }
 
         private void 最新の情報に更新RToolStripMenuItem_Click(object sender, EventArgs e)

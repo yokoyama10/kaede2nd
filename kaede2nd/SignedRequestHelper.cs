@@ -139,15 +139,16 @@ namespace AmazonProductAdvtApi
         private string PercentEncodeRfc3986(string str)
         {
             str = HttpUtility.UrlEncode(str, System.Text.Encoding.UTF8);
-            str.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29").Replace("*", "%2A").Replace("!", "%21").Replace("%7e", "~").Replace("+", "%20");
+            str = str.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29").Replace("*", "%2A").Replace("!", "%21").Replace("%7e", "~").Replace("+", "%20");
 
             StringBuilder sbuilder = new StringBuilder(str);
             for (int i = 0; i < sbuilder.Length; i++)
             {
                 if (sbuilder[i] == '%')
                 {
-                    if (Char.IsDigit(sbuilder[i + 1]) && Char.IsLetter(sbuilder[i + 2]))
+                    if (Char.IsLetter(sbuilder[i + 1]) || Char.IsLetter(sbuilder[i + 2]))
                     {
+                        sbuilder[i + 1] = Char.ToUpper(sbuilder[i + 1]);
                         sbuilder[i + 2] = Char.ToUpper(sbuilder[i + 2]);
                     }
                 }
@@ -223,7 +224,6 @@ namespace AmazonProductAdvtApi
 
             foreach (KeyValuePair<string, string> kvp in sortedParamMap)
             {
-
                 builder.Append(this.PercentEncodeRfc3986(kvp.Key));
                 builder.Append("=");
                 builder.Append(this.PercentEncodeRfc3986(kvp.Value));

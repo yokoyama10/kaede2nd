@@ -14,10 +14,19 @@ namespace kaede2nd
         [OptionalFieldAttribute]
         public bool ShowForm_RecentItem;
 
+        [OptionalFieldAttribute]
+        public bool ShowPrintDialog_AtTagPrint;
+
+        [NonSerialized]
+        [System.Xml.Serialization.XmlIgnore]
+        public string configPath;
+
         public AppConfig()
         {
             this.ConnectList = new List<Connection>();
             this.ShowForm_RecentItem = true;
+            this.ShowPrintDialog_AtTagPrint = true;
+            this.configPath = "";
         }
 
 
@@ -31,6 +40,45 @@ namespace kaede2nd
             public string pass;
             public string dbname;
             public bool is_readonly;
+        }
+
+
+
+        // FileIO系のExceptionが飛ぶよ
+        public void SaveToFile()
+        {
+            var seri = new System.Xml.Serialization.XmlSerializer(typeof(AppConfig));
+
+            using (System.IO.FileStream fs = new System.IO.FileStream(this.configPath, System.IO.FileMode.Create))
+            {
+                seri.Serialize(fs, this);
+                fs.Close();
+            }
+        }
+
+
+        // FileIO系のExceptionが飛ぶよ
+        public static AppConfig LoadFromFile(string path)
+        {
+            var seri = new System.Xml.Serialization.XmlSerializer(typeof(AppConfig));
+            AppConfig config = null;
+
+            using (System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Open))
+            {
+                config = (AppConfig)seri.Deserialize(fs);
+                fs.Close();
+            }
+
+            config.configPath = path;
+
+            return config;
+
+        }
+
+        public string GetConfigFileName()
+        {
+            if (string.IsNullOrEmpty(this.configPath)) { return ""; }
+            return System.IO.Path.GetFileName(this.configPath);
         }
     }
 }

@@ -35,12 +35,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cSVで出力CToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.楓ちゃん形式で出力KToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.最近追加された商品リストLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ページ設定UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.選択中の票を印刷PToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.ログイン画面に戻るLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +62,7 @@
             this.バージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.label_company = new System.Windows.Forms.Label();
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -107,7 +108,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 60);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(700, 296);
+            this.dataGridView1.Size = new System.Drawing.Size(713, 329);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
@@ -119,7 +120,7 @@
             this.機能ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(700, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(713, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -150,11 +151,6 @@
             this.toolStripMenuItem3.Text = "バックアップを保存(&B)";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(243, 6);
-            // 
             // cSVで出力CToolStripMenuItem
             // 
             this.cSVで出力CToolStripMenuItem.Name = "cSVで出力CToolStripMenuItem";
@@ -181,12 +177,27 @@
             this.最近追加された商品リストLToolStripMenuItem.Text = "最近追加された商品リスト (&L)";
             this.最近追加された商品リストLToolStripMenuItem.Click += new System.EventHandler(this.最近追加された商品リストLToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(243, 6);
+            // 
             // ページ設定UToolStripMenuItem
             // 
             this.ページ設定UToolStripMenuItem.Name = "ページ設定UToolStripMenuItem";
             this.ページ設定UToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.ページ設定UToolStripMenuItem.Text = "ページ設定(&U)...";
             this.ページ設定UToolStripMenuItem.Click += new System.EventHandler(this.ページ設定UToolStripMenuItem_Click);
+            // 
+            // タグ印刷ごとにダイアログを表示ToolStripMenuItem
+            // 
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked = true;
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckOnClick = true;
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Name = "タグ印刷ごとにダイアログを表示ToolStripMenuItem";
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Text = "タグ印刷ごとにダイアログを表示";
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Click += new System.EventHandler(this.タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click);
             // 
             // 選択中の票を印刷PToolStripMenuItem
             // 
@@ -341,21 +352,20 @@
             this.label_company.TabIndex = 11;
             this.label_company.Text = "CompanyName";
             // 
-            // タグ印刷ごとにダイアログを表示ToolStripMenuItem
+            // statusStrip1
             // 
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked = true;
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckOnClick = true;
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Name = "タグ印刷ごとにダイアログを表示ToolStripMenuItem";
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Text = "タグ印刷ごとにダイアログを表示";
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Click += new System.EventHandler(this.タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 392);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(713, 22);
+            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 356);
+            this.ClientSize = new System.Drawing.Size(713, 414);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label_company);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
@@ -411,6 +421,7 @@
         private System.Windows.Forms.ToolStripMenuItem 各部門の返金額合算ToolStripMenuItem;
         private System.Windows.Forms.Label label_company;
         private System.Windows.Forms.ToolStripMenuItem タグ印刷ごとにダイアログを表示ToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 

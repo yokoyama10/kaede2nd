@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_ItemList));
             this.dataGridView1 = new kaede2nd.MyDataGridView();
             this.button_refresh = new System.Windows.Forms.Button();
             this.button_csv = new System.Windows.Forms.Button();
@@ -114,8 +113,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 347);
             this.Controls.Add(this.checkBox_regex);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button_search);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button_csv);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button_refresh);

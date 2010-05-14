@@ -63,75 +63,11 @@ namespace kaede2nd
             this.AddColumn(this.dataGridView1, ColumnType.ReceiptReceiveTime);
             this.AddColumn(this.dataGridView1, ColumnType.ReceiptComment);
 
-            /*
-             
-            ColumnInfo colinfo;
-            DataGridViewColumn col;
-             
-            
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>(ColumnName.kosuu);
-            col = colinfo.col;
-            col.ValueType = typeof(UInt32);
-            col.ReadOnly = true;
-            col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            col.Width = GlobalData.moziWidth * 5;
-            this.dataGridView1.Columns.Add(col);
-            */
-
-
-
-            /*
-            colinfo = this.newColumn<DataGridViewTextBoxColumn>("受付者");
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            col.ReadOnly = true;
-            col.Visible = false;
-            col.Width = GlobalData.moziWidth * 11;
-            this.dataGridView1.Columns.Add(col);
-            */
-
-            /*
-            colinfo = this.newColumn<DataGridViewCheckBoxColumn>(ColumnName.henkinZumi);
-            colinfo.DBvalueSet = delegate(object obj, object val) { ((Receipt)obj).receipt_payback = Globals.getNullableBoolFromCheckboxString((string)val); };
-            colinfo.CellvalueSet = delegate(DataGridViewCell cell, object obj)
-            {
-                cell.Value = Globals.getCheckboxString(((Receipt)obj).receipt_payback);
-            };
-            col = colinfo.col;
-            col.ValueType = typeof(string);
-            ((DataGridViewCheckBoxColumn)col).ThreeState = true;
-            ((DataGridViewCheckBoxColumn)col).TrueValue = Globals.check_trueVal;
-            ((DataGridViewCheckBoxColumn)col).FalseValue = Globals.check_falseVal;
-            ((DataGridViewCheckBoxColumn)col).IndeterminateValue = Globals.check_unkVal;
-            col.Width = GlobalData.moziWidth * 8;
-            col.SortMode = DataGridViewColumnSortMode.Automatic;
-            this.dataGridView1.Columns.Add(col);
-            */
-
-            
-
-            /*
-            DataGridViewComboBoxColumn combocol = new DataGridViewComboBoxColumn();
-            combocol.ValueType = typeof(UInt32?);
-            combocol.DataPropertyName = "_受付者";
-            combocol.HeaderText = "受付者";
-
-            DataTable opTable = new DataTable("___OperatorTable");
-            opTable.Columns.Add("Display", typeof(string));
-            opTable.Columns.Add("Value", typeof(UInt32?));
-            opTable.Rows.Add("不明", null);
-            foreach (var op in GlobalData.Instance.operators)
-            {
-                opTable.Rows.Add(op.operator_name, op.operator_id);
-            }
-
-            combocol.ValueMember = "Value";
-            combocol.DisplayMember = "Display";
-
-            this.dataGridView1.Columns.Add(combocol);
-            */
-
             this.addDGVEvents(this.dataGridView1);
+
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked = Program.config.ShowPrintDialog_AtTagPrint;
+
+            //Readonly
             this.button3.Enabled = !GlobalData.Instance.data.isReadonly;
             this.新Receiptを追加UToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
             this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
@@ -142,10 +78,12 @@ namespace kaede2nd
 
         }
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            GlobalData.Instance.recentItemForm.Show();
+            if (Program.config.ShowForm_RecentItem)
+            {
+                this.最近追加された商品リストLToolStripMenuItem.PerformClick();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -536,35 +474,7 @@ namespace kaede2nd
             {
                 MessageBox.Show(loc + "のファイルサイズが取得できませんでした。バックアップに失敗した（かも）。", "バックアップ失敗");
             }
-            /*
-            System.Threading.Thread t = new System.Threading.Thread(
-                delegate() { 
 
-
-                    
-                    using (StreamWriter sw = new StreamWriter(Path.Combine(dumpdbDest, destdest), false))
-                    {
-                        System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
-                        while (!p.StandardOutput.EndOfStream)
-                        {
-                            char[] buf = new char[4096];
-                            int ret = p.StandardOutput.Read(buf, 0, 4096);
-                            sw.Write(buf, 0, ret);
-                        }
-
-                        sw.Close();
-
-                        p.WaitForExit();
-
-                    }
-                    
-
-                    //p.StandardOutput
-                }
-            );
-
-            t.Start();
-            */
         }
 
         private void 選択中の票を印刷PToolStripMenuItem_Click(object sender, EventArgs e)
@@ -610,6 +520,7 @@ namespace kaede2nd
 
         private void 最近追加された商品リストLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Program.config.ShowForm_RecentItem = true;
             GlobalData.Instance.recentItemForm.Show();
         }
 
@@ -732,7 +643,7 @@ namespace kaede2nd
 
         private void タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GlobalData.Instance.showPrintDialog = this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked;
+            Program.config.ShowPrintDialog_AtTagPrint = this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked;
         }
 
         

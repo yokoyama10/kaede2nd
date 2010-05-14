@@ -10,7 +10,8 @@ namespace kaede2nd
         public const string 御名 = "\u7530\u6751\u3086\u304b\u308a";
 
         public static AppConfig config;
-        public static string configFile = "kaedecfg.xml";
+        private static string configFile = "kaedecfg.xml";
+
         public static bool continueProg;
 
         /// <summary>
@@ -19,9 +20,9 @@ namespace kaede2nd
         [STAThread]
         static void Main()
         {
-            var seri = new System.Xml.Serialization.XmlSerializer(typeof(AppConfig));
 
             string cfgFullPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), configFile);
+
             if (!System.IO.File.Exists(cfgFullPath))
             {
                 AppConfig c = new AppConfig();
@@ -35,24 +36,20 @@ namespace kaede2nd
                     dbname = "database_name",
                     is_readonly = false
                 });
-                System.IO.FileStream fs = new System.IO.FileStream(cfgFullPath, System.IO.FileMode.OpenOrCreate);
 
-                seri.Serialize(fs, c);
-                fs.Close();
-
-                MessageBox.Show("コンフィグファイル (" + configFile + ") を作成しました。");
+                c.configPath = cfgFullPath;
+                c.SaveToFile();
+                MessageBox.Show("コンフィグファイル (" + config.GetConfigFileName() + ") を作成しました。");
             }
 
             try
             {
-                System.IO.FileStream fs = new System.IO.FileStream(cfgFullPath, System.IO.FileMode.Open);
-                config = (AppConfig)seri.Deserialize(fs);
-                fs.Close();
+                config = AppConfig.LoadFromFile(cfgFullPath);
             }
             catch (Exception e)
             {
-                MessageBox.Show("コンフィグファイル (" + configFile + ") が正常に開けませんでした: " + e.Message);
-                Application.Exit();
+                MessageBox.Show("コンフィグファイル (" + configFile + ") が正常に開けませんでした。\nファイルが間違っていないか確認するか、諦めて削除して起動しなおしてください。\n\n詳細:\n" + e.Message);
+                System.Environment.Exit(-1);
             }
 
 
@@ -65,6 +62,15 @@ namespace kaede2nd
             {
                 continueProg = false;
                 Application.Run(new Form1());
+
+                try
+                {
+                    config.SaveToFile();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("コンフィグファイル (" + config.GetConfigFileName() + ") が保存できませんでした。\n " + e.Message);
+                }
             }
         }
     }
