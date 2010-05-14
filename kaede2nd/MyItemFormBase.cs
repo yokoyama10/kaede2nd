@@ -269,23 +269,30 @@ namespace kaede2nd
         protected void ConvBarcode(DataGridViewCell cell)
         {
             string val = (string)cell.Value;
-            if (val != null && val.Length == 13)
+            if (string.IsNullOrEmpty(val)) { return; }
+
+            if ( val.Length == 13 )
             {
                 val = Microsoft.VisualBasic.Strings.StrConv(val, Microsoft.VisualBasic.VbStrConv.Narrow, 0);
 
                 if (System.Text.RegularExpressions.Regex.IsMatch(val, @"^\d{13}$"))
                 {
-                    if (val.StartsWith("978"))
+                    if (val.StartsWith("978") || val.StartsWith("979"))
                     {
                         System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvIsbnThread);
                         t.Start(cell);
                     }
-                    else if (val.StartsWith("49"))
+                    else if (val.StartsWith("45") || val.StartsWith("49"))
                     {
                         System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvJanThread);
                         t.Start(cell);
                     }
                 }
+            }
+            else if (System.Text.RegularExpressions.Regex.IsMatch(val, @"^4\d{9}$"))
+            {
+                System.Threading.Thread t = new System.Threading.Thread(this.setTitleConvIsbnThread);
+                t.Start(cell);
             }
         }
 
@@ -332,74 +339,79 @@ namespace kaede2nd
             }
 
             string code = (string)cell.Value;
-            code = Microsoft.VisualBasic.Strings.StrConv(code, Microsoft.VisualBasic.VbStrConv.Narrow, 0);
-
-            if (!System.Text.RegularExpressions.Regex.IsMatch(code, @"^\d{13}$"))
-            {
-                return false;
-            }
 
             SignedRequestHelper helper = new SignedRequestHelper("13R1P6WSEW5Y6CP6MVR2", "yv69PdUY09Mosx/k4T9mwiP2xbcDZG6HMF4fsNuX", "ecs.amazonaws.jp");
+
+            var searchIndexList = new List<string>();
+            if (type == BarcodeType.Isbn)
+            {
+                searchIndexList.Add("Books");
+            }
+            //else if (type == BarcodeType.Jan)
+            else
+            {
+                searchIndexList.Add("Books"); //雑誌むけ
+                searchIndexList.Add("VideoGames");
+                searchIndexList.Add("Music");
+                searchIndexList.Add("DVD");
+            }
+
+
             IDictionary<string, string> requestParams = new Dictionary<string, String>();
             requestParams["Service"] = "AWSECommerceService";
             requestParams["Version"] = "2009-03-31";
             requestParams["Operation"] = "ItemLookup";
-            requestParams["SearchIndex"] = "Books";
+            requestParams["ItemId"] = code;
 
             if (type == BarcodeType.Isbn)
             {
                 requestParams["IdType"] = "ISBN";
             }
+            //else if (type == BarcodeType.Jan)
             else
             {
                 requestParams["IdType"] = "EAN";
             }
-            requestParams["ItemId"] = code;
-            string url = helper.Sign(requestParams);
 
-            System.Net.WebClient webc = new System.Net.WebClient();
-
-            // @"http://webservices.amazon.co.jp/onca/xml?SearchIndex=Books&Operation=ItemLookup&IdType=ISBN&AWSAccessKeyId=13R1P6WSEW5Y6CP6MVR2&ItemId=" + isbn
-            using (Stream st = webc.OpenRead(url))
+            foreach (var searchindex in searchIndexList)
             {
-                if (st == null) { return false; }
-                using (StreamReader sr = new StreamReader(st, Encoding.UTF8))
+                requestParams["SearchIndex"] = searchindex;
+
+                string url = helper.Sign(requestParams);
+                System.Diagnostics.Debug.WriteLine(url);
+
+                System.Net.WebClient webc = new System.Net.WebClient();
+
+                using (Stream st = webc.OpenRead(url))
                 {
-                    XmlDocument xdoc = new XmlDocument();
-                    xdoc.Load(sr);
-
-                    /*
-                    XmlNamespaceManager xman = new XmlNamespaceManager(xdoc.NameTable);
-                    xman.AddNamespace("aws", @"http://webservices.amazon.com/AWSECommerceService/2005-10-05");
-                    XmlNode xtitle = xdoc.SelectSingleNode(@"/aws:ItemLookupResponse/aws:Items/aws:Item/aws:ItemAttributes/aws:Title", xman);
-                    */
-
-                    XmlNodeList xlist = xdoc.GetElementsByTagName("Title", @"http://webservices.amazon.com/AWSECommerceService/2009-03-31");
-
-                    if (xlist.Count > 0)
+                    if (st == null) { return false; }
+                    using (StreamReader sr = new StreamReader(st, Encoding.UTF8))
                     {
-                        XmlNode xtitle = xlist.Item(0);
-                        ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
-                        {
-                            cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(code);
-                            cell.Value = xtitle.InnerText;
-                        });
-                    }
-                    else
-                    {
-                        ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
-                        {
-                            cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = null;
-                        });
-                        return false;
-                    }
+                        XmlDocument xdoc = new XmlDocument();
+                        xdoc.Load(sr);
 
-                    sr.Close();
+                        XmlNodeList xlist = xdoc.GetElementsByTagName("Title", @"http://webservices.amazon.com/AWSECommerceService/2009-03-31");
+
+                        if (xlist.Count > 0)
+                        {
+                            XmlNode xtitle = xlist.Item(0);
+                            ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
+                            {
+                                cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(code);
+                                cell.Value = xtitle.InnerText;
+                            });
+                            return true;
+                        }
+                    }
                 }
-                st.Close();
             }
 
-            return true;
+            ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
+            {
+                cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = null;
+            });
+
+            return false;
         }
 
 #endregion

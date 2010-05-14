@@ -39,7 +39,7 @@ namespace kaede2nd
 
                 c.configPath = cfgFullPath;
                 c.SaveToFile();
-                MessageBox.Show("コンフィグファイル (" + config.GetConfigFileName() + ") を作成しました。");
+                MessageBox.Show("コンフィグファイル (" + c.GetConfigFileName() + ") を作成しました。");
             }
 
             try

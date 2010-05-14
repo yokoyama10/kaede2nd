@@ -458,6 +458,8 @@ namespace kaede2nd
                         {
                             if (r.receipt_id == receiptid)
                             {
+                                f.WindowState = FormWindowState.Normal;
+                                f.BringToFront();
                                 f.Activate();
                                 return;
                             }

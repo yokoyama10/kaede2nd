@@ -17,6 +17,9 @@ namespace kaede2nd
         [OptionalFieldAttribute]
         public bool ShowPrintDialog_AtTagPrint;
 
+        [OptionalFieldAttribute]
+        public string BackupDirectory;
+
         [NonSerialized]
         [System.Xml.Serialization.XmlIgnore]
         public string configPath;
@@ -27,6 +30,7 @@ namespace kaede2nd
             this.ShowForm_RecentItem = true;
             this.ShowPrintDialog_AtTagPrint = true;
             this.configPath = "";
+            this.BackupDirectory = @".\backup";
         }
 
 

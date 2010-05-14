@@ -18,6 +18,8 @@ namespace kaede2nd
         {
             InitializeComponent();
 
+            this.textBox_backupdest.Text = Program.config.BackupDirectory;
+
             this.connectList = Program.config.ConnectList;
             if (this.connectList == null) { this.connectList = new List<AppConfig.Connection>(); }
             if (this.connectList.Count == 0)
@@ -46,6 +48,9 @@ namespace kaede2nd
         {
             this.DbAccessSetter = setter;
             this.Text = formTitle;
+
+            this.label_backupdest.Enabled = false;
+            this.textBox_backupdest.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -95,6 +100,8 @@ namespace kaede2nd
                 GlobalData.Instance.barcodePrefix = cfg.config_barcodeprefix;
                 GlobalData.Instance.itemNameImeOn = cfg.config_itemname_imeon;
                 GlobalData.Instance.enterToTab = cfg.config_entertotab;
+
+                Program.config.BackupDirectory = this.textBox_backupdest.Text;
 
             }
 

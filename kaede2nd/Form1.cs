@@ -448,23 +448,49 @@ namespace kaede2nd
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            this.DoBackup(true);
+        }
+
+        public void DoBackup(bool showSuccessDialog)
+        {
             //mysqldump
-
             const string mysqldumpPath = @"mysqldump";
-            const string dumpDest = @"backup";
 
-            string dumpFullPath = Path.Combine(Directory.GetCurrentDirectory(), dumpDest);
-            if (new DirectoryInfo(dumpFullPath).Exists != true)
+            string dumpFullPath, dumpdbDest;
+            DirectoryInfo dbdestInfo;
+
+            try
             {
-                MessageBox.Show("バックアップディレクトリが見つかりません");
+                if (Path.IsPathRooted(Program.config.BackupDirectory))
+                {
+                    dumpFullPath = Program.config.BackupDirectory;
+                }
+                else
+                {
+                    dumpFullPath = Path.Combine(Directory.GetCurrentDirectory(), Program.config.BackupDirectory);
+                }
+
+                //FIXME: ディレクトリトラバーサルとか
+                dumpdbDest = Path.Combine(dumpFullPath, GlobalData.Instance.data.db_dbname);
+                dbdestInfo = new DirectoryInfo(dumpdbDest);
+            }
+            catch (Exception e2)
+            {
+                MessageBox.Show("部門選択画面で設定されたバックアップ先 " + Program.config.BackupDirectory + " は不正な文字列です: " + e2.Message);
+                return;
             }
 
-            //FIXME: ディレクトリトラバーサルとか
-            string dumpdbDest = Path.Combine(dumpFullPath, GlobalData.Instance.data.db_dbname);
-            DirectoryInfo dbdestInfo = new DirectoryInfo(dumpdbDest);
             if (dbdestInfo.Exists != true)
             {
-                dbdestInfo.Create();
+                try
+                {
+                    dbdestInfo.Create();
+                }
+                catch (Exception e2)
+                {
+                    MessageBox.Show("バックアップフォルダ " + dbdestInfo.FullName + " が作成できませんでした: " + e2.Message, "バックアップ失敗");
+                    return;
+                }
             }
 
 
@@ -473,24 +499,45 @@ namespace kaede2nd
             //psi.RedirectStandardOutput = true;
             psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
+            psi.RedirectStandardError = true;
             psi.FileName = mysqldumpPath;
             psi.Arguments = "--host=" + GlobalData.Instance.data.db_host + " --port=" + GlobalData.Instance.data.db_port +
                 " --user=" + GlobalData.Instance.data.db_user + " --password=" + GlobalData.Instance.data.db_pass +
                 " --dump-date --skip-lock-tables --result-file=\"" + Path.Combine(dumpdbDest, destdest) + "\" " + GlobalData.Instance.data.db_dbname;
 
-            System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
+            System.Diagnostics.Process p;
+            try
+            {
+                p = System.Diagnostics.Process.Start(psi);
+            }
+            catch (Exception e2)
+            {
+                MessageBox.Show("バックアップに必要な mysqldump.exe が実行できませんでした: " + e2.Message, "バックアップ失敗");
+                return;
+            }
             p.WaitForExit();
+
+            string stderr = p.StandardError.ReadToEnd();
 
             System.IO.FileInfo fi = new System.IO.FileInfo(Path.Combine(dumpdbDest, destdest));
 
-            string loc = dumpDest + "\\" + GlobalData.Instance.data.db_dbname + "\\" + destdest;
+            string loc = fi.FullName;
             try
             {
-                MessageBox.Show(fi.Length.ToString("#,##0") + " バイトを " + loc + " にバックアップしました。サイズが小さすぎると失敗（かも）", "バックアップ完了");
+                if (fi.Length < 3 * 1024)
+                {
+                    MessageBox.Show("バックアップは終了しましたが、出力ファイル " + loc + " のファイルサイズが小さすぎます（" + fi.Length.ToString("#,##0") + " バイト）。おそらく失敗しています。\n\n" + stderr, "バックアップ失敗？");
+                    return;
+                }
+
+                if (showSuccessDialog)
+                {
+                    MessageBox.Show(fi.Length.ToString("#,##0") + " バイトを " + loc + " にバックアップしました。\n\n" + stderr, "バックアップ完了");
+                }
             }
             catch
             {
-                MessageBox.Show(loc + "のファイルサイズが取得できませんでした。バックアップに失敗した（かも）。", "バックアップ失敗");
+                MessageBox.Show(loc + " のファイルサイズが取得できませんでした。バックアップに失敗しました。\n\n" + stderr, "バックアップ失敗");
             }
 
         }

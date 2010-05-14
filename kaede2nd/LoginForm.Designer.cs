@@ -42,6 +42,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox_readonly = new System.Windows.Forms.CheckBox();
+            this.label_backupdest = new System.Windows.Forms.Label();
+            this.textBox_backupdest = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // text_host
@@ -176,14 +178,32 @@
             this.checkBox_readonly.Text = "読み取り専用";
             this.checkBox_readonly.UseVisualStyleBackColor = true;
             // 
+            // label_backupdest
+            // 
+            this.label_backupdest.AutoSize = true;
+            this.label_backupdest.Location = new System.Drawing.Point(12, 273);
+            this.label_backupdest.Name = "label_backupdest";
+            this.label_backupdest.Size = new System.Drawing.Size(163, 12);
+            this.label_backupdest.TabIndex = 15;
+            this.label_backupdest.Text = "Ctrl+Sでバックアップを出力する先:";
+            // 
+            // textBox_backupdest
+            // 
+            this.textBox_backupdest.Location = new System.Drawing.Point(14, 290);
+            this.textBox_backupdest.Name = "textBox_backupdest";
+            this.textBox_backupdest.Size = new System.Drawing.Size(247, 19);
+            this.textBox_backupdest.TabIndex = 16;
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(292, 273);
+            this.ClientSize = new System.Drawing.Size(277, 320);
             this.ControlBox = false;
+            this.Controls.Add(this.textBox_backupdest);
+            this.Controls.Add(this.label_backupdest);
             this.Controls.Add(this.checkBox_readonly);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -222,5 +242,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox checkBox_readonly;
+        private System.Windows.Forms.Label label_backupdest;
+        private System.Windows.Forms.TextBox textBox_backupdest;
     }
 }
