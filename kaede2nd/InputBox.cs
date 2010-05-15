@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace kaede2nd
@@ -18,7 +12,7 @@ namespace kaede2nd
 
         public InputBox(string msgText, string title, string defaultVal) : this()
         {
-            this.textBox1.Text = msgText;
+            this.textBox1.Text = msgText.Replace("\n", System.Environment.NewLine);
             this.Text = title;
             this.textBox2.Text = defaultVal;
         }

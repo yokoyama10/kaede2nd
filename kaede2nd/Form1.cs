@@ -20,8 +20,8 @@ namespace kaede2nd
     {
 
         private List<Receipt> receiptlist;
-      
- 
+
+        private Timer statusBarTimer;
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Form1()
@@ -44,8 +44,6 @@ namespace kaede2nd
 
             GlobalData.Instance.mainForm = this;
             //GlobalDataセット完了
-
-            IOperatorDao opDao = GlobalData.getIDao<IOperatorDao>();
 
             //Form Init...
             InitializeComponent();
@@ -74,8 +72,19 @@ namespace kaede2nd
             this.売却ウィンドウSToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
             this.監査ウィンドウWToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
 
+
+            this.statusBarTimer = new Timer();
+            this.statusBarTimer.Interval = 10 * 1000;
+            this.statusBarTimer.Tick += new EventHandler(statusBarTimer_Tick);
+            this.statusBarTimer.Start();
+
             this.renewReceipts();
 
+        }
+
+        void statusBarTimer_Tick(object sender, EventArgs e)
+        {
+            this.RefreshStatusBar();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -91,12 +100,18 @@ namespace kaede2nd
             this.renewReceipts();
         }
 
-        public void DoRefresh()
+        public void RefreshStatusBar()
         {
             System.Threading.Thread t = new System.Threading.Thread(
                 (delegate() {
-                    System.Threading.Thread.Sleep(300);
-                    this.Invoke((MethodInvoker)delegate() { this.renewReceipts(); });
+                    IItemDao itemDao = GlobalData.getIDao<IItemDao>();
+                    string itemcount = itemDao.CountAll().ToString() + "個の商品";
+                    string sold = "売上 ¥" + itemDao.SumSellPrice().ToString("#,##0") + "- " + itemDao.CountSoldItem().ToString() + "個";
+
+                    this.Invoke((MethodInvoker)delegate() {
+                        this.status_itemcount.Text = itemcount;
+                        this.status_sold.Text = sold;
+                    });
                 }));
             t.Start();
         }
@@ -131,6 +146,8 @@ namespace kaede2nd
             {
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
             }
+
+            this.RefreshStatusBar();
             
         }
 
@@ -353,7 +370,11 @@ namespace kaede2nd
                         //to_be_discount
                         bw.Write(it.item_tataki.ToKaedeBool());
 
-                        if (it.item__Receipt.receipt_time.HasValue)
+                        if (it.item_receipt_time.HasValue)
+                        {
+                            bw.Write(it.item_receipt_time.Value.ToUnixTime());
+                        }
+                        else if (it.item__Receipt.receipt_time.HasValue)
                         {
                             bw.Write(it.item__Receipt.receipt_time.Value.ToUnixTime());
                         }

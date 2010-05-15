@@ -44,7 +44,7 @@
             this.textBox1.Size = new System.Drawing.Size(292, 52);
             this.textBox1.TabIndex = 99;
             this.textBox1.TabStop = false;
-            this.textBox1.Text = "テキスト";
+            this.textBox1.Text = "テキスト\r\nテスト";
             // 
             // button1
             // 
@@ -81,7 +81,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(411, 115);
+            this.ClientSize = new System.Drawing.Size(407, 111);
             this.ControlBox = false;
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button2);

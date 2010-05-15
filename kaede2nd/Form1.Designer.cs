@@ -63,8 +63,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label_company = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.status_itemcount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.status_sold = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button3
@@ -108,7 +111,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 60);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 21;
-            this.dataGridView1.Size = new System.Drawing.Size(713, 329);
+            this.dataGridView1.Size = new System.Drawing.Size(708, 322);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
@@ -120,7 +123,7 @@
             this.機能ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(713, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(708, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -354,17 +357,44 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 392);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status_itemcount,
+            this.status_sold});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 385);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(713, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(708, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // status_itemcount
+            // 
+            this.status_itemcount.AutoSize = false;
+            this.status_itemcount.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.status_itemcount.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.status_itemcount.Name = "status_itemcount";
+            this.status_itemcount.Size = new System.Drawing.Size(170, 17);
+            this.status_itemcount.Text = "nnn個の商品";
+            this.status_itemcount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // status_sold
+            // 
+            this.status_sold.AutoSize = false;
+            this.status_sold.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)
+                        | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.status_sold.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            this.status_sold.Name = "status_sold";
+            this.status_sold.Size = new System.Drawing.Size(200, 17);
+            this.status_sold.Text = "売上 \\88,888- nnn個";
+            this.status_sold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 414);
+            this.ClientSize = new System.Drawing.Size(708, 407);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label_company);
             this.Controls.Add(this.button1);
@@ -380,6 +410,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,6 +454,8 @@
         private System.Windows.Forms.Label label_company;
         private System.Windows.Forms.ToolStripMenuItem タグ印刷ごとにダイアログを表示ToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel status_itemcount;
+        private System.Windows.Forms.ToolStripStatusLabel status_sold;
     }
 }
 

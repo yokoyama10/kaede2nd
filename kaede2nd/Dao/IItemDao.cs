@@ -26,6 +26,15 @@ namespace kaede2nd.Dao
         [Query("item_receipt_id = /*receipt_id*/")]
         List<Item> GetReceiptItem(UInt32 receipt_id);
 
+        [Sql("SELECT COUNT(*) FROM item")]
+        UInt32 CountAll();
+
+        [Sql("SELECT COUNT(*) FROM item WHERE item_sellprice IS NOT NULL")]
+        UInt32 CountSoldItem();
+
+        [Sql("SELECT SUM(item_sellprice) FROM item")]
+        UInt32 SumSellPrice();
+
         [Sql("SELECT COUNT(*) FROM item WHERE item_receipt_id = /*receipt_id*/")]
         UInt32 CountReceiptItem(UInt32 receipt_id);
 

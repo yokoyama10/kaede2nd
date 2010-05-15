@@ -152,7 +152,7 @@ namespace kaede2nd
                 if (it.item_kansa_end.HasValue)
                 {
                     //監査済み
-                    this.label_error.Text = "監査対象ではありません。今日販売ではない可能性が。";
+                    this.label_error.Text = "監査対象ではありません。本日の販売ではない可能性が。";
                     this.label_error.Visible = true;
                 }
                 else
@@ -189,7 +189,7 @@ namespace kaede2nd
                         t.IsBackground = true;
                         t.Start(it);
 
-                        this.label_error.Text = "監査しました";
+                        this.label_error.Text = "監査しました。次の品番を入力してね";
 
                         this.RefreshRemain();
                     }
@@ -204,7 +204,7 @@ namespace kaede2nd
                 this.textBox_baika.BackColor = Color.LightPink;
                 this.textBox_sellop.Text = null;
 
-                this.label_error.Text = "未売却は監査できません";
+                this.label_error.Text = "未売却の商品は監査できません";
                 this.label_error.Visible = true;
             }
 
@@ -255,7 +255,8 @@ namespace kaede2nd
             IItemDao idao = GlobalData.getIDao<IItemDao>();
             idao.Update(curItem);
 
-            this.DoKansaItem(curItem);
+            this.DoKansaItem(idao.GetItemById(curItem.item_id).First());
+            this.label_error.Text = "商品を未売却にしました";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -307,7 +308,7 @@ namespace kaede2nd
             while (true)
             {
                 string res;
-                DialogResult dres = InputBox.ShowIntDialog("修正後の売価を入力してください", "売価修正", def, out res);
+                DialogResult dres = InputBox.ShowIntDialog("修正後の売価を入力してください\n商品名: " + this.curItem.item_name, "売価修正", def, out res);
 
                 if (dres == DialogResult.Cancel)
                 {
@@ -328,7 +329,8 @@ namespace kaede2nd
                     this.curItem.item_sell_operator = this.nowOperator.operator_id;
                     itDao.Update(this.curItem);
 
-                    this.DoKansaItem(this.curItem);
+                    this.DoKansaItem(itDao.GetItemById(curItem.item_id).First());
+                    this.label_error.Text = "金額訂正が完了しました";
 
                     return;
                 }
