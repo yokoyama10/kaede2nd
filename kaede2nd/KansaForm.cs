@@ -98,7 +98,7 @@ namespace kaede2nd
                     }
                 }
 
-                if (!(0 <= shinaBan && shinaBan <= 99999))
+                if (!(0 <= shinaBan && shinaBan <= 999999))
                 {
                     this.textBox_ban_err("不正な品番です");
                 }
@@ -130,12 +130,13 @@ namespace kaede2nd
             {
                 if (it.item_sellprice.Value == it.item_tagprice)
                 {
-                    this.textBox_baika.Text = "- #" + it.item_sellprice.Value.ToString();
+                    this.textBox_baika.Text = "-- " + it.item_sellprice.Value.ToString();
                 }
                 else
                 {
                     this.textBox_baika.Text = it.item_sellprice.Value.ToString();
                 }
+
                 if (it.item_sell__Operator != null)
                 {
                     this.textBox_sellop.Text = it.item_sell__Operator.operator_name;
@@ -144,6 +145,9 @@ namespace kaede2nd
                 {
                     this.textBox_sellop.Text = "不明";
                 }
+
+                this.textBox_selltime.Text = Globals.getTimeString(it.item_selltime);
+
                 this.button_mibai.Enabled = true;
                 this.button_teisei.Enabled = true;
                 this.textBox_baika.BackColor = SystemColors.Control;
@@ -203,6 +207,7 @@ namespace kaede2nd
                 this.textBox_baika.Text = "未売却";
                 this.textBox_baika.BackColor = Color.LightPink;
                 this.textBox_sellop.Text = null;
+                this.textBox_selltime.Text = null;
 
                 this.label_error.Text = "未売却の商品は監査できません";
                 this.label_error.Visible = true;

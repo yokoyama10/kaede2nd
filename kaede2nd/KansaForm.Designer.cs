@@ -62,6 +62,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.textBox_sellop = new System.Windows.Forms.TextBox();
             this.button_allend = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_selltime = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -135,9 +137,9 @@
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label4.Location = new System.Drawing.Point(86, 155);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(21, 21);
+            this.label4.Size = new System.Drawing.Size(22, 21);
             this.label4.TabIndex = 6;
-            this.label4.Text = "\\";
+            this.label4.Text = "¥";
             // 
             // label5
             // 
@@ -154,9 +156,9 @@
             this.label7.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label7.Location = new System.Drawing.Point(68, 112);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(15, 15);
+            this.label7.Size = new System.Drawing.Size(16, 15);
             this.label7.TabIndex = 11;
-            this.label7.Text = "\\";
+            this.label7.Text = "¥";
             // 
             // textBox_teika
             // 
@@ -197,13 +199,13 @@
             this.textBox_nebiki.Size = new System.Drawing.Size(50, 23);
             this.textBox_nebiki.TabIndex = 13;
             this.textBox_nebiki.TabStop = false;
-            this.textBox_nebiki.Text = "不可";
+            this.textBox_nebiki.Text = "×";
             this.textBox_nebiki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button_mibai
             // 
             this.button_mibai.Enabled = false;
-            this.button_mibai.Location = new System.Drawing.Point(122, 228);
+            this.button_mibai.Location = new System.Drawing.Point(122, 244);
             this.button_mibai.Name = "button_mibai";
             this.button_mibai.Size = new System.Drawing.Size(112, 23);
             this.button_mibai.TabIndex = 17;
@@ -215,7 +217,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(21, 320);
+            this.label12.Location = new System.Drawing.Point(21, 336);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(41, 12);
             this.label12.TabIndex = 18;
@@ -223,7 +225,7 @@
             // 
             // textBox_operator
             // 
-            this.textBox_operator.Location = new System.Drawing.Point(68, 317);
+            this.textBox_operator.Location = new System.Drawing.Point(68, 333);
             this.textBox_operator.Name = "textBox_operator";
             this.textBox_operator.ReadOnly = true;
             this.textBox_operator.Size = new System.Drawing.Size(122, 19);
@@ -233,7 +235,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(212, 315);
+            this.button1.Location = new System.Drawing.Point(212, 331);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 20;
@@ -245,7 +247,7 @@
             // button_teisei
             // 
             this.button_teisei.Enabled = false;
-            this.button_teisei.Location = new System.Drawing.Point(23, 228);
+            this.button_teisei.Location = new System.Drawing.Point(23, 244);
             this.button_teisei.Name = "button_teisei";
             this.button_teisei.Size = new System.Drawing.Size(75, 23);
             this.button_teisei.TabIndex = 21;
@@ -259,7 +261,7 @@
             this.label_error.AutoSize = true;
             this.label_error.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label_error.ForeColor = System.Drawing.Color.Red;
-            this.label_error.Location = new System.Drawing.Point(21, 267);
+            this.label_error.Location = new System.Drawing.Point(21, 283);
             this.label_error.Name = "label_error";
             this.label_error.Size = new System.Drawing.Size(156, 12);
             this.label_error.TabIndex = 22;
@@ -403,7 +405,7 @@
             // button_allend
             // 
             this.button_allend.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_allend.Location = new System.Drawing.Point(413, 320);
+            this.button_allend.Location = new System.Drawing.Point(413, 336);
             this.button_allend.Name = "button_allend";
             this.button_allend.Size = new System.Drawing.Size(156, 18);
             this.button_allend.TabIndex = 39;
@@ -412,11 +414,30 @@
             this.button_allend.UseVisualStyleBackColor = true;
             this.button_allend.Click += new System.EventHandler(this.button_allend_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(21, 216);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 40;
+            this.label6.Text = "売却日時";
+            // 
+            // textBox_selltime
+            // 
+            this.textBox_selltime.Location = new System.Drawing.Point(113, 212);
+            this.textBox_selltime.Name = "textBox_selltime";
+            this.textBox_selltime.ReadOnly = true;
+            this.textBox_selltime.Size = new System.Drawing.Size(109, 19);
+            this.textBox_selltime.TabIndex = 41;
+            // 
             // KansaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 356);
+            this.ClientSize = new System.Drawing.Size(587, 382);
+            this.Controls.Add(this.textBox_selltime);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.button_allend);
             this.Controls.Add(this.textBox_sellop);
             this.Controls.Add(this.label18);
@@ -499,5 +520,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox_sellop;
         private System.Windows.Forms.Button button_allend;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox_selltime;
     }
 }

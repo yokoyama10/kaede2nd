@@ -55,7 +55,7 @@ namespace kaede2nd
                     }
                 }
 
-                if (!(0 <= shinaBan && shinaBan <= 99999))
+                if (!(0 <= shinaBan && shinaBan <= 999999))
                 {
                     this.textBox_ban_err("不正な品番です");
                 }
@@ -85,10 +85,11 @@ namespace kaede2nd
             if (it.item_sellprice.HasValue)
             {
                 this.label_sellzumi.Visible = true;
-                this.label_sellzumi.Text = "売却済 \\" + it.item_sellprice.Value.ToString("#,##0");
+                this.label_sellzumi.Text = "売却済 ¥" + it.item_sellprice.Value.ToString("#,##0");
                 this.label_sellop.Visible = true;
                 this.label_sellop.Text = "入力者: " +
                     (it.item_sell__Operator != null ? it.item_sell__Operator.operator_name : "不明");
+                this.label_sellop.Text += "  " + Globals.getTimeString(it.item_selltime);
 
                 if (it.item_sellprice.Value == it.item_tagprice)
                 {

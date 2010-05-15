@@ -122,9 +122,9 @@
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label4.Location = new System.Drawing.Point(86, 205);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(21, 21);
+            this.label4.Size = new System.Drawing.Size(22, 21);
             this.label4.TabIndex = 6;
-            this.label4.Text = "\\";
+            this.label4.Text = "¥";
             // 
             // label5
             // 
@@ -151,9 +151,9 @@
             this.label7.Font = new System.Drawing.Font("MS UI Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label7.Location = new System.Drawing.Point(68, 112);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(15, 15);
+            this.label7.Size = new System.Drawing.Size(16, 15);
             this.label7.TabIndex = 11;
-            this.label7.Text = "\\";
+            this.label7.Text = "¥";
             // 
             // textBox_teika
             // 
@@ -194,7 +194,7 @@
             this.textBox_nebiki.Size = new System.Drawing.Size(50, 23);
             this.textBox_nebiki.TabIndex = 13;
             this.textBox_nebiki.TabStop = false;
-            this.textBox_nebiki.Text = "不可";
+            this.textBox_nebiki.Text = "×";
             this.textBox_nebiki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label_CtrlZ
@@ -262,10 +262,10 @@
             // 
             this.button1.Location = new System.Drawing.Point(212, 310);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 23);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 20;
             this.button1.TabStop = false;
-            this.button1.Text = "ログアウト (&L)";
+            this.button1.Text = "変更 (&L)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

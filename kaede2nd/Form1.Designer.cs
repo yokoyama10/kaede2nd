@@ -387,7 +387,7 @@
             this.status_sold.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.status_sold.Name = "status_sold";
             this.status_sold.Size = new System.Drawing.Size(200, 17);
-            this.status_sold.Text = "売上 \\88,888- nnn個";
+            this.status_sold.Text = "売上 ¥88,888- nnn個";
             this.status_sold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
