@@ -27,6 +27,7 @@ namespace kaede2nd
             this.AddColumn(this.dataGridView1, ColumnType.OperatorComment);
 
             this.addDGVEvents(this.dataGridView1);
+            this.dataGridView1.DefaultCellStyle.BackColor = GlobalData.Instance.data.symbolColor;
 
             this.RefreshShowing();
         }

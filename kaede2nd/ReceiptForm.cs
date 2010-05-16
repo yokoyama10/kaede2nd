@@ -566,7 +566,6 @@ namespace kaede2nd
                 MessageBox.Show("商品一覧ウィンドウが生成できませんでした: " + excep.Message);
             }
         }
-
         
     }
 

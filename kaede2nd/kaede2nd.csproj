@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
     <Compile Include="Dao\IConfigDao.cs" />
+    <Compile Include="DbConfig.cs" />
     <Compile Include="Entity\ConfigEntity.cs" />
     <Compile Include="Dao\IItemDao.cs" />
     <Compile Include="Dao\IOperatorDao.cs" />

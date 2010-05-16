@@ -99,7 +99,7 @@
             this.button_ext.Name = "button_ext";
             this.button_ext.Size = new System.Drawing.Size(72, 21);
             this.button_ext.TabIndex = 4;
-            this.button_ext.Text = "その他(&O)";
+            this.button_ext.Text = "メニュー";
             this.button_ext.UseVisualStyleBackColor = true;
             this.button_ext.Click += new System.EventHandler(this.button_ext_Click);
             // 
@@ -114,7 +114,7 @@
             this.toolStripSeparator2,
             this.最後に印刷した商品をリストに復活ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(255, 148);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(255, 126);
             // 
             // 最新の情報に更新RToolStripMenuItem
             // 

@@ -9,11 +9,10 @@ namespace kaede2nd.Dao
     [Bean(typeof(ConfigEntity))]
     public interface IConfigDao
     {
-        [Query("config_id = 0")]
-        List<ConfigEntity> Get();
+        List<ConfigEntity> GetAll();
 
         //INSERT
-        int Insert(ConfigEntity item);
+        int Insert(ConfigEntity cfg);
         //UPDATE
         int Update(ConfigEntity cfg);
     }

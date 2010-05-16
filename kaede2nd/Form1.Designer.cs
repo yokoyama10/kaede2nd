@@ -65,6 +65,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status_itemcount = new System.Windows.Forms.ToolStripStatusLabel();
             this.status_sold = new System.Windows.Forms.ToolStripStatusLabel();
+            this.設定を変更ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -235,6 +236,7 @@
             this.新Receiptを追加UToolStripMenuItem,
             this.最新の情報に更新RToolStripMenuItem,
             this.toolStripSeparator2,
+            this.設定を変更ToolStripMenuItem,
             this.品番カウンタをセットしなおすToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(61, 20);
@@ -390,6 +392,13 @@
             this.status_sold.Text = "売上 ¥88,888- nnn個";
             this.status_sold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // 設定を変更ToolStripMenuItem
+            // 
+            this.設定を変更ToolStripMenuItem.Enabled = false;
+            this.設定を変更ToolStripMenuItem.Name = "設定を変更ToolStripMenuItem";
+            this.設定を変更ToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.設定を変更ToolStripMenuItem.Text = "設定を変更 (&C) 近日実装";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -456,6 +465,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel status_itemcount;
         private System.Windows.Forms.ToolStripStatusLabel status_sold;
+        private System.Windows.Forms.ToolStripMenuItem 設定を変更ToolStripMenuItem;
     }
 }
 

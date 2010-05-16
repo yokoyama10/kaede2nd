@@ -76,30 +76,24 @@ namespace kaede2nd
             }
 
             //Config取得
-            var icdao = data.getIDao<kaede2nd.Dao.IConfigDao>();
-            var lc = icdao.Get();
-            kaede2nd.Entity.ConfigEntity cfg;
-            if (lc.Count == 0)
-            {
-                cfg = new kaede2nd.Entity.ConfigEntity();
-                icdao.Insert(cfg);
-            }
-            else
-            {
-                cfg = lc.Single();
-            }
-            data.bumonName = cfg.config_bumonname;
-            data.companyName = cfg.config_companyname;
-            data.symbolColor = System.Drawing.Color.FromArgb(cfg.config_symbolcolor_argb);
+            var cfg = DbConfig.MakeFromDB();
 
+            data.bumonName = cfg.getValue("bumonname");
+            data.companyName = cfg.getValue("companyname");
+            data.symbolColor = System.Drawing.Color.FromArgb(cfg.getValueInt("symbolcolor_argb"));
 
             if (this.DbAccessSetter == null)
             {
                 GlobalData.Instance.windowTitle = "ゆかり姫萌え萌えソフトウェア";
 
-                GlobalData.Instance.barcodePrefix = cfg.config_barcodeprefix;
-                GlobalData.Instance.itemNameImeOn = cfg.config_itemname_imeon;
-                GlobalData.Instance.enterToTab = cfg.config_entertotab;
+                GlobalData.Instance.barcodePrefix = cfg.getValue("barcodeprefix");
+                if (!Globals.isValidBarcodePrefix(GlobalData.Instance.barcodePrefix))
+                {
+                    MessageBox.Show("barcodeprefix が不正です。正常なバーコードが印刷されませんよ");
+                    GlobalData.Instance.barcodePrefix = "00";
+                }
+                GlobalData.Instance.itemNameImeOn = cfg.getValueBool("itemname_imeon");
+                GlobalData.Instance.enterToTab = cfg.getValueBool("entertotab");
 
                 Program.config.BackupDirectory = this.textBox_backupdest.Text;
 

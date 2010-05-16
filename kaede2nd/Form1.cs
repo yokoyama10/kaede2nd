@@ -104,14 +104,28 @@ namespace kaede2nd
         {
             System.Threading.Thread t = new System.Threading.Thread(
                 (delegate() {
-                    IItemDao itemDao = GlobalData.getIDao<IItemDao>();
-                    string itemcount = itemDao.CountAll().ToString() + "個の商品";
-                    string sold = "売上 ¥" + itemDao.SumSellPrice().ToString("#,##0") + "- " + itemDao.CountSoldItem().ToString() + "個";
 
-                    this.Invoke((MethodInvoker)delegate() {
-                        this.status_itemcount.Text = itemcount;
-                        this.status_sold.Text = sold;
-                    });
+                    try
+                    {
+
+                        IItemDao itemDao = GlobalData.getIDao<IItemDao>();
+                        string itemcount = itemDao.CountAll().ToString() + "個の商品";
+                        string sold = "売上 ¥" + itemDao.SumSellPrice().ToString("#,##0") + "- " + itemDao.CountSoldItem().ToString() + "個";
+
+                        ControlUtil.SafelyOperated(this.statusStrip1,
+                        (MethodInvoker)delegate()
+                        {
+                            this.status_itemcount.Text = itemcount;
+                        });
+
+                        ControlUtil.SafelyOperated(this.statusStrip1,
+                        (MethodInvoker)delegate()
+                        {
+                            this.status_sold.Text = sold;
+                        });
+
+                    }
+                    catch { }
                 }));
             t.Start();
         }
@@ -590,7 +604,15 @@ namespace kaede2nd
             */
 
             var idao = GlobalData.getIDao<IItemDao>();
-            idao.ResetItemIdNumber();
+            try
+            {
+                idao.ResetItemIdNumber();
+            }
+            catch (Exception e2)
+            {
+                MessageBox.Show("失敗しました。ALTER権限がないかも。管理用機能だから諦めるんだ\n" + e2.Message);
+                return;
+            }
             MessageBox.Show("品番カウンタをリセットしました");
         }
 

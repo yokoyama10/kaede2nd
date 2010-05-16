@@ -221,6 +221,11 @@ namespace kaede2nd
 
         }
 
+        public static bool isValidBarcodePrefix(string pref)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(pref, @"^\d\d$");
+        }
+
         public static bool getBoolFromCheckboxString(string str)
         {
             switch (str)
