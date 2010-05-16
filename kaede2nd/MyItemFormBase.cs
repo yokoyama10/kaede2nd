@@ -342,24 +342,10 @@ namespace kaede2nd
 
             SignedRequestHelper helper = new SignedRequestHelper("13R1P6WSEW5Y6CP6MVR2", "yv69PdUY09Mosx/k4T9mwiP2xbcDZG6HMF4fsNuX", "ecs.amazonaws.jp");
 
-            var searchIndexList = new List<string>();
-            if (type == BarcodeType.Isbn)
-            {
-                searchIndexList.Add("Books");
-            }
-            //else if (type == BarcodeType.Jan)
-            else
-            {
-                searchIndexList.Add("Books"); //雑誌むけ
-                searchIndexList.Add("VideoGames");
-                searchIndexList.Add("Music");
-                searchIndexList.Add("DVD");
-            }
-
 
             IDictionary<string, string> requestParams = new Dictionary<string, String>();
             requestParams["Service"] = "AWSECommerceService";
-            requestParams["Version"] = "2009-03-31";
+            requestParams["Version"] = "2009-11-01";
             requestParams["Operation"] = "ItemLookup";
             requestParams["ItemId"] = code;
 
@@ -372,36 +358,32 @@ namespace kaede2nd
             {
                 requestParams["IdType"] = "EAN";
             }
+            requestParams["SearchIndex"] = "All";
 
-            foreach (var searchindex in searchIndexList)
+            string url = helper.Sign(requestParams);
+            System.Diagnostics.Debug.WriteLine(url);
+
+            System.Net.WebClient webc = new System.Net.WebClient();
+
+            using (Stream st = webc.OpenRead(url))
             {
-                requestParams["SearchIndex"] = searchindex;
-
-                string url = helper.Sign(requestParams);
-                System.Diagnostics.Debug.WriteLine(url);
-
-                System.Net.WebClient webc = new System.Net.WebClient();
-
-                using (Stream st = webc.OpenRead(url))
+                if (st == null) { return false; }
+                using (StreamReader sr = new StreamReader(st, Encoding.UTF8))
                 {
-                    if (st == null) { return false; }
-                    using (StreamReader sr = new StreamReader(st, Encoding.UTF8))
+                    XmlDocument xdoc = new XmlDocument();
+                    xdoc.Load(sr);
+
+                    XmlNodeList xlist = xdoc.GetElementsByTagName("Title", @"http://webservices.amazon.com/AWSECommerceService/2009-11-01");
+
+                    if (xlist.Count > 0)
                     {
-                        XmlDocument xdoc = new XmlDocument();
-                        xdoc.Load(sr);
-
-                        XmlNodeList xlist = xdoc.GetElementsByTagName("Title", @"http://webservices.amazon.com/AWSECommerceService/2009-03-31");
-
-                        if (xlist.Count > 0)
+                        XmlNode xtitle = xlist.Item(0);
+                        ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
                         {
-                            XmlNode xtitle = xlist.Item(0);
-                            ControlUtil.SafelyOperated(this, (MethodInvoker)delegate()
-                            {
-                                cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(code);
-                                cell.Value = xtitle.InnerText;
-                            });
-                            return true;
-                        }
+                            cell.DataGridView[ColumnName.isbn, cell.RowIndex].Value = decimal.Parse(code);
+                            cell.Value = xtitle.InnerText;
+                        });
+                        return true;
                     }
                 }
             }

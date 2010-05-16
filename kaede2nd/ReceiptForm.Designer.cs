@@ -53,14 +53,14 @@
             this.商品名でIMEオンToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.商品名編集Enterで右移動ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ネット受付のデータを挿入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.商品リストを表示LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.受付票を印刷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.text_external = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.ネット受付のデータを挿入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip_temp.SuspendLayout();
             this.SuspendLayout();
@@ -314,6 +314,18 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(259, 6);
             // 
+            // ネット受付のデータを挿入ToolStripMenuItem
+            // 
+            this.ネット受付のデータを挿入ToolStripMenuItem.Enabled = false;
+            this.ネット受付のデータを挿入ToolStripMenuItem.Name = "ネット受付のデータを挿入ToolStripMenuItem";
+            this.ネット受付のデータを挿入ToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.ネット受付のデータを挿入ToolStripMenuItem.Text = "ネット受付のデータを挿入 (&N) 近日実装";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
+            // 
             // 最新の情報に更新RToolStripMenuItem
             // 
             this.最新の情報に更新RToolStripMenuItem.Name = "最新の情報に更新RToolStripMenuItem";
@@ -363,30 +375,18 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label5.Location = new System.Drawing.Point(12, 46);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 12);
+            this.label5.Size = new System.Drawing.Size(150, 12);
             this.label5.TabIndex = 82;
-            this.label5.Text = "この欄を変更後は「確定」";
-            // 
-            // ネット受付のデータを挿入ToolStripMenuItem
-            // 
-            this.ネット受付のデータを挿入ToolStripMenuItem.Enabled = false;
-            this.ネット受付のデータを挿入ToolStripMenuItem.Name = "ネット受付のデータを挿入ToolStripMenuItem";
-            this.ネット受付のデータを挿入ToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.ネット受付のデータを挿入ToolStripMenuItem.Text = "ネット受付のデータを挿入 (&N) 近日実装";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
+            this.label5.Text = "この辺を変更後は「確定」必要";
             // 
             // ReceiptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 401);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label_sakini);
             this.Controls.Add(this.text_external);
             this.Controls.Add(this.label_external);
