@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("s2dao")]
+[assembly: AssemblyTitle("kaede2nd")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("FJ-USER")]
-[assembly: AssemblyProduct("s2dao")]
-[assembly: AssemblyCopyright("Copyright © FJ-USER 2009")]
+[assembly: AssemblyCompany("筑駒58期縁日班")]
+[assembly: AssemblyProduct("ゆかり姫萌え萌えソフトウェア")]
+[assembly: AssemblyCopyright("Copyright © 筑駒58期縁日班 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -35,3 +36,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("ja-JP")]
