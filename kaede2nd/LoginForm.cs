@@ -81,6 +81,7 @@ namespace kaede2nd
             data.bumonName = cfg.getValue("bumonname");
             data.companyName = cfg.getValue("companyname");
             data.symbolColor = System.Drawing.Color.FromArgb(cfg.getValueInt("symbolcolor_argb"));
+            data.bumonTextColor = System.Drawing.Color.FromArgb(cfg.getValueInt("bumontextcolor_argb"));
 
             if (this.DbAccessSetter == null)
             {

@@ -229,7 +229,7 @@ namespace kaede2nd
                 Brushes.Black, x + 30, y + 3.5f + (5.25f) * 3 + 10.0f + 0.4f);
 
             e.Graphics.DrawString(GlobalData.Instance.data.companyName, new Font("MS Mincho", 2.2f, FontStyle.Regular, GraphicsUnit.Millimeter),
-                Brushes.Black, x + 46, y + 3.5f + (5.25f) * 3 + 10.9f);
+                new SolidBrush(GlobalData.Instance.data.bumonTextColor), x + 46, y + 3.5f + (5.25f) * 3 + 10.9f);
 
 
             if (printit.volumeNum < 2)

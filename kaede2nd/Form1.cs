@@ -610,7 +610,7 @@ namespace kaede2nd
             }
             catch (Exception e2)
             {
-                MessageBox.Show("失敗しました。ALTER権限がないかも。管理用機能だから諦めるんだ\n" + e2.Message);
+                MessageBox.Show("失敗しました。ALTER権限がないかも。管理用機能だから諦めるんだ\n" + e2.Message, "rootでログインしてください");
                 return;
             }
             MessageBox.Show("品番カウンタをリセットしました");
@@ -752,6 +752,14 @@ namespace kaede2nd
         private void タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Program.config.ShowPrintDialog_AtTagPrint = this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Checked;
+        }
+
+        private void 設定を変更ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((new ConfigForm()).ShowDialog() == DialogResult.OK)
+            {
+                this.ログイン画面に戻るLToolStripMenuItem.PerformClick();
+            }
         }
 
         

@@ -50,6 +50,7 @@
             this.新Receiptを追加UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.設定を変更ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.品番カウンタをセットしなおすToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.機能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.売却ウィンドウSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +66,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status_itemcount = new System.Windows.Forms.ToolStripStatusLabel();
             this.status_sold = new System.Windows.Forms.ToolStripStatusLabel();
-            this.設定を変更ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -124,7 +124,7 @@
             this.機能ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(708, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(708, 26);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -144,52 +144,52 @@
             this.ログイン画面に戻るLToolStripMenuItem,
             this.終了XToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(66, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(85, 22);
             this.toolStripMenuItem1.Text = "ファイル(&F)";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(246, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(283, 22);
             this.toolStripMenuItem3.Text = "バックアップを保存(&B)";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // cSVで出力CToolStripMenuItem
             // 
             this.cSVで出力CToolStripMenuItem.Name = "cSVで出力CToolStripMenuItem";
-            this.cSVで出力CToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.cSVで出力CToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.cSVで出力CToolStripMenuItem.Text = "CSVで出力(&C)...";
             this.cSVで出力CToolStripMenuItem.Click += new System.EventHandler(this.cSVで出力CToolStripMenuItem_Click);
             // 
             // 楓ちゃん形式で出力KToolStripMenuItem
             // 
             this.楓ちゃん形式で出力KToolStripMenuItem.Name = "楓ちゃん形式で出力KToolStripMenuItem";
-            this.楓ちゃん形式で出力KToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.楓ちゃん形式で出力KToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.楓ちゃん形式で出力KToolStripMenuItem.Text = "楓ちゃん形式で出力(&K)...";
             this.楓ちゃん形式で出力KToolStripMenuItem.Click += new System.EventHandler(this.kaedeOutput);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(243, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(280, 6);
             // 
             // 最近追加された商品リストLToolStripMenuItem
             // 
             this.最近追加された商品リストLToolStripMenuItem.Name = "最近追加された商品リストLToolStripMenuItem";
-            this.最近追加された商品リストLToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.最近追加された商品リストLToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.最近追加された商品リストLToolStripMenuItem.Text = "最近追加された商品リスト (&L)";
             this.最近追加された商品リストLToolStripMenuItem.Click += new System.EventHandler(this.最近追加された商品リストLToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(243, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(280, 6);
             // 
             // ページ設定UToolStripMenuItem
             // 
             this.ページ設定UToolStripMenuItem.Name = "ページ設定UToolStripMenuItem";
-            this.ページ設定UToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.ページ設定UToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.ページ設定UToolStripMenuItem.Text = "ページ設定(&U)...";
             this.ページ設定UToolStripMenuItem.Click += new System.EventHandler(this.ページ設定UToolStripMenuItem_Click);
             // 
@@ -199,7 +199,7 @@
             this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckOnClick = true;
             this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Name = "タグ印刷ごとにダイアログを表示ToolStripMenuItem";
-            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Text = "タグ印刷ごとにダイアログを表示";
             this.タグ印刷ごとにダイアログを表示ToolStripMenuItem.Click += new System.EventHandler(this.タグ印刷ごとにダイアログを表示ToolStripMenuItem_Click);
             // 
@@ -207,26 +207,26 @@
             // 
             this.選択中の票を印刷PToolStripMenuItem.Name = "選択中の票を印刷PToolStripMenuItem";
             this.選択中の票を印刷PToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.選択中の票を印刷PToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.選択中の票を印刷PToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.選択中の票を印刷PToolStripMenuItem.Text = "選択中の票のタグを印刷(&P)...";
             this.選択中の票を印刷PToolStripMenuItem.Click += new System.EventHandler(this.選択中の票を印刷PToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(243, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(280, 6);
             // 
             // ログイン画面に戻るLToolStripMenuItem
             // 
             this.ログイン画面に戻るLToolStripMenuItem.Name = "ログイン画面に戻るLToolStripMenuItem";
-            this.ログイン画面に戻るLToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.ログイン画面に戻るLToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.ログイン画面に戻るLToolStripMenuItem.Text = "ログイン画面に戻る(&L)";
             this.ログイン画面に戻るLToolStripMenuItem.Click += new System.EventHandler(this.ログイン画面に戻るLToolStripMenuItem_Click);
             // 
             // 終了XToolStripMenuItem
             // 
             this.終了XToolStripMenuItem.Name = "終了XToolStripMenuItem";
-            this.終了XToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.終了XToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.終了XToolStripMenuItem.Text = "終了(&X)";
             this.終了XToolStripMenuItem.Click += new System.EventHandler(this.終了XToolStripMenuItem_Click);
             // 
@@ -239,14 +239,14 @@
             this.設定を変更ToolStripMenuItem,
             this.品番カウンタをセットしなおすToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(61, 20);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(75, 22);
             this.toolStripMenuItem2.Text = "データ(&D)";
             // 
             // 新Receiptを追加UToolStripMenuItem
             // 
             this.新Receiptを追加UToolStripMenuItem.Name = "新Receiptを追加UToolStripMenuItem";
             this.新Receiptを追加UToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.新Receiptを追加UToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.新Receiptを追加UToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.新Receiptを追加UToolStripMenuItem.Text = "新Receiptを追加... (&U)";
             this.新Receiptを追加UToolStripMenuItem.Click += new System.EventHandler(this.新Receiptを追加UToolStripMenuItem_Click);
             // 
@@ -254,20 +254,27 @@
             // 
             this.最新の情報に更新RToolStripMenuItem.Name = "最新の情報に更新RToolStripMenuItem";
             this.最新の情報に更新RToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.最新の情報に更新RToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.最新の情報に更新RToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
             this.最新の情報に更新RToolStripMenuItem.Text = "最新の情報に更新 (&R)";
             this.最新の情報に更新RToolStripMenuItem.Click += new System.EventHandler(this.最新の情報に更新RToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(263, 6);
+            // 
+            // 設定を変更ToolStripMenuItem
+            // 
+            this.設定を変更ToolStripMenuItem.Name = "設定を変更ToolStripMenuItem";
+            this.設定を変更ToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.設定を変更ToolStripMenuItem.Text = "部門設定を変更 (&S)";
+            this.設定を変更ToolStripMenuItem.Click += new System.EventHandler(this.設定を変更ToolStripMenuItem_Click);
             // 
             // 品番カウンタをセットしなおすToolStripMenuItem
             // 
             this.品番カウンタをセットしなおすToolStripMenuItem.Name = "品番カウンタをセットしなおすToolStripMenuItem";
-            this.品番カウンタをセットしなおすToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.品番カウンタをセットしなおすToolStripMenuItem.Text = "品番カウンタをセットしなおす(&C)";
+            this.品番カウンタをセットしなおすToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
+            this.品番カウンタをセットしなおすToolStripMenuItem.Text = "品番カウンタをセットしなおす (&C)";
             this.品番カウンタをセットしなおすToolStripMenuItem.Click += new System.EventHandler(this.品番カウンタをセットしなおすToolStripMenuItem_Click);
             // 
             // 機能ToolStripMenuItem
@@ -282,58 +289,58 @@
             this.toolStripSeparator6,
             this.バージョン情報ToolStripMenuItem});
             this.機能ToolStripMenuItem.Name = "機能ToolStripMenuItem";
-            this.機能ToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.機能ToolStripMenuItem.Size = new System.Drawing.Size(63, 22);
             this.機能ToolStripMenuItem.Text = "機能(&O)";
             // 
             // 売却ウィンドウSToolStripMenuItem
             // 
             this.売却ウィンドウSToolStripMenuItem.Name = "売却ウィンドウSToolStripMenuItem";
-            this.売却ウィンドウSToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.売却ウィンドウSToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.売却ウィンドウSToolStripMenuItem.Text = "売却ウィンドウ (&S)";
             this.売却ウィンドウSToolStripMenuItem.Click += new System.EventHandler(this.売却ウィンドウSToolStripMenuItem_Click);
             // 
             // 監査ウィンドウWToolStripMenuItem
             // 
             this.監査ウィンドウWToolStripMenuItem.Name = "監査ウィンドウWToolStripMenuItem";
-            this.監査ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.監査ウィンドウWToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.監査ウィンドウWToolStripMenuItem.Text = "監査ウィンドウ (&W)";
             this.監査ウィンドウWToolStripMenuItem.Click += new System.EventHandler(this.監査ウィンドウWToolStripMenuItem_Click);
             // 
             // オペレーターIDを管理ToolStripMenuItem
             // 
             this.オペレーターIDを管理ToolStripMenuItem.Name = "オペレーターIDを管理ToolStripMenuItem";
-            this.オペレーターIDを管理ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.オペレーターIDを管理ToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.オペレーターIDを管理ToolStripMenuItem.Text = "オペレーターIDを管理 (&O)";
             this.オペレーターIDを管理ToolStripMenuItem.Click += new System.EventHandler(this.オペレーターIDを管理ToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(218, 6);
             // 
             // 返金返品ToolStripMenuItem
             // 
             this.返金返品ToolStripMenuItem.Name = "返金返品ToolStripMenuItem";
-            this.返金返品ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.返金返品ToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.返金返品ToolStripMenuItem.Text = "返金・返品 (&R)";
             this.返金返品ToolStripMenuItem.Click += new System.EventHandler(this.返金返品ToolStripMenuItem_Click);
             // 
             // 各部門の返金額合算ToolStripMenuItem
             // 
             this.各部門の返金額合算ToolStripMenuItem.Name = "各部門の返金額合算ToolStripMenuItem";
-            this.各部門の返金額合算ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.各部門の返金額合算ToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.各部門の返金額合算ToolStripMenuItem.Text = "各部門の返金額合算 (&G)";
             this.各部門の返金額合算ToolStripMenuItem.Click += new System.EventHandler(this.各部門の返金額合算ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(218, 6);
             // 
             // バージョン情報ToolStripMenuItem
             // 
             this.バージョン情報ToolStripMenuItem.Name = "バージョン情報ToolStripMenuItem";
-            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.バージョン情報ToolStripMenuItem.Text = "バージョン情報 (&A)";
             this.バージョン情報ToolStripMenuItem.Click += new System.EventHandler(this.バージョン情報ToolStripMenuItem_Click);
             // 
@@ -391,13 +398,6 @@
             this.status_sold.Size = new System.Drawing.Size(200, 17);
             this.status_sold.Text = "売上 ¥88,888- nnn個";
             this.status_sold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // 設定を変更ToolStripMenuItem
-            // 
-            this.設定を変更ToolStripMenuItem.Enabled = false;
-            this.設定を変更ToolStripMenuItem.Name = "設定を変更ToolStripMenuItem";
-            this.設定を変更ToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.設定を変更ToolStripMenuItem.Text = "設定を変更 (&C) 近日実装";
             // 
             // Form1
             // 

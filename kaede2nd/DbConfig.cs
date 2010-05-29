@@ -53,6 +53,16 @@ namespace kaede2nd
             }
         }
 
+        public void setValueBool(string name, bool value)
+        {
+            this.setValue(name, value ? "1" : "0");
+        }
+
+        public void setValueInt(string name, Int32 value)
+        {
+            this.setValue(name, value.ToString());
+        }
+
         public string getValue(string name)
         {
             var s1 = from d in this.data

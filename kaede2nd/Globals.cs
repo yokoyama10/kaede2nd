@@ -499,6 +499,7 @@ namespace kaede2nd
         public string bumonName = "不明な部門";
         public string companyName = "不明な縁日班不明部門";
         public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
+        public System.Drawing.Color bumonTextColor = System.Drawing.Color.Black;
 
         public DatabaseAccess(string host, string port, string user, string pass, string dbname)
         {
