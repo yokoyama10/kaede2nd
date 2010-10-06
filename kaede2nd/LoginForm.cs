@@ -74,9 +74,9 @@ namespace kaede2nd
                 data.isReadonly = true;
                 this.DbAccessSetter(data);
             }
-
+            
             //Config取得
-            var cfg = DbConfig.MakeFromDB();
+            var cfg = DbConfig.MakeFromDB(data);
 
             data.bumonName = cfg.getValue("bumonname");
             data.companyName = cfg.getValue("companyname");
@@ -105,7 +105,14 @@ namespace kaede2nd
 
         private void button2_Click(object sender, EventArgs e)
         {
-            System.Environment.Exit(0);
+            if (this.DbAccessSetter == null)
+            {
+                System.Environment.Exit(0);
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void setTextbox(int index)

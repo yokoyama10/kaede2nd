@@ -19,7 +19,7 @@ namespace kaede2nd
 
             this.button_ok.Enabled = !GlobalData.Instance.data.isReadonly;
 
-            this.dconf = DbConfig.MakeFromDB();
+            this.dconf = DbConfig.MakeFromDB(GlobalData.Instance.data);
 
             this.textBox_bumon.Text = this.dconf.getValue("bumonname");
             this.textBox_company.Text = this.dconf.getValue("companyname");
@@ -71,13 +71,13 @@ namespace kaede2nd
                 return;
             }
 
-            this.dconf.setValue("bumonname", this.textBox_bumon.Text);
-            this.dconf.setValue("companyname", this.textBox_company.Text);
-            this.dconf.setValueInt("symbolcolor_argb", this.pictureBox1.BackColor.ToArgb());
-            this.dconf.setValueInt("bumontextcolor_argb", this.pictureBox2.BackColor.ToArgb());
-            this.dconf.setValue("barcodeprefix", this.textBox_barcode.Text);
-            this.dconf.setValueBool("itemname_imeon", this.checkBox_imeon.Checked);
-            this.dconf.setValueBool("entertotab", this.checkBox_entertotab.Checked);
+            DbConfig.setValue("bumonname", this.textBox_bumon.Text);
+            DbConfig.setValue("companyname", this.textBox_company.Text);
+            DbConfig.setValueInt("symbolcolor_argb", this.pictureBox1.BackColor.ToArgb());
+            DbConfig.setValueInt("bumontextcolor_argb", this.pictureBox2.BackColor.ToArgb());
+            DbConfig.setValue("barcodeprefix", this.textBox_barcode.Text);
+            DbConfig.setValueBool("itemname_imeon", this.checkBox_imeon.Checked);
+            DbConfig.setValueBool("entertotab", this.checkBox_entertotab.Checked);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

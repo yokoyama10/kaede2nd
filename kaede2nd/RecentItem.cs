@@ -23,7 +23,11 @@ namespace kaede2nd
         private List<RecentItemSet> recentList = new List<RecentItemSet>();
         public void AddRecentItemId(UInt32 iid)
         {
+            this.AddRecentItemId(iid, true);
+        }
 
+        public void AddRecentItemId(UInt32 iid, bool doRedraw)
+        {
             RecentItemSet ris = this.GetItemSetFromId(iid);
             if (ris != null)
             {
@@ -32,7 +36,11 @@ namespace kaede2nd
             }
 
             this.recentList.Add(new RecentItemSet(iid));
-            this.ReDraw();
+
+            if (doRedraw)
+            {
+                this.ReDraw();
+            }
         }
 
         public void ReDraw()

@@ -22,16 +22,16 @@ namespace kaede2nd
 
         private List<ConfigEntity> data;
 
-        public static DbConfig MakeFromDB()
+        public static DbConfig MakeFromDB(DatabaseAccess dbaccess)
         {
             DbConfig c = new DbConfig();
-            var cdao = GlobalData.getIDao<IConfigDao>();
+            var cdao = dbaccess.getIDao<IConfigDao>();
             c.data = cdao.GetAll();
 
             return c;
         }
 
-        public void setValue(string name, string value)
+        public static void setValue(string name, string value)
         {
             var cdao = GlobalData.getIDao<IConfigDao>();
 
@@ -53,14 +53,14 @@ namespace kaede2nd
             }
         }
 
-        public void setValueBool(string name, bool value)
+        public static void setValueBool(string name, bool value)
         {
-            this.setValue(name, value ? "1" : "0");
+            DbConfig.setValue(name, value ? "1" : "0");
         }
 
-        public void setValueInt(string name, Int32 value)
+        public static void setValueInt(string name, Int32 value)
         {
-            this.setValue(name, value.ToString());
+            DbConfig.setValue(name, value.ToString());
         }
 
         public string getValue(string name)

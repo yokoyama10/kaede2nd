@@ -174,9 +174,9 @@ namespace kaede2nd
             for (int i = 0; i < itemids.Count; i++)
             {
 
-                GlobalData.Instance.recentItemForm.AddRecentItemId(itemids[i]);
+                GlobalData.Instance.recentItemForm.AddRecentItemId(itemids[i], false);
             }
-
+            GlobalData.Instance.recentItemForm.ReDraw();
         }
 
 
