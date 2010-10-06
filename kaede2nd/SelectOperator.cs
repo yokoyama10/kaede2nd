@@ -43,6 +43,7 @@ namespace kaede2nd
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.listBox1.SelectedItem == null) { return; }
             this.textBox1.Text = ((Operator)this.listBox1.SelectedItem).operator_id.ToString();
         }
 

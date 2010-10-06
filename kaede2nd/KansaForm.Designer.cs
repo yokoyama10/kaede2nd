@@ -64,6 +64,7 @@
             this.button_allend = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_selltime = new System.Windows.Forms.TextBox();
+            this.button_reset = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -405,9 +406,9 @@
             // button_allend
             // 
             this.button_allend.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button_allend.Location = new System.Drawing.Point(413, 336);
+            this.button_allend.Location = new System.Drawing.Point(397, 336);
             this.button_allend.Name = "button_allend";
-            this.button_allend.Size = new System.Drawing.Size(156, 18);
+            this.button_allend.Size = new System.Drawing.Size(172, 18);
             this.button_allend.TabIndex = 39;
             this.button_allend.TabStop = false;
             this.button_allend.Text = "本日の監査を完了（管理用）";
@@ -431,11 +432,24 @@
             this.textBox_selltime.Size = new System.Drawing.Size(109, 19);
             this.textBox_selltime.TabIndex = 41;
             // 
+            // button_reset
+            // 
+            this.button_reset.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.button_reset.Location = new System.Drawing.Point(397, 312);
+            this.button_reset.Name = "button_reset";
+            this.button_reset.Size = new System.Drawing.Size(172, 18);
+            this.button_reset.TabIndex = 42;
+            this.button_reset.TabStop = false;
+            this.button_reset.Text = "本日の監査をやりなおす（管理用）";
+            this.button_reset.UseVisualStyleBackColor = true;
+            this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
+            // 
             // KansaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(587, 382);
+            this.Controls.Add(this.button_reset);
             this.Controls.Add(this.textBox_selltime);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button_allend);
@@ -522,5 +536,6 @@
         private System.Windows.Forms.Button button_allend;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_selltime;
+        private System.Windows.Forms.Button button_reset;
     }
 }

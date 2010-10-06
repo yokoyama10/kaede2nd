@@ -404,5 +404,24 @@ namespace kaede2nd
             this.RefreshRemain();
         }
 
+        private void button_reset_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("このコマンドでは、「監査対象」の商品を全て未監査に戻します。\n" +
+                "よろしいですか？", "監査やりなおし？", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (res != DialogResult.Yes) { return; }
+
+            var itemDao = GlobalData.getIDao<IItemDao>();
+            List<Item> lit = itemDao.GetNeedKansaItem();
+
+            DateTime dt = DateTime.Now;
+            for (int i = 0; i < lit.Count; i++)
+            {
+                lit[i].item_kansa_flag1 = null;
+                itemDao.Update(lit[i]);
+            }
+
+            this.RefreshRemain();
+        }
+
     }
 }
