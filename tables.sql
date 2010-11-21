@@ -6,35 +6,29 @@ CREATE TABLE operator (
 	operator_comment TEXT default NULL, #コメント
 
 	PRIMARY KEY ( operator_id )
-) type=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE external ( #生徒でない人
-	external_id INT UNSIGNED AUTO_INCREMENT NOT NULL, #外部者ID
-	external_type CHAR(2) default NULL, #種別
-	external_name VARCHAR(255) UNIQUE NOT NULL, #名前
-	external_comment TEXT default NULL, #コメント
+CREATE TABLE config (
+	config_name char(128) NOT NULL, #設定項目の名前
+	config_value text NOT NULL, #設定の内容
 
-	PRIMARY KEY ( external_id )
-) type=InnoDB;
+	PRIMARY KEY  (config_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE receipt (
 	receipt_id INT UNSIGNED AUTO_INCREMENT NOT NULL, #受付書ID
 	receipt_pass CHAR(8) default NULL, #パスワード
 	receipt_seller CHAR(4) NOT NULL default "9999", #売り手コード（出席番号）
-###	receipt_seller_external INT UNSIGNED default NULL, #外部id
 	receipt_seller_exname VARCHAR(64) default NULL, #名前
-	receipt_seller_branch INT UNSIGNED default NULL, #枝番
 	receipt_time DATETIME default NULL, #受付時刻
 	receipt_operator INT UNSIGNED default NULL, #受付者
 	receipt_payback BOOL default FALSE, #返金済みか NULL: 不明
-###	receipt_loss BOOL NOT NULL default FALSE, #紛失
 	receipt_comment VARCHAR(255) default NULL, #コメント
 
 	PRIMARY KEY ( receipt_id ),
-###	FOREIGN KEY ( receipt_seller_external ) REFERENCES external(external_id) ON DELETE SET NULL,
 	FOREIGN KEY ( receipt_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL
 
-) type=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE item (
 	item_id INT UNSIGNED AUTO_INCREMENT NOT NULL, #商品ID
@@ -52,9 +46,15 @@ CREATE TABLE item (
 	item_sellprice INT UNSIGNED default NULL, #売価
 	item_selltime DATETIME default NULL, #販売時刻
 	item_sell_operator INT UNSIGNED default NULL, #販売入力者
-	item_adjust INT SIGNED default NULL, #事故時調整額
+
+	item_kansa_end DATETIME default NULL, #監査終了時刻
+	item_kansa_flag1 INT UNSIGNED default NULL, #監査フラグ
+	
+	item_adjust INT SIGNED default NULL, #事故時調整額（未使用）
 
 	item_isbn BIGINT(20) UNSIGNED default NULL, #ISBNコード
+	item_volumes INT UNSIGNED default NULL, #分冊数
+
 	item_comment VARCHAR(255) default NULL, #商品コメント
 	item_sellcomment TEXT default NULL, #販売コメント、事故詳細
 	item_userspace TEXT default NULL, #自由領域
@@ -64,4 +64,4 @@ CREATE TABLE item (
 	FOREIGN KEY ( item_receipt_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL,
 	FOREIGN KEY ( item_sell_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL
 
-) type=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
