@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+
+<components>
+
+  <!--(Sqlite)-->
+  <component name="SQLite"
+  class="Seasar.Extension.ADO.DataProvider">
+    <property name="ConnectionType">"System.Data.SQLite.SQLiteConnection"</property>
+    <property name="CommandType">"System.Data.SQLite.SQLiteCommand"</property>
+    <property name="ParameterType">"System.Data.SQLite.SQLiteParameter"</property>
+    <property name="DataAdapterType">"System.Data.SQLite.SQLiteDataAdapter"</property>
+  </component>
+
+  <!-- TransactoinContext（データソースで使用する） -->
+  <component name="TransactionContext"
+             class="Seasar.Extension.Tx.Impl.TransactionContext">
+    <property name="IsolationLevel">
+      System.Data.IsolationLevel.ReadCommitted
+    </property>
+  </component>
+
+  <component name="SqlDataSource"
+  class="Seasar.Extension.Tx.Impl.TxDataSource">
+    <property name="DataProvider">SQLite</property>
+    <!--<property name="ProviderInvariantName">"provider"</property>-->
+    <property name="ConnectionString">"Data Source=[PATH_TO_FILE];New=False;Compress=False;Synchronous=Off;UTF8Encoding=True;Version=3"</property>
+  </component>
+
+  <!-- S2Dao.NETのDaoInterceptorとそれに必要なコンポーネント -->
+  <component class="Seasar.Extension.ADO.Impl.BasicDataReaderFactory" />
+  <component class="Seasar.Extension.ADO.Impl.BasicCommandFactory" />
+  <component class="Seasar.Dao.Impl.DaoMetaDataFactoryImpl" />
+  <component name="DaoInterceptor"
+             class="Seasar.Dao.Interceptors.S2DaoInterceptor"/>
+
+
+  <component class="kaede2nd.Dao.IReceiptDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IOperatorDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IItemDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IConfigDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+  
+  <component class="Seasar.Dao.Impl.FieldAnnotationReaderFactory" />
+
+</components>

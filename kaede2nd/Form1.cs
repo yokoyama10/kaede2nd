@@ -31,7 +31,7 @@ namespace kaede2nd
             log4net.Config.XmlConfigurator.Configure(log4net.LogManager.GetRepository(), info);
             */
 
-            logger.Info("MessageTest");
+            //logger.Info("MessageTest");
 
             using (LoginForm lf = new LoginForm())
             {

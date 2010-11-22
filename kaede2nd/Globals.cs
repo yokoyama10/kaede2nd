@@ -488,6 +488,7 @@ namespace kaede2nd
 
     public class DatabaseAccess
     {
+        public static string SQLiteHostString = "__sqlite";
         //DBConnectInfo
         public readonly string db_host, db_port, db_user, db_pass, db_dbname;
 
@@ -503,21 +504,41 @@ namespace kaede2nd
 
         public DatabaseAccess(string host, string port, string user, string pass, string dbname)
         {
-            string con = "host=" + host + ";port=" + port
-                + ";user id=" + user + ";password=" + pass
-                + ";database=" + dbname + ";charset=utf8;";
+            if (host == DatabaseAccess.SQLiteHostString)
+            {
+                string con = "Data Source=\"" + dbname
+                        + "\";New=True;Compress=False;Synchronous=Off;UTF8Encoding=True;Version=3";
+                this.db_host = host;
+                this.db_port = null;
+                this.db_user = null;
+                this.db_pass = null;
+                this.db_dbname = dbname;
 
-            this.db_host = host;
-            this.db_port = port;
-            this.db_user = user;
-            this.db_pass = pass;
-            this.db_dbname = dbname;
+                this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao_sqlite.dicon");
 
-            this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao.dicon");
+                this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
+                    this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
+                this.txDataSource.ConnectionString = con;
 
-            this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
-                this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
-            this.txDataSource.ConnectionString = con;
+            }
+            else
+            {
+                string con = "host=" + host + ";port=" + port
+                    + ";user id=" + user + ";password=" + pass
+                    + ";database=" + dbname + ";charset=utf8;";
+
+                this.db_host = host;
+                this.db_port = port;
+                this.db_user = user;
+                this.db_pass = pass;
+                this.db_dbname = dbname;
+
+                this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao.dicon");
+
+                this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
+                    this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
+                this.txDataSource.ConnectionString = con;
+            }
 
             this.container.Init();
         }
@@ -595,7 +616,7 @@ namespace kaede2nd
 
                 instance.data = new DatabaseAccess(host, port, user, pass, dbname);
 
-                instance.recentItemForm = new RecentItem();
+                instance.recentItemForm = null;
                 instance.mainForm = null;
 
 

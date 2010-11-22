@@ -90,13 +90,15 @@ namespace kaede2nd
                 GlobalData.Instance.barcodePrefix = cfg.getValue("barcodeprefix");
                 if (!Globals.isValidBarcodePrefix(GlobalData.Instance.barcodePrefix))
                 {
-                    MessageBox.Show("barcodeprefix が不正です。正常なバーコードが印刷されませんよ");
+                    MessageBox.Show("バーコード識別子 (barcodeprefix) が不正です。正常なバーコードが印刷されませんよ");
                     GlobalData.Instance.barcodePrefix = "00";
                 }
                 GlobalData.Instance.itemNameImeOn = cfg.getValueBool("itemname_imeon");
                 GlobalData.Instance.enterToTab = cfg.getValueBool("entertotab");
 
                 Program.config.BackupDirectory = this.textBox_backupdest.Text;
+
+                GlobalData.Instance.recentItemForm = new RecentItem();
 
             }
 

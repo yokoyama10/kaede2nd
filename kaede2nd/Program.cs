@@ -20,6 +20,7 @@ namespace kaede2nd
         [STAThread]
         static void Main()
         {
+            SeasarValueType.AddValueType();
 
             string cfgFullPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), configFile);
 
