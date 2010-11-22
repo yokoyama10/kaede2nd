@@ -382,9 +382,9 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(356, 169);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(106, 12);
+            this.label17.Size = new System.Drawing.Size(100, 12);
             this.label17.TabIndex = 36;
-            this.label17.Text = "（10秒ごと自動更新）";
+            this.label17.Text = "（5秒ごと自動更新）";
             // 
             // label18
             // 
