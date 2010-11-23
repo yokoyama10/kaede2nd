@@ -29,5 +29,15 @@ namespace kaede2nd.Entity
         {
             return this.operator_id.ToString() + ". " + this.operator_name;
         }
+
+
+        public static string create_sqlite = @"
+CREATE TABLE operator (
+	operator_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	operator_name VARCHAR(255) UNIQUE NOT NULL,
+	operator_comment TEXT default NULL
+);
+";
+
     }
 }

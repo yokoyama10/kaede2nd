@@ -15,5 +15,6 @@ namespace kaede2nd.Dao
         int Insert(ConfigEntity cfg);
         //UPDATE
         int Update(ConfigEntity cfg);
+
     }
 }

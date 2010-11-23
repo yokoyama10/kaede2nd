@@ -20,6 +20,13 @@ CREATE TABLE  `en_test`.`config` (
         public string config_name { get; set; }
         public string config_value { get; set; }
 
+        public static string create_sqlite = @"
+CREATE TABLE config (
+	config_name char(128) PRIMARY KEY NOT NULL,
+	config_value text NOT NULL
+);
+";
+
         public ConfigEntity() { }
 
         public ConfigEntity(string name, string value)
@@ -27,5 +34,6 @@ CREATE TABLE  `en_test`.`config` (
             this.config_name = name;
             this.config_value = value;
         }
+
     }
 }

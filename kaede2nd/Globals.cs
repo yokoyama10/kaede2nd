@@ -548,6 +548,11 @@ namespace kaede2nd
             return (T)this.container.GetComponent(typeof(T));
         }
 
+        public bool IsSQLite()
+        {
+            return this.db_host == DatabaseAccess.SQLiteHostString;
+        }
+
     }
 
     /*

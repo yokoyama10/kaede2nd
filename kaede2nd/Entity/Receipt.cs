@@ -47,6 +47,20 @@ namespace kaede2nd.Entity
         public string receipt_comment { get; set; }
 
 
+        public static string create_sqlite = @"
+CREATE TABLE receipt (
+	receipt_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	receipt_pass CHAR(8) default NULL,
+	receipt_seller CHAR(4) NOT NULL default " + "\"9999\"" + @",
+	receipt_seller_exname VARCHAR(64) default NULL,
+	receipt_time DATETIME default NULL,
+	receipt_operator INTEGER default NULL,
+	receipt_payback BOOL default FALSE,
+	receipt_comment VARCHAR(255) default NULL,
+
+	FOREIGN KEY ( receipt_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL
+);
+";
 
 
         public string getSellerString()

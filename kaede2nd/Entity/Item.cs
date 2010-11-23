@@ -89,6 +89,44 @@ namespace kaede2nd.Entity
         public string item_sellcomment { get; set; }
         public string item_userspace { get; set; }
 
+
+        public static string create_sqlite = @"
+CREATE TABLE item (
+	item_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	item_receipt_id INTEGER NOT NULL,
+	item_name VARCHAR(255) NOT NULL,
+	item_tagprice INTEGER NOT NULL default 0,
+	item_tataki BOOL NOT NULL default FALSE,
+	item_return BOOL NOT NULL default TRUE,
+	item_genre VARCHAR(255) default NULL,
+	item_sellway VARCHAR(255) default NULL,
+
+	item_receipt_time DATETIME default NULL,
+	item_receipt_operator INTEGER default NULL,
+
+	item_sellprice INTEGER default NULL,
+	item_selltime DATETIME default NULL,
+	item_sell_operator INTEGER default NULL,
+
+	item_kansa_end DATETIME default NULL,
+	item_kansa_flag1 INTEGER default NULL,
+	
+	item_adjust INTEGER default NULL,
+
+	item_isbn TEXT default NULL,
+	item_volumes INTEGER default NULL,
+
+	item_comment VARCHAR(255) default NULL,
+	item_sellcomment TEXT default NULL,
+	item_userspace TEXT default NULL,
+
+	FOREIGN KEY ( item_receipt_id ) REFERENCES receipt(receipt_id) ON DELETE CASCADE,
+	FOREIGN KEY ( item_receipt_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL,
+	FOREIGN KEY ( item_sell_operator ) REFERENCES operator(operator_id) ON DELETE SET NULL
+
+);
+";
+
         public static string GetCSVHeader()
         {
             return "id,票番,出品者,商品名,定価,売価,返す?,売却日時,コメント,監査終了日時";

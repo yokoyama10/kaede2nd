@@ -27,6 +27,11 @@ namespace kaede2nd
             {
                 this.listBox1.Items.Add(op);
             }
+
+            if (lop.Count == 0)
+            {
+                MessageBox.Show("先に[機能]→[オペレーターIDを管理]で設定を済ませてください");
+            }
         }
 
         public static DialogResult ShowSelectOperatorDialog(out Operator op)

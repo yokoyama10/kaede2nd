@@ -22,5 +22,7 @@ namespace kaede2nd.Dao
 
         [Query("operator_id = /*operator_id*/")]
         List<Operator> GetById(UInt32 operator_id);
+
     }
+
 }

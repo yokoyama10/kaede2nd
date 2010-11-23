@@ -493,6 +493,7 @@
             this.Name = "KansaForm";
             this.Text = "監査";
             this.Load += new System.EventHandler(this.KansaForm_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.KansaForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -329,7 +329,7 @@
             // 
             this.各部門の返金額合算ToolStripMenuItem.Name = "各部門の返金額合算ToolStripMenuItem";
             this.各部門の返金額合算ToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.各部門の返金額合算ToolStripMenuItem.Text = "各部門の返金額合算 (&G)";
+            this.各部門の返金額合算ToolStripMenuItem.Text = "各部門の売上額合算 (&G)";
             this.各部門の返金額合算ToolStripMenuItem.Click += new System.EventHandler(this.各部門の返金額合算ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6

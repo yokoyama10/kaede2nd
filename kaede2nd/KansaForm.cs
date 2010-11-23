@@ -423,5 +423,10 @@ namespace kaede2nd
             this.RefreshRemain();
         }
 
+        private void KansaForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.timer1.Enabled = false;
+        }
+
     }
 }

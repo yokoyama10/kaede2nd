@@ -41,15 +41,28 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkBox_readonly = new System.Windows.Forms.CheckBox();
+            this.checkBox_MySQL_readonly = new System.Windows.Forms.CheckBox();
             this.label_backupdest = new System.Windows.Forms.Label();
             this.textBox_backupdest = new System.Windows.Forms.TextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button_SQLite_create = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkBox_SQLite_readonly = new System.Windows.Forms.CheckBox();
+            this.button_SQLite_open = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // text_host
             // 
             this.text_host.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.text_host.Location = new System.Drawing.Point(104, 45);
+            this.text_host.Location = new System.Drawing.Point(110, 43);
             this.text_host.Name = "text_host";
             this.text_host.Size = new System.Drawing.Size(100, 19);
             this.text_host.TabIndex = 0;
@@ -58,7 +71,7 @@
             // text_port
             // 
             this.text_port.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.text_port.Location = new System.Drawing.Point(104, 70);
+            this.text_port.Location = new System.Drawing.Point(110, 68);
             this.text_port.Name = "text_port";
             this.text_port.Size = new System.Drawing.Size(100, 19);
             this.text_port.TabIndex = 1;
@@ -67,7 +80,7 @@
             // text_user
             // 
             this.text_user.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.text_user.Location = new System.Drawing.Point(104, 95);
+            this.text_user.Location = new System.Drawing.Point(110, 93);
             this.text_user.Name = "text_user";
             this.text_user.Size = new System.Drawing.Size(100, 19);
             this.text_user.TabIndex = 2;
@@ -76,7 +89,7 @@
             // text_pass
             // 
             this.text_pass.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.text_pass.Location = new System.Drawing.Point(104, 120);
+            this.text_pass.Location = new System.Drawing.Point(110, 118);
             this.text_pass.Name = "text_pass";
             this.text_pass.Size = new System.Drawing.Size(100, 19);
             this.text_pass.TabIndex = 3;
@@ -85,7 +98,7 @@
             // text_dbname
             // 
             this.text_dbname.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.text_dbname.Location = new System.Drawing.Point(104, 145);
+            this.text_dbname.Location = new System.Drawing.Point(110, 143);
             this.text_dbname.Name = "text_dbname";
             this.text_dbname.Size = new System.Drawing.Size(100, 19);
             this.text_dbname.TabIndex = 4;
@@ -93,8 +106,7 @@
             // 
             // button1
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(129, 198);
+            this.button1.Location = new System.Drawing.Point(135, 196);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -105,7 +117,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(129, 227);
+            this.button2.Location = new System.Drawing.Point(231, 329);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -117,7 +129,7 @@
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 12);
+            this.comboBox1.Location = new System.Drawing.Point(18, 10);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 7;
@@ -126,7 +138,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 48);
+            this.label1.Location = new System.Drawing.Point(75, 46);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 9;
@@ -135,7 +147,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 73);
+            this.label2.Location = new System.Drawing.Point(75, 71);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 12);
             this.label2.TabIndex = 10;
@@ -144,7 +156,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(69, 98);
+            this.label3.Location = new System.Drawing.Point(75, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 11;
@@ -153,7 +165,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(69, 123);
+            this.label4.Location = new System.Drawing.Point(75, 121);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 12);
             this.label4.TabIndex = 12;
@@ -162,26 +174,26 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(70, 148);
+            this.label5.Location = new System.Drawing.Point(76, 146);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(19, 12);
             this.label5.TabIndex = 13;
             this.label5.Text = "Db";
             // 
-            // checkBox_readonly
+            // checkBox_MySQL_readonly
             // 
-            this.checkBox_readonly.AutoSize = true;
-            this.checkBox_readonly.Location = new System.Drawing.Point(104, 170);
-            this.checkBox_readonly.Name = "checkBox_readonly";
-            this.checkBox_readonly.Size = new System.Drawing.Size(91, 16);
-            this.checkBox_readonly.TabIndex = 14;
-            this.checkBox_readonly.Text = "読み取り専用";
-            this.checkBox_readonly.UseVisualStyleBackColor = true;
+            this.checkBox_MySQL_readonly.AutoSize = true;
+            this.checkBox_MySQL_readonly.Location = new System.Drawing.Point(78, 174);
+            this.checkBox_MySQL_readonly.Name = "checkBox_MySQL_readonly";
+            this.checkBox_MySQL_readonly.Size = new System.Drawing.Size(91, 16);
+            this.checkBox_MySQL_readonly.TabIndex = 14;
+            this.checkBox_MySQL_readonly.Text = "読み取り専用";
+            this.checkBox_MySQL_readonly.UseVisualStyleBackColor = true;
             // 
             // label_backupdest
             // 
             this.label_backupdest.AutoSize = true;
-            this.label_backupdest.Location = new System.Drawing.Point(12, 273);
+            this.label_backupdest.Location = new System.Drawing.Point(16, 233);
             this.label_backupdest.Name = "label_backupdest";
             this.label_backupdest.Size = new System.Drawing.Size(163, 12);
             this.label_backupdest.TabIndex = 15;
@@ -189,10 +201,130 @@
             // 
             // textBox_backupdest
             // 
-            this.textBox_backupdest.Location = new System.Drawing.Point(14, 290);
+            this.textBox_backupdest.Location = new System.Drawing.Point(18, 250);
             this.textBox_backupdest.Name = "textBox_backupdest";
             this.textBox_backupdest.Size = new System.Drawing.Size(247, 19);
             this.textBox_backupdest.TabIndex = 16;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(296, 309);
+            this.tabControl1.TabIndex = 17;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.comboBox1);
+            this.tabPage1.Controls.Add(this.checkBox_MySQL_readonly);
+            this.tabPage1.Controls.Add(this.textBox_backupdest);
+            this.tabPage1.Controls.Add(this.text_host);
+            this.tabPage1.Controls.Add(this.label_backupdest);
+            this.tabPage1.Controls.Add(this.text_port);
+            this.tabPage1.Controls.Add(this.text_user);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.text_pass);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.text_dbname);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.button1);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(288, 283);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "サーバーに接続";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label6.Location = new System.Drawing.Point(224, 18);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "MySQL";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.button_SQLite_create);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.checkBox_SQLite_readonly);
+            this.tabPage2.Controls.Add(this.button_SQLite_open);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(288, 283);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "ファイルを開く";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button_SQLite_create
+            // 
+            this.button_SQLite_create.Location = new System.Drawing.Point(21, 242);
+            this.button_SQLite_create.Name = "button_SQLite_create";
+            this.button_SQLite_create.Size = new System.Drawing.Size(103, 23);
+            this.button_SQLite_create.TabIndex = 22;
+            this.button_SQLite_create.Text = "新規作成";
+            this.button_SQLite_create.UseVisualStyleBackColor = true;
+            this.button_SQLite_create.Click += new System.EventHandler(this.button_SQLite_create_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 82);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(105, 12);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "最近使用したファイル";
+            // 
+            // checkBox_SQLite_readonly
+            // 
+            this.checkBox_SQLite_readonly.AutoSize = true;
+            this.checkBox_SQLite_readonly.Location = new System.Drawing.Point(180, 217);
+            this.checkBox_SQLite_readonly.Name = "checkBox_SQLite_readonly";
+            this.checkBox_SQLite_readonly.Size = new System.Drawing.Size(91, 16);
+            this.checkBox_SQLite_readonly.TabIndex = 20;
+            this.checkBox_SQLite_readonly.Text = "読み取り専用";
+            this.checkBox_SQLite_readonly.UseVisualStyleBackColor = true;
+            // 
+            // button_SQLite_open
+            // 
+            this.button_SQLite_open.Location = new System.Drawing.Point(21, 35);
+            this.button_SQLite_open.Name = "button_SQLite_open";
+            this.button_SQLite_open.Size = new System.Drawing.Size(125, 23);
+            this.button_SQLite_open.TabIndex = 19;
+            this.button_SQLite_open.Text = "ファイルを開く...";
+            this.button_SQLite_open.UseVisualStyleBackColor = true;
+            this.button_SQLite_open.Click += new System.EventHandler(this.button_SQLite_open_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label7.Location = new System.Drawing.Point(232, 14);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 12);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "SQLite";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(122, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(95, 12);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "（保存は自動です）";
             // 
             // LoginForm
             // 
@@ -200,29 +332,20 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(277, 320);
+            this.ClientSize = new System.Drawing.Size(328, 368);
             this.ControlBox = false;
-            this.Controls.Add(this.textBox_backupdest);
-            this.Controls.Add(this.label_backupdest);
-            this.Controls.Add(this.checkBox_readonly);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.text_dbname);
-            this.Controls.Add(this.text_pass);
-            this.Controls.Add(this.text_user);
-            this.Controls.Add(this.text_port);
-            this.Controls.Add(this.text_host);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "LoginForm";
             this.Text = "部門の選択を";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -241,8 +364,18 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox_readonly;
+        private System.Windows.Forms.CheckBox checkBox_MySQL_readonly;
         private System.Windows.Forms.Label label_backupdest;
         private System.Windows.Forms.TextBox textBox_backupdest;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBox_SQLite_readonly;
+        private System.Windows.Forms.Button button_SQLite_open;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button button_SQLite_create;
+        private System.Windows.Forms.Label label9;
     }
 }

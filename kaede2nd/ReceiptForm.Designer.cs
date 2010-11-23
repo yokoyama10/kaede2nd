@@ -53,8 +53,6 @@
             this.商品名でIMEオンToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.商品名編集Enterで右移動ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ネット受付のデータを挿入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.商品リストを表示LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.受付票を印刷ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -281,15 +279,13 @@
             this.商品名でIMEオンToolStripMenuItem,
             this.商品名編集Enterで右移動ToolStripMenuItem,
             this.toolStripSeparator2,
-            this.ネット受付のデータを挿入ToolStripMenuItem,
-            this.toolStripSeparator1,
             this.最新の情報に更新RToolStripMenuItem,
             this.商品リストを表示LToolStripMenuItem,
             this.受付票を印刷ToolStripMenuItem});
             this.contextMenuStrip_temp.Name = "contextMenuStrip_temp";
             this.contextMenuStrip_temp.ShowCheckMargin = true;
             this.contextMenuStrip_temp.ShowImageMargin = false;
-            this.contextMenuStrip_temp.Size = new System.Drawing.Size(263, 148);
+            this.contextMenuStrip_temp.Size = new System.Drawing.Size(237, 120);
             // 
             // 商品名でIMEオンToolStripMenuItem
             // 
@@ -297,7 +293,7 @@
             this.商品名でIMEオンToolStripMenuItem.CheckOnClick = true;
             this.商品名でIMEオンToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.商品名でIMEオンToolStripMenuItem.Name = "商品名でIMEオンToolStripMenuItem";
-            this.商品名でIMEオンToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.商品名でIMEオンToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.商品名でIMEオンToolStripMenuItem.Text = "商品名でIMEオン (&I)";
             this.商品名でIMEオンToolStripMenuItem.Click += new System.EventHandler(this.商品名でIMEオンToolStripMenuItem_Click);
             // 
@@ -305,46 +301,34 @@
             // 
             this.商品名編集Enterで右移動ToolStripMenuItem.CheckOnClick = true;
             this.商品名編集Enterで右移動ToolStripMenuItem.Name = "商品名編集Enterで右移動ToolStripMenuItem";
-            this.商品名編集Enterで右移動ToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.商品名編集Enterで右移動ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.商品名編集Enterで右移動ToolStripMenuItem.Text = "商品名編集Enterで右移動 (&E)";
             this.商品名編集Enterで右移動ToolStripMenuItem.Click += new System.EventHandler(this.商品名編集Enterで右移動ToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(259, 6);
-            // 
-            // ネット受付のデータを挿入ToolStripMenuItem
-            // 
-            this.ネット受付のデータを挿入ToolStripMenuItem.Enabled = false;
-            this.ネット受付のデータを挿入ToolStripMenuItem.Name = "ネット受付のデータを挿入ToolStripMenuItem";
-            this.ネット受付のデータを挿入ToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
-            this.ネット受付のデータを挿入ToolStripMenuItem.Text = "ネット受付のデータを挿入 (&N) 近日実装";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(233, 6);
             // 
             // 最新の情報に更新RToolStripMenuItem
             // 
             this.最新の情報に更新RToolStripMenuItem.Name = "最新の情報に更新RToolStripMenuItem";
             this.最新の情報に更新RToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.最新の情報に更新RToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.最新の情報に更新RToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.最新の情報に更新RToolStripMenuItem.Text = "最新の情報に更新 (&R)";
             this.最新の情報に更新RToolStripMenuItem.Click += new System.EventHandler(this.最新の情報に更新RToolStripMenuItem_Click);
             // 
             // 商品リストを表示LToolStripMenuItem
             // 
             this.商品リストを表示LToolStripMenuItem.Name = "商品リストを表示LToolStripMenuItem";
-            this.商品リストを表示LToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.商品リストを表示LToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.商品リストを表示LToolStripMenuItem.Text = "商品リストを表示 (&L)";
             this.商品リストを表示LToolStripMenuItem.Click += new System.EventHandler(this.商品リストを表示LToolStripMenuItem_Click);
             // 
             // 受付票を印刷ToolStripMenuItem
             // 
             this.受付票を印刷ToolStripMenuItem.Name = "受付票を印刷ToolStripMenuItem";
-            this.受付票を印刷ToolStripMenuItem.Size = new System.Drawing.Size(262, 22);
+            this.受付票を印刷ToolStripMenuItem.Size = new System.Drawing.Size(236, 22);
             this.受付票を印刷ToolStripMenuItem.Text = "受付票を印刷 (&P)...";
             this.受付票を印刷ToolStripMenuItem.Click += new System.EventHandler(this.票印刷ToolStripMenuItem_Click);
             // 
@@ -449,8 +433,6 @@
         private System.Windows.Forms.ToolStripMenuItem 最新の情報に更新RToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 商品リストを表示LToolStripMenuItem;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ToolStripMenuItem ネット受付のデータを挿入ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Label label5;
     }
 }

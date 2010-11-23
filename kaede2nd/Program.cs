@@ -12,6 +12,8 @@ namespace kaede2nd
         public static AppConfig config;
         private static string configFile = "kaedecfg.xml";
 
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static bool continueProg;
 
         /// <summary>
@@ -49,7 +51,8 @@ namespace kaede2nd
             }
             catch (Exception e)
             {
-                MessageBox.Show("コンフィグファイル (" + configFile + ") が正常に開けませんでした。\nファイルが間違っていないか確認するか、諦めて削除して起動しなおしてください。\n\n詳細:\n" + e.Message);
+                MessageBox.Show("コンフィグファイル (" + configFile + ") が正常に開けませんでした。\nファイルが間違っていないか確認するか、諦めて削除して起動しなおしてください。\n\n詳細:\n" 
+                    + e.Message + (e.InnerException != null ? ("\n" + e.InnerException.Message) : "") );
                 System.Environment.Exit(-1);
             }
 

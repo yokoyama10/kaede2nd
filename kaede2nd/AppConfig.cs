@@ -20,6 +20,11 @@ namespace kaede2nd
         [OptionalFieldAttribute]
         public string BackupDirectory;
 
+        [OptionalFieldAttribute]
+        public SQLType DefaultSQLType;
+
+        public List<SQLiteFile> RecentSQLiteFile;
+
         [NonSerialized]
         [System.Xml.Serialization.XmlIgnore]
         public string configPath;
@@ -31,8 +36,12 @@ namespace kaede2nd
             this.ShowPrintDialog_AtTagPrint = true;
             this.configPath = "";
             this.BackupDirectory = @".\backup";
+            this.DefaultSQLType = SQLType.SQLite;
+            this.RecentSQLiteFile = new List<SQLiteFile>();
         }
 
+
+        public enum SQLType { MySQL, SQLite };
 
         [Serializable]
         public class Connection
@@ -44,6 +53,13 @@ namespace kaede2nd
             public string pass;
             public string dbname;
             public bool is_readonly;
+        }
+
+        [Serializable]
+        public class SQLiteFile
+        {
+            public string name;
+            public string path;
         }
 
 
@@ -83,6 +99,26 @@ namespace kaede2nd
         {
             if (string.IsNullOrEmpty(this.configPath)) { return ""; }
             return System.IO.Path.GetFileName(this.configPath);
+        }
+
+        public void AddRecentSQLite(string name, string path)
+        {
+            this.DeleteRecentSQLite(path);
+
+            this.RecentSQLiteFile.Insert(0, new SQLiteFile() { name = name, path = path });
+            this.RecentSQLiteFile = this.RecentSQLiteFile.Take(5).ToList();
+        }
+
+        public void DeleteRecentSQLite(string path)
+        {
+            if ( this.RecentSQLiteFile.Count == 0 ) {return; }
+            for (int i = this.RecentSQLiteFile.Count - 1; i >= 0; i--)
+            {
+                if (this.RecentSQLiteFile[i].path == path)
+                {
+                    this.RecentSQLiteFile.RemoveAt(i);
+                }
+            }
         }
     }
 }

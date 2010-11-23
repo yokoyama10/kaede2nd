@@ -22,7 +22,6 @@ namespace kaede2nd
         private List<Receipt> receiptlist;
 
         private Timer statusBarTimer;
-        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Form1()
         {
@@ -73,6 +72,11 @@ namespace kaede2nd
             this.監査ウィンドウWToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
 
 
+            //SQLite
+            this.toolStripMenuItem3.Enabled = !GlobalData.Instance.data.IsSQLite();
+            this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.IsSQLite();
+
+
             this.statusBarTimer = new Timer();
             this.statusBarTimer.Interval = 10 * 1000;
             this.statusBarTimer.Tick += new EventHandler(statusBarTimer_Tick);
@@ -89,6 +93,12 @@ namespace kaede2nd
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Show();
+            if (this.receiptlist.Count == 0)
+            {
+                this.設定を変更ToolStripMenuItem.PerformClick();
+            }
+
             if (Program.config.ShowForm_RecentItem)
             {
                 this.最近追加された商品リストLToolStripMenuItem.PerformClick();
@@ -476,6 +486,7 @@ namespace kaede2nd
         private void ログイン画面に戻るLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GlobalData.disposeInstance();
+            this.statusBarTimer.Enabled = false;
             Program.continueProg = true;
 
             this.Close();

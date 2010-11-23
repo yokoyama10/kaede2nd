@@ -26,5 +26,6 @@ namespace kaede2nd.Dao
         [Query("receipt_seller = /*receipt_seller*/")]
         List<Receipt> GetBySellerString(string receipt_seller);
 
+
     }
 }
