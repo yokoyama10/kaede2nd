@@ -319,6 +319,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Tag = "";
             this.Text = "部門データの設定";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

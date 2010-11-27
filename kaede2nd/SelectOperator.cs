@@ -12,7 +12,7 @@ using kaede2nd.Entity;
 
 namespace kaede2nd
 {
-    public partial class SelectOperator : Form
+    public partial class SelectOperator : MyForm
     {
         private Operator retop;
 

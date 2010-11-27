@@ -15,7 +15,7 @@ namespace kaede2nd
         public Version()
         {
             InitializeComponent();
-            this.label_ver.Text = @"$Rev$";
+            this.label_ver.Text = @"Version: 2010-11-27";
             this.tim_Tick(null, EventArgs.Empty);
 
             tim = new Timer();
@@ -45,10 +45,10 @@ namespace kaede2nd
 
         private void tim_Tick(object sender, EventArgs e)
         {
-            DateTime d = DateTime.Now;
+            DateTime d = DateTime.Now.ToUniversalTime().AddHours(9);
 
             //date
-            this.label_date.Text = string.Format("王国歴{0}年{1}月{2}日 {3}", d.Year - 1975, d.Month, d.Day, d.ToString("HH:mm:ss"));
+            this.label_date.Text = string.Format("王国歴{0}年{1}月{2}日 {3} (UTC+9)", d.Year - 1975, d.Month, d.Day, d.ToString("HH:mm:ss"));
 
             //hime
             this.label_hime.Text = birth(d, "ゆかり姫", Program. /**/
@@ -57,6 +57,12 @@ namespace kaede2nd
 
             //kaede
             this.label_kaede.Text = birth(d, "楓ちゃん", "柏木楓", 11, 15);
+        }
+
+        private void Version_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.tim.Enabled = false;
+            this.tim = null;
         }
 
     }

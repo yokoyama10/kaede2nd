@@ -15,6 +15,7 @@ namespace kaede2nd
         {
             InitializeComponent();
 
+            this.Icon = kaede2nd.Properties.Resources.yukari;
             this.colinfos = new Dictionary<string, ColumnInfo>();
         }
 

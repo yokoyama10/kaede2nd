@@ -48,6 +48,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.textBox1.Location = new System.Drawing.Point(33, 37);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(85, 26);

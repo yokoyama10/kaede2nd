@@ -48,12 +48,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
             this.button_SQLite_create = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBox_SQLite_readonly = new System.Windows.Forms.CheckBox();
             this.button_SQLite_open = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -268,6 +268,15 @@
             this.tabPage2.Text = "ファイルを開く";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(122, 14);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(95, 12);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "（保存は自動です）";
+            // 
             // button_SQLite_create
             // 
             this.button_SQLite_create.Location = new System.Drawing.Point(21, 242);
@@ -317,28 +326,21 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "SQLite";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(122, 14);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(95, 12);
-            this.label9.TabIndex = 23;
-            this.label9.Text = "（保存は自動です）";
-            // 
             // LoginForm
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(328, 368);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(319, 362);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.Text = "部門の選択を";
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

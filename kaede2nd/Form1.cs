@@ -67,14 +67,14 @@ namespace kaede2nd
             //Readonly
             this.button3.Enabled = !GlobalData.Instance.data.isReadonly;
             this.新Receiptを追加UToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
-            this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
+            this.品番の最終をセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
             this.売却ウィンドウSToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
             this.監査ウィンドウWToolStripMenuItem.Enabled = !GlobalData.Instance.data.isReadonly;
 
 
             //SQLite
             this.toolStripMenuItem3.Enabled = !GlobalData.Instance.data.IsSQLite();
-            this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.IsSQLite();
+            //this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.IsSQLite();
 
 
             this.statusBarTimer = new Timer();
@@ -102,6 +102,12 @@ namespace kaede2nd
             if (Program.config.ShowForm_RecentItem)
             {
                 this.最近追加された商品リストLToolStripMenuItem.PerformClick();
+            }
+
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                this.品番の最終をセットしなおすToolStripMenuItem.Visible = true;
+                this.button_copyDatabase.Visible = true;
             }
         }
 
@@ -249,7 +255,7 @@ namespace kaede2nd
             }
             catch (Exception ex)
             {
-                MessageBox.Show("更新できませんでした: " + ex.ToString());
+                MessageBox.Show("更新できませんでした: " + ex.Message);
                 return;
             }
 
@@ -261,12 +267,20 @@ namespace kaede2nd
         private void kaedeOutput(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = GlobalData.Instance.data.bumonName + ".kae";
+            sfd.FileName = GlobalData.Instance.data.companyName + ".kae";
             sfd.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
             sfd.Filter = "楓ちゃん萌え萌え filez (*.kae)|*.kae";
             sfd.RestoreDirectory = true;
 
             if (sfd.ShowDialog() != DialogResult.OK) { return; }
+
+            bool zaikouAsOB = false;
+            if (MessageBox.Show("在校生の氏名データを残しますか？\n" +
+                 "はい・・・全員をOBとして扱います\n" +
+                 "いいえ・・・在校生は年組番号で出力します", "在校生の扱い", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                zaikouAsOB = true;
+            }
 
 
             const string kae_header = "Kaede chan moemoe software by 51st. ennichi han";
@@ -280,9 +294,15 @@ namespace kaede2nd
             int exnum = 1;
             foreach (Item it in items)
             {
-                if (it.item__Receipt.receipt_seller == Receipt.seller_EXT)
+                if (it.item__Receipt.receipt_seller == Receipt.seller_DONATE ||
+                     it.item__Receipt.receipt_seller == Receipt.seller_LAGACY)
                 {
-                    string exname = it.item__Receipt.receipt_seller_exname;
+                    continue;
+                }
+
+                if (it.item__Receipt.receipt_seller == Receipt.seller_EXT || zaikouAsOB)
+                {
+                    string exname = it.item__Receipt.getSellerString();
                     if (! exSellers.ContainsKey(exname))
                     {
                         exSellers.Add(exname, exnum);
@@ -334,11 +354,6 @@ namespace kaede2nd
 
                         switch (sellerstr)
                         {
-                            case Receipt.seller_EXT:
-                                {
-                                    seller = 0x10000000 + exSellers[it.item__Receipt.receipt_seller_exname];
-                                    break;
-                                }
                             case Receipt.seller_LAGACY:
                                 {
                                     seller = 0x30000000;
@@ -351,6 +366,12 @@ namespace kaede2nd
                                 }
                             default:
                                 {
+                                    if (sellerstr == Receipt.seller_EXT || zaikouAsOB)
+                                    {
+                                        seller = 0x10000000 + exSellers[it.item__Receipt.getSellerString()];
+                                        break;
+                                    }
+
                                     int nen = int.Parse(sellerstr.Substring(0, 1));
                                     string kumi = sellerstr.Substring(1, 1);
                                     int kumi_i;
@@ -427,10 +448,10 @@ namespace kaede2nd
                     }
 
                     //cash
-                    bw.Write(888);
+                    bw.Write((Int32)888);
 
                     //refund_rate
-                    bw.Write(100);
+                    bw.Write((Int32)100);
 
                     bw.Flush();
                     fs.Close();
@@ -479,14 +500,16 @@ namespace kaede2nd
             }
             catch (Exception ex)
             {
-                MessageBox.Show("kaeファイルの作成エラー: " + ex.ToString());
+                MessageBox.Show("kaeファイルの作成エラー: " + ex.Message);
+                return;
             }
+
+            MessageBox.Show("楓ちゃん形式での出力が完了しました。");
         }
 
         private void ログイン画面に戻るLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GlobalData.disposeInstance();
-            this.statusBarTimer.Enabled = false;
             Program.continueProg = true;
 
             this.Close();
@@ -604,7 +627,7 @@ namespace kaede2nd
             psd.ShowDialog();
         }
 
-        private void 品番カウンタをセットしなおすToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 品番の最終をセットしなおすToolStripMenuItem_Click(object sender, EventArgs e)
         {
             /*
             IDbConnection con = GlobalData.Instance.txDataSource.Instance.GetConnection();
@@ -617,11 +640,18 @@ namespace kaede2nd
             var idao = GlobalData.getIDao<IItemDao>();
             try
             {
-                idao.ResetItemIdNumber();
+                if (GlobalData.Instance.data.IsSQLite())
+                {
+                    idao.ResetItemIdNumber_SQLite();
+                }
+                else
+                {
+                    idao.ResetItemIdNumber_MySQL();
+                }
             }
             catch (Exception e2)
             {
-                MessageBox.Show("失敗しました。ALTER権限がないかも。管理用機能だから諦めるんだ\n" + e2.Message, "rootでログインしてください");
+                MessageBox.Show("失敗しました。ALTER権限がないかも。サーバーにrootでログインしなおしてください。\n" + e2.Message, "rootでログインしてください");
                 return;
             }
             MessageBox.Show("品番カウンタをリセットしました");
@@ -771,6 +801,46 @@ namespace kaede2nd
             {
                 this.ログイン画面に戻るLToolStripMenuItem.PerformClick();
             }
+        }
+
+        private void button_copyDatabase_Click(object sender, EventArgs e)
+        {
+            DatabaseAccess da = null;
+            LoginForm lf = new LoginForm(
+                delegate(DatabaseAccess obj) { da = obj; }, "コピー先のデータを選択");
+            lf.ShowDialog();
+
+            if (da == null) { return; }
+
+            var tocDao = da.getIDao<IConfigDao>();
+            foreach (ConfigEntity c in GlobalData.getIDao<IConfigDao>().GetAll())
+            {
+                tocDao.Insert(c);
+            }
+
+            var tooDao = da.getIDao<IOperatorDao>();
+            foreach (Operator o in GlobalData.getIDao<IOperatorDao>().GetAll())
+            {
+                tooDao.Insert(o);
+            }
+
+            var torDao = da.getIDao<IReceiptDao>();
+            foreach (Receipt r in GlobalData.getIDao<IReceiptDao>().GetAll())
+            {
+                torDao.Insert(r);
+            }
+
+            var toiDao = da.getIDao<IItemDao>();
+            foreach (Item i in GlobalData.getIDao<IItemDao>().GetAll())
+            {
+                toiDao.Insert(i);
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.statusBarTimer.Enabled = false;
+            this.statusBarTimer = null;
         }
 
         

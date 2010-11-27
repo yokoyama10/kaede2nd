@@ -99,7 +99,7 @@ namespace kaede2nd
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("更新できませんでした: " + ex.ToString());
+                    MessageBox.Show("更新できませんでした: " + ex.Message);
                     return;
                 }
             }

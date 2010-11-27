@@ -14,6 +14,7 @@ namespace kaede2nd
 
         private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public static string cmdargFilepath = null;
         public static bool continueProg;
 
         /// <summary>
@@ -60,6 +61,12 @@ namespace kaede2nd
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             ToolStripManager.RenderMode = ToolStripManagerRenderMode.System;
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length >= 2)
+            {
+                Program.cmdargFilepath = args[1];
+            }
             continueProg = true;
 
             while (continueProg)

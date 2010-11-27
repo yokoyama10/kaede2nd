@@ -12,7 +12,7 @@ using kaede2nd.Dao;
 
 namespace kaede2nd
 {
-    public partial class KansaForm : Form
+    public partial class KansaForm : MyForm
     {
         private Item curItem = null;
 
@@ -426,6 +426,7 @@ namespace kaede2nd
         private void KansaForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.timer1.Enabled = false;
+            this.timer1 = null;
         }
 
     }

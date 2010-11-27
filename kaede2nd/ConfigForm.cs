@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace kaede2nd
 {
-    public partial class ConfigForm : Form
+    public partial class ConfigForm : MyForm
     {
         private DbConfig dconf;
 

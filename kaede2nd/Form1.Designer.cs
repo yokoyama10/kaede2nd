@@ -51,7 +51,7 @@
             this.最新の情報に更新RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.設定を変更ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.品番カウンタをセットしなおすToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.品番の最終をセットしなおすToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.機能ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.売却ウィンドウSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.監査ウィンドウWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +66,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.status_itemcount = new System.Windows.Forms.ToolStripStatusLabel();
             this.status_sold = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button_copyDatabase = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -237,7 +238,7 @@
             this.最新の情報に更新RToolStripMenuItem,
             this.toolStripSeparator2,
             this.設定を変更ToolStripMenuItem,
-            this.品番カウンタをセットしなおすToolStripMenuItem});
+            this.品番の最終をセットしなおすToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(75, 22);
             this.toolStripMenuItem2.Text = "データ(&D)";
@@ -270,12 +271,13 @@
             this.設定を変更ToolStripMenuItem.Text = "部門設定を変更 (&S)";
             this.設定を変更ToolStripMenuItem.Click += new System.EventHandler(this.設定を変更ToolStripMenuItem_Click);
             // 
-            // 品番カウンタをセットしなおすToolStripMenuItem
+            // 品番の最終をセットしなおすToolStripMenuItem
             // 
-            this.品番カウンタをセットしなおすToolStripMenuItem.Name = "品番カウンタをセットしなおすToolStripMenuItem";
-            this.品番カウンタをセットしなおすToolStripMenuItem.Size = new System.Drawing.Size(266, 22);
-            this.品番カウンタをセットしなおすToolStripMenuItem.Text = "品番カウンタをセットしなおす (&C)";
-            this.品番カウンタをセットしなおすToolStripMenuItem.Click += new System.EventHandler(this.品番カウンタをセットしなおすToolStripMenuItem_Click);
+            this.品番の最終をセットしなおすToolStripMenuItem.Name = "品番の最終をセットしなおすToolStripMenuItem";
+            this.品番の最終をセットしなおすToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.品番の最終をセットしなおすToolStripMenuItem.Text = "品番の最終をセットしなおす (&C)";
+            this.品番の最終をセットしなおすToolStripMenuItem.Visible = false;
+            this.品番の最終をセットしなおすToolStripMenuItem.Click += new System.EventHandler(this.品番の最終をセットしなおすToolStripMenuItem_Click);
             // 
             // 機能ToolStripMenuItem
             // 
@@ -399,11 +401,23 @@
             this.status_sold.Text = "売上 ¥88,888- nnn個";
             this.status_sold.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // button_copyDatabase
+            // 
+            this.button_copyDatabase.Location = new System.Drawing.Point(621, 31);
+            this.button_copyDatabase.Name = "button_copyDatabase";
+            this.button_copyDatabase.Size = new System.Drawing.Size(75, 23);
+            this.button_copyDatabase.TabIndex = 13;
+            this.button_copyDatabase.Text = "copyDB";
+            this.button_copyDatabase.UseVisualStyleBackColor = true;
+            this.button_copyDatabase.Visible = false;
+            this.button_copyDatabase.Click += new System.EventHandler(this.button_copyDatabase_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 407);
+            this.Controls.Add(this.button_copyDatabase);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label_company);
             this.Controls.Add(this.button1);
@@ -416,6 +430,7 @@
             this.Name = "Form1";
             this.Text = "ゆかり姫萌え萌えソフトウェア";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -446,7 +461,7 @@
         private System.Windows.Forms.ToolStripMenuItem ページ設定UToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 選択中の票を印刷PToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem 品番カウンタをセットしなおすToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 品番の最終をセットしなおすToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 新Receiptを追加UToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 最新の情報に更新RToolStripMenuItem;
@@ -466,6 +481,7 @@
         private System.Windows.Forms.ToolStripStatusLabel status_itemcount;
         private System.Windows.Forms.ToolStripStatusLabel status_sold;
         private System.Windows.Forms.ToolStripMenuItem 設定を変更ToolStripMenuItem;
+        private System.Windows.Forms.Button button_copyDatabase;
     }
 }
 

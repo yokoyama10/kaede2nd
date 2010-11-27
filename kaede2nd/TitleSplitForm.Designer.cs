@@ -94,6 +94,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TitleSplitForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "シリーズ名を切り出す";
             this.ResumeLayout(false);
             this.PerformLayout();

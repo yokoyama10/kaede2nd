@@ -39,7 +39,10 @@ namespace kaede2nd.Dao
         UInt32 CountReceiptItem(UInt32 receipt_id);
 
         [Sql("ALTER TABLE item AUTO_INCREMENT=1")]
-        void ResetItemIdNumber();
+        void ResetItemIdNumber_MySQL();
+
+        [Sql("UPDATE sqlite_sequence SET seq=1 WHERE name='item'")]
+        void ResetItemIdNumber_SQLite();
 
 
         /**監査**/

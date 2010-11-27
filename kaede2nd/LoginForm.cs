@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace kaede2nd
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : MyForm
     {
         private readonly Action<DatabaseAccess> DbAccessSetter = null;
         private List<AppConfig.Connection> connectList;
@@ -115,7 +115,7 @@ namespace kaede2nd
         {
             OpenFileDialog dia = new OpenFileDialog();
             dia.Filter =
-                @"SQLite3 データベース (*.sqlite;*.sqlite3)|*.sqlite;*.sqlite3|すべてのファイル (*.*)|*.*";
+                @"SQLite3 データベース filez (*.sqlite;*.sqlite3)|*.sqlite;*.sqlite3|すべてのファイル (*.*)|*.*";
             dia.Title = "データベースファイルを開く";
             dia.RestoreDirectory = true;
             dia.ShowReadOnly = this.checkBox_SQLite_readonly.Enabled;
@@ -163,7 +163,25 @@ namespace kaede2nd
             }
             
             //Config取得
-            var cfg = DbConfig.MakeFromDB(data);
+            DbConfig cfg = null;
+            try
+            {
+                cfg = DbConfig.MakeFromDB(data);
+            }
+            catch (Exception ecfg)
+            {
+                MessageBox.Show("データベースから設定が取得できませんでした。正しい接続先・ファイルを指定していますか？\n"
+                    + ecfg.Message);
+                if (this.DbAccessSetter == null)
+                {
+                    GlobalData.disposeInstance();
+                }
+                else
+                {
+                    this.DbAccessSetter(null);
+                }
+                return;
+            }
 
             data.bumonName = cfg.getValue("bumonname");
             data.companyName = cfg.getValue("companyname");
@@ -247,7 +265,7 @@ namespace kaede2nd
 
             SaveFileDialog dia = new SaveFileDialog();
             dia.Filter =
-                @"SQLite3 データベース (*.sqlite;*.sqlite3)|*.sqlite;*.sqlite3|すべてのファイル (*.*)|*.*";
+                @"SQLite3 データベース filez (*.sqlite;*.sqlite3)|*.sqlite;*.sqlite3|すべてのファイル (*.*)|*.*";
             dia.Title = "データベースファイルを新規作成";
             dia.RestoreDirectory = true;
             dia.AddExtension = true;
@@ -300,6 +318,22 @@ namespace kaede2nd
                 this.OpenSQLite(dia.FileName);
             }
             
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Program.cmdargFilepath))
+            {
+                string path = Program.cmdargFilepath;
+                Program.cmdargFilepath = null;
+
+                if (!System.IO.File.Exists(path))
+                {
+                    MessageBox.Show("起動コマンドで指定されたファイルが存在しません:\n" + path);
+                    return;
+                }
+                this.OpenSQLite(path);
+            }
         }
 
 

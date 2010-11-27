@@ -77,7 +77,7 @@ namespace kaede2nd
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("正規表現がおかしいです: " + e.ToString());
+                    MessageBox.Show("正規表現がおかしいです: " + e.Message);
                     return;
                 }
             }
@@ -159,7 +159,7 @@ namespace kaede2nd
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("更新できませんでした: " + ex.ToString());
+                    MessageBox.Show("更新できませんでした: " + ex.Message);
                     return;
                 }
             }

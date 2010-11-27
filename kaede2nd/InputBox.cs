@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace kaede2nd
 {
-    public partial class InputBox : Form
+    public partial class InputBox : MyForm
     {
         private InputBox()
         {

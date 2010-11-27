@@ -12,7 +12,7 @@ using kaede2nd.Dao;
 
 namespace kaede2nd
 {
-    public partial class SellForm : Form
+    public partial class SellForm : MyForm
     {
         private Item curItem = null;
 

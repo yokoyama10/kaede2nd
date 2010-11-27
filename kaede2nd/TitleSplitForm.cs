@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace kaede2nd
 {
-    public partial class TitleSplitForm : Form
+    public partial class TitleSplitForm : MyForm
     {
         private string res = null;
         private List<Button> buttons = new List<Button>();
