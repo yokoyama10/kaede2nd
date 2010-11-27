@@ -2,23 +2,32 @@
 using System.Data;
 
 using Seasar.Extension.ADO.Types;
+using Seasar.Extension.ADO;
 
 namespace kaede2nd
 {
     public static class SeasarValueType
     {
-        public readonly static Seasar.Extension.ADO.IValueType UINT32 = new Seasar.Extension.ADO.Types.UInt32Type();
-        public readonly static Seasar.Extension.ADO.IValueType NULLABLE_UINT32 = new Seasar.Extension.ADO.Types.NullableUInt32Type();
+        public readonly static IValueType UINT32 = new kaede2nd.SeasarTypes.UInt32Type();
+        public readonly static IValueType NULLABLE_UINT32 = new kaede2nd.SeasarTypes.NullableUInt32Type();
 
         public static void AddValueType()
         {
-            Seasar.Extension.ADO.Types.ValueTypes.RegisterValueType(typeof(UInt32), UINT32);
-            Seasar.Extension.ADO.Types.ValueTypes.RegisterValueType(typeof(Nullable<UInt32>), NULLABLE_UINT32);
+            IValueType objType = ValueTypes.GetValueType(null);
+
+            if (ValueTypes.GetValueType(typeof(UInt32)) == objType)
+            {
+                ValueTypes.RegisterValueType(typeof(UInt32), UINT32);
+            }
+            if (ValueTypes.GetValueType(typeof(Nullable<UInt32>)) == objType)
+            {
+                ValueTypes.RegisterValueType(typeof(Nullable<UInt32>), NULLABLE_UINT32);
+            }
         }
     }
 }
 
-namespace Seasar.Extension.ADO.Types
+namespace kaede2nd.SeasarTypes
 {
     public class UInt32Type : PrimitiveBaseType, IValueType
     {

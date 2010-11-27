@@ -347,6 +347,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ennichi58_logo.png" />
+    <Content Include="mysqldump.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="yukari.ico" />
     <Content Include="yukari_96.png" />
   </ItemGroup>

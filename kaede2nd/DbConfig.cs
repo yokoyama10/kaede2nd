@@ -11,8 +11,8 @@ namespace kaede2nd
     {
         private static List<ConfigEntity> defaults
             = new List<ConfigEntity>() { 
-                new ConfigEntity( "bumonname", "不明な部門"),
-                new ConfigEntity( "companyname", "不明な縁日班不明部門"),
+                new ConfigEntity( "bumonname", "サンプル部門"),
+                new ConfigEntity( "companyname", "nn期縁日班サンプル部門"),
                 new ConfigEntity( "barcodeprefix", "00"),
                 new ConfigEntity( "symbolcolor_argb", "-1"),
                 new ConfigEntity( "itemname_imeon", "1"),
