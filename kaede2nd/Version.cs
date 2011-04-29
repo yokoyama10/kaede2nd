@@ -15,7 +15,7 @@ namespace kaede2nd
         public Version()
         {
             InitializeComponent();
-            this.label_ver.Text = @"Version: 2010-11-27";
+            this.label_ver.Text = @"Version: 2011-04-29";
             this.tim_Tick(null, EventArgs.Empty);
 
             tim = new Timer();
