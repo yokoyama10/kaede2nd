@@ -68,7 +68,7 @@
             this.text_host.Location = new System.Drawing.Point(110, 43);
             this.text_host.Name = "text_host";
             this.text_host.Size = new System.Drawing.Size(100, 19);
-            this.text_host.TabIndex = 0;
+            this.text_host.TabIndex = 2;
             this.text_host.Text = "hostname";
             // 
             // text_port
@@ -77,7 +77,7 @@
             this.text_port.Location = new System.Drawing.Point(110, 68);
             this.text_port.Name = "text_port";
             this.text_port.Size = new System.Drawing.Size(100, 19);
-            this.text_port.TabIndex = 1;
+            this.text_port.TabIndex = 3;
             this.text_port.Text = "3306";
             // 
             // text_user
@@ -86,7 +86,7 @@
             this.text_user.Location = new System.Drawing.Point(110, 93);
             this.text_user.Name = "text_user";
             this.text_user.Size = new System.Drawing.Size(100, 19);
-            this.text_user.TabIndex = 2;
+            this.text_user.TabIndex = 4;
             this.text_user.Text = "user";
             // 
             // text_pass
@@ -95,7 +95,7 @@
             this.text_pass.Location = new System.Drawing.Point(110, 118);
             this.text_pass.Name = "text_pass";
             this.text_pass.Size = new System.Drawing.Size(100, 19);
-            this.text_pass.TabIndex = 3;
+            this.text_pass.TabIndex = 5;
             this.text_pass.Text = "pass";
             // 
             // text_dbname
@@ -104,7 +104,7 @@
             this.text_dbname.Location = new System.Drawing.Point(110, 143);
             this.text_dbname.Name = "text_dbname";
             this.text_dbname.Size = new System.Drawing.Size(100, 19);
-            this.text_dbname.TabIndex = 4;
+            this.text_dbname.TabIndex = 6;
             this.text_dbname.Text = "ennichidb";
             // 
             // button1
@@ -112,7 +112,7 @@
             this.button1.Location = new System.Drawing.Point(135, 234);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
+            this.button1.TabIndex = 9;
             this.button1.Text = "Connect";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -123,7 +123,7 @@
             this.button2.Location = new System.Drawing.Point(232, 366);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 6;
+            this.button2.TabIndex = 100;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -135,7 +135,7 @@
             this.comboBox1.Location = new System.Drawing.Point(18, 10);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 7;
+            this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
@@ -189,7 +189,7 @@
             this.checkBox_MySQL_readonly.Location = new System.Drawing.Point(78, 212);
             this.checkBox_MySQL_readonly.Name = "checkBox_MySQL_readonly";
             this.checkBox_MySQL_readonly.Size = new System.Drawing.Size(91, 16);
-            this.checkBox_MySQL_readonly.TabIndex = 14;
+            this.checkBox_MySQL_readonly.TabIndex = 8;
             this.checkBox_MySQL_readonly.Text = "読み取り専用";
             this.checkBox_MySQL_readonly.UseVisualStyleBackColor = true;
             // 
@@ -207,7 +207,7 @@
             this.textBox_backupdest.Location = new System.Drawing.Point(18, 288);
             this.textBox_backupdest.Name = "textBox_backupdest";
             this.textBox_backupdest.Size = new System.Drawing.Size(247, 19);
-            this.textBox_backupdest.TabIndex = 16;
+            this.textBox_backupdest.TabIndex = 10;
             // 
             // tabControl1
             // 
@@ -217,7 +217,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(296, 343);
-            this.tabControl1.TabIndex = 17;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -265,7 +265,7 @@
             this.comboBox_dbtype.Location = new System.Drawing.Point(110, 177);
             this.comboBox_dbtype.Name = "comboBox_dbtype";
             this.comboBox_dbtype.Size = new System.Drawing.Size(100, 20);
-            this.comboBox_dbtype.TabIndex = 18;
+            this.comboBox_dbtype.TabIndex = 7;
             // 
             // label6
             // 
@@ -307,7 +307,7 @@
             this.button_SQLite_create.Location = new System.Drawing.Point(21, 242);
             this.button_SQLite_create.Name = "button_SQLite_create";
             this.button_SQLite_create.Size = new System.Drawing.Size(103, 23);
-            this.button_SQLite_create.TabIndex = 22;
+            this.button_SQLite_create.TabIndex = 3;
             this.button_SQLite_create.Text = "新規作成";
             this.button_SQLite_create.UseVisualStyleBackColor = true;
             this.button_SQLite_create.Click += new System.EventHandler(this.button_SQLite_create_Click);
@@ -327,7 +327,7 @@
             this.checkBox_SQLite_readonly.Location = new System.Drawing.Point(180, 217);
             this.checkBox_SQLite_readonly.Name = "checkBox_SQLite_readonly";
             this.checkBox_SQLite_readonly.Size = new System.Drawing.Size(91, 16);
-            this.checkBox_SQLite_readonly.TabIndex = 20;
+            this.checkBox_SQLite_readonly.TabIndex = 2;
             this.checkBox_SQLite_readonly.Text = "読み取り専用";
             this.checkBox_SQLite_readonly.UseVisualStyleBackColor = true;
             // 
@@ -336,7 +336,7 @@
             this.button_SQLite_open.Location = new System.Drawing.Point(21, 35);
             this.button_SQLite_open.Name = "button_SQLite_open";
             this.button_SQLite_open.Size = new System.Drawing.Size(125, 23);
-            this.button_SQLite_open.TabIndex = 19;
+            this.button_SQLite_open.TabIndex = 1;
             this.button_SQLite_open.Text = "ファイルを開く...";
             this.button_SQLite_open.UseVisualStyleBackColor = true;
             this.button_SQLite_open.Click += new System.EventHandler(this.button_SQLite_open_Click);
@@ -376,8 +376,8 @@
             this.MinimizeBox = false;
             this.Name = "LoginForm";
             this.Text = "部門の選択を";
-            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

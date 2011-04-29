@@ -550,7 +550,7 @@ namespace kaede2nd
                 }
                 else
                 {
-                    con = "User ID=" + user + ";Password='" + pass + "';Server=" + host + ";Initial Catalog=" + dbname;
+                    con = "User ID=" + user + ";Password='" + pass + "';Server=" + host + "," + port + ";Initial Catalog=" + dbname;
                 }
 
                 this.db_host = host;

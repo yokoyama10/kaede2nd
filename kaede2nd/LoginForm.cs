@@ -142,8 +142,14 @@ namespace kaede2nd
         private void button1_Click(object sender, EventArgs e)
         {
             SQLType type;
-            if (this.comboBox_dbtype.SelectedIndex == 0) { type = SQLType.MySQL; }
-            else { type = SQLType.MSSQL; }
+            if (this.comboBox_dbtype.SelectedIndex == 0) {
+                type = SQLType.MySQL;
+                if (string.IsNullOrEmpty(this.text_port.Text)) { this.text_port.Text = "3306"; }
+            }
+            else {
+                type = SQLType.MSSQL;
+                if (string.IsNullOrEmpty(this.text_port.Text)) { this.text_port.Text = "1433"; }
+            }
 
             Program.config.DefaultSQLType = type;
 
