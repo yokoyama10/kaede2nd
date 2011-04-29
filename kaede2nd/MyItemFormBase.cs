@@ -312,7 +312,7 @@ namespace kaede2nd
             try
             {
                 ControlUtil.SafelyOperated(this, (MethodInvoker)delegate() { cell.ToolTipText = this.tooltip_BarcodeSearching; });
-                f = this.setTitleConvIsbn_Impl(cell, type);
+                f = this.setTitleConvBarcode_Impl(cell, type);
             }
             catch (Exception e)
             {
@@ -331,7 +331,7 @@ namespace kaede2nd
 
 
         //別スレッド
-        protected bool setTitleConvIsbn_Impl(DataGridViewCell cell, BarcodeType type)
+        protected bool setTitleConvBarcode_Impl(DataGridViewCell cell, BarcodeType type)
         {
             if (cell.DataGridView.Columns[cell.ColumnIndex].Name != ColumnName.shouhinMei)
             {
