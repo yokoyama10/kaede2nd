@@ -244,7 +244,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <EmbeddedResource Include="Dao.dicon" />
     <EmbeddedResource Include="RecentItem.resx">
       <DependentUpon>RecentItem.cs</DependentUpon>
     </EmbeddedResource>
@@ -345,6 +344,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Dao_mssql.dicon" />
+    <EmbeddedResource Include="Dao_mysql.dicon" />
     <None Include="ennichi58_logo.png" />
     <Content Include="mysqldump.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

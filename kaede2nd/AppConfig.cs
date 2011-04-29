@@ -6,6 +6,8 @@ using System.Runtime.Serialization;
 
 namespace kaede2nd
 {
+    public enum SQLType { MySQL, SQLite, MSSQL };
+
     [Serializable]
     public class AppConfig
     {
@@ -36,12 +38,9 @@ namespace kaede2nd
             this.ShowPrintDialog_AtTagPrint = true;
             this.configPath = "";
             this.BackupDirectory = @".\backup";
-            this.DefaultSQLType = SQLType.SQLite;
+            this.DefaultSQLType = SQLType.MySQL;
             this.RecentSQLiteFile = new List<SQLiteFile>();
         }
-
-
-        public enum SQLType { MySQL, SQLite };
 
         [Serializable]
         public class Connection
@@ -52,6 +51,7 @@ namespace kaede2nd
             public string user;
             public string pass;
             public string dbname;
+            public SQLType dbtype;
             public bool is_readonly;
         }
 

@@ -35,7 +35,7 @@ namespace kaede2nd.SeasarTypes
 
         public override void BindValue(IDbCommand cmd, string columnName, object value)
         {
-            BindValue(cmd, columnName, value, DbType.UInt32);
+            BindValue(cmd, columnName, value, DbType.Int64);
         }
 
         #endregion
@@ -59,7 +59,7 @@ namespace kaede2nd.SeasarTypes
 
         public override void BindValue(IDbCommand cmd, string columnName, object value)
         {
-            BindValue(cmd, columnName, value, DbType.UInt32);
+            BindValue(cmd, columnName, value, DbType.Int64);
         }
 
         #endregion

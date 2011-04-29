@@ -488,9 +488,9 @@ namespace kaede2nd
 
     public class DatabaseAccess
     {
-        public static string SQLiteHostString = "__sqlite";
         //DBConnectInfo
         public readonly string db_host, db_port, db_user, db_pass, db_dbname;
+        public readonly SQLType db_type;
 
         public Seasar.Framework.Container.IS2Container container;
         public Seasar.Extension.Tx.Impl.TxDataSource txDataSource;
@@ -502,9 +502,9 @@ namespace kaede2nd
         public System.Drawing.Color symbolColor = System.Drawing.SystemColors.Window;
         public System.Drawing.Color bumonTextColor = System.Drawing.Color.Black;
 
-        public DatabaseAccess(string host, string port, string user, string pass, string dbname)
+        public DatabaseAccess(string host, string port, string user, string pass, string dbname, SQLType dbtype)
         {
-            if (host == DatabaseAccess.SQLiteHostString)
+            if (dbtype == SQLType.SQLite)
             {
                 string con = "Data Source=\"" + dbname
                         + "\";New=True;Compress=False;Synchronous=Off;UTF8Encoding=True;Version=3";
@@ -513,6 +513,7 @@ namespace kaede2nd
                 this.db_user = null;
                 this.db_pass = null;
                 this.db_dbname = dbname;
+                this.db_type = dbtype;
 
                 this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao_sqlite.dicon");
 
@@ -521,7 +522,7 @@ namespace kaede2nd
                 this.txDataSource.ConnectionString = con;
 
             }
-            else
+            else if ( dbtype == SQLType.MySQL )
             {
                 string con = "host=" + host + ";port=" + port
                     + ";user id=" + user + ";password=" + pass
@@ -533,11 +534,39 @@ namespace kaede2nd
                 this.db_pass = pass;
                 this.db_dbname = dbname;
 
-                this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao.dicon");
+                this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao_mysql.dicon");
 
                 this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
                     this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
                 this.txDataSource.ConnectionString = con;
+            }
+            else if (dbtype == SQLType.MSSQL)
+            {
+                string con;
+                if (user == "SSPI")
+                {
+                    con = "Integrated Security=SSPI;Server=" + host + ";Initial Catalog=" + dbname;
+                }
+                else
+                {
+                    con = "User ID=" + user + ";Password='" + pass + "';Server=" + host + ";Initial Catalog=" + dbname;
+                }
+
+                this.db_host = host;
+                this.db_port = port;
+                this.db_user = user;
+                this.db_pass = pass;
+                this.db_dbname = dbname;
+
+                this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao_mssql.dicon");
+
+                this.txDataSource = (Seasar.Extension.Tx.Impl.TxDataSource)
+                    this.container.GetComponent(typeof(Seasar.Extension.Tx.Impl.TxDataSource), "SqlDataSource");
+                this.txDataSource.ConnectionString = con;
+            }
+            else
+            {
+                throw new Exception("Unknown SQLType");
             }
 
             this.container.Init();
@@ -546,11 +575,6 @@ namespace kaede2nd
         public T getIDao<T>()
         {
             return (T)this.container.GetComponent(typeof(T));
-        }
-
-        public bool IsSQLite()
-        {
-            return this.db_host == DatabaseAccess.SQLiteHostString;
         }
 
     }
@@ -613,13 +637,13 @@ namespace kaede2nd
             instance = null;
         }
 
-        public static void makeInstance(string host, string port, string user, string pass, string dbname)
+        public static void makeInstance(string host, string port, string user, string pass, string dbname, SQLType dbtype)
         {
             if (instance == null)
             {
                 instance = new GlobalData();
 
-                instance.data = new DatabaseAccess(host, port, user, pass, dbname);
+                instance.data = new DatabaseAccess(host, port, user, pass, dbname, dbtype);
 
                 instance.recentItemForm = null;
                 instance.mainForm = null;

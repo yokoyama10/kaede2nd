@@ -35,6 +35,7 @@ namespace kaede2nd
                     user = "username",
                     pass = "password",
                     dbname = "database_name",
+                    dbtype = SQLType.MySQL,
                     is_readonly = false
                 });
             }
@@ -70,13 +71,13 @@ namespace kaede2nd
                 cnt++;
             }
 
-            if (Program.config.DefaultSQLType == AppConfig.SQLType.MySQL)
-            {
-                this.tabControl1.SelectedTab = this.tabPage1;
-            }
-            else if (Program.config.DefaultSQLType == AppConfig.SQLType.SQLite)
+            if (Program.config.DefaultSQLType == SQLType.SQLite)
             {
                 this.tabControl1.SelectedTab = this.tabPage2;
+            }
+            else
+            {
+                this.tabControl1.SelectedTab = this.tabPage1;
             }
         }
 
@@ -130,34 +131,38 @@ namespace kaede2nd
 
         private void OpenSQLite(string path)
         {
-            this.text_host.Text = DatabaseAccess.SQLiteHostString;
             this.text_dbname.Text = path;
             this.checkBox_MySQL_readonly.Checked = this.checkBox_SQLite_readonly.Checked;
 
-            Program.config.DefaultSQLType = AppConfig.SQLType.SQLite;
+            Program.config.DefaultSQLType = SQLType.SQLite;
 
-            this.Connect();
+            this.Connect(SQLType.SQLite);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.config.DefaultSQLType = AppConfig.SQLType.MySQL;
-            this.Connect();
+            SQLType type;
+            if (this.comboBox_dbtype.SelectedIndex == 0) { type = SQLType.MySQL; }
+            else { type = SQLType.MSSQL; }
+
+            Program.config.DefaultSQLType = type;
+
+            this.Connect(type);
         }
 
-        private void Connect()
+        private void Connect(SQLType dbtype)
         {
 
             DatabaseAccess data;
             if (this.DbAccessSetter == null)
             {
-                GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                GlobalData.makeInstance(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text, dbtype);
                 GlobalData.Instance.data.isReadonly = checkBox_MySQL_readonly.Checked;
                 data = GlobalData.Instance.data;
             }
             else
             {
-                data = new DatabaseAccess(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text);
+                data = new DatabaseAccess(text_host.Text, text_port.Text, text_user.Text, text_pass.Text, text_dbname.Text, dbtype);
                 data.isReadonly = true;
                 this.DbAccessSetter(data);
             }
@@ -207,7 +212,7 @@ namespace kaede2nd
 
             }
 
-            if (data.IsSQLite())
+            if (data.db_type == SQLType.SQLite)
             {
                 Program.config.AddRecentSQLite(data.companyName, text_dbname.Text);
             }
@@ -246,6 +251,21 @@ namespace kaede2nd
             this.text_user.Text = c.user;
             this.text_pass.Text = c.pass;
             this.text_dbname.Text = c.dbname;
+
+            if (c.dbtype == SQLType.MySQL)
+            {
+                this.comboBox_dbtype.SelectedIndex = 0;
+            }
+            else if (c.dbtype == SQLType.MSSQL)
+            {
+                this.comboBox_dbtype.SelectedIndex = 1;
+            }
+            else
+            {
+                //fallback
+                this.comboBox_dbtype.SelectedIndex = 0;
+            }
+
             this.checkBox_MySQL_readonly.Checked = c.is_readonly;
         }
 
@@ -283,7 +303,7 @@ namespace kaede2nd
                 try
                 {
 
-                    var data = new DatabaseAccess(DatabaseAccess.SQLiteHostString, null, null, null, dia.FileName);
+                    var data = new DatabaseAccess(null, null, null, null, dia.FileName, SQLType.SQLite);
                     
                     IDbConnection con = data.txDataSource.GetConnection();
                     con.Open();

@@ -54,6 +54,8 @@
             this.checkBox_SQLite_readonly = new System.Windows.Forms.CheckBox();
             this.button_SQLite_open = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
+            this.comboBox_dbtype = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -106,7 +108,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(135, 196);
+            this.button1.Location = new System.Drawing.Point(135, 234);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -117,7 +119,7 @@
             // button2
             // 
             this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(231, 329);
+            this.button2.Location = new System.Drawing.Point(232, 366);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -183,7 +185,7 @@
             // checkBox_MySQL_readonly
             // 
             this.checkBox_MySQL_readonly.AutoSize = true;
-            this.checkBox_MySQL_readonly.Location = new System.Drawing.Point(78, 174);
+            this.checkBox_MySQL_readonly.Location = new System.Drawing.Point(78, 212);
             this.checkBox_MySQL_readonly.Name = "checkBox_MySQL_readonly";
             this.checkBox_MySQL_readonly.Size = new System.Drawing.Size(91, 16);
             this.checkBox_MySQL_readonly.TabIndex = 14;
@@ -193,7 +195,7 @@
             // label_backupdest
             // 
             this.label_backupdest.AutoSize = true;
-            this.label_backupdest.Location = new System.Drawing.Point(16, 233);
+            this.label_backupdest.Location = new System.Drawing.Point(16, 271);
             this.label_backupdest.Name = "label_backupdest";
             this.label_backupdest.Size = new System.Drawing.Size(163, 12);
             this.label_backupdest.TabIndex = 15;
@@ -201,7 +203,7 @@
             // 
             // textBox_backupdest
             // 
-            this.textBox_backupdest.Location = new System.Drawing.Point(18, 250);
+            this.textBox_backupdest.Location = new System.Drawing.Point(18, 288);
             this.textBox_backupdest.Name = "textBox_backupdest";
             this.textBox_backupdest.Size = new System.Drawing.Size(247, 19);
             this.textBox_backupdest.TabIndex = 16;
@@ -213,11 +215,13 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(296, 309);
+            this.tabControl1.Size = new System.Drawing.Size(296, 343);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label10);
+            this.tabPage1.Controls.Add(this.comboBox_dbtype);
             this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.comboBox1);
             this.tabPage1.Controls.Add(this.checkBox_MySQL_readonly);
@@ -237,7 +241,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(288, 283);
+            this.tabPage1.Size = new System.Drawing.Size(288, 317);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "サーバーに接続";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -246,11 +250,11 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label6.Location = new System.Drawing.Point(224, 18);
+            this.label6.Location = new System.Drawing.Point(179, 18);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.Size = new System.Drawing.Size(92, 12);
             this.label6.TabIndex = 17;
-            this.label6.Text = "MySQL";
+            this.label6.Text = "MySQL / MSSQL";
             // 
             // tabPage2
             // 
@@ -326,13 +330,33 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "SQLite";
             // 
+            // comboBox_dbtype
+            // 
+            this.comboBox_dbtype.FormattingEnabled = true;
+            this.comboBox_dbtype.Items.AddRange(new object[] {
+            "MySQL",
+            "MSSQL"});
+            this.comboBox_dbtype.Location = new System.Drawing.Point(110, 177);
+            this.comboBox_dbtype.Name = "comboBox_dbtype";
+            this.comboBox_dbtype.Size = new System.Drawing.Size(100, 20);
+            this.comboBox_dbtype.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(76, 180);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(30, 12);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Type";
+            // 
             // LoginForm
             // 
             this.AcceptButton = this.button1;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(319, 362);
+            this.ClientSize = new System.Drawing.Size(319, 401);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -379,5 +403,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button_SQLite_create;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboBox_dbtype;
     }
 }

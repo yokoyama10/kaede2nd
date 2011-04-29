@@ -73,7 +73,7 @@ namespace kaede2nd
 
 
             //SQLite
-            this.toolStripMenuItem3.Enabled = !GlobalData.Instance.data.IsSQLite();
+            this.toolStripMenuItem3.Enabled = (GlobalData.Instance.data.db_type == SQLType.MySQL);
             //this.品番カウンタをセットしなおすToolStripMenuItem.Enabled = !GlobalData.Instance.data.IsSQLite();
 
 
@@ -639,7 +639,7 @@ namespace kaede2nd
 
             var idao = GlobalData.getIDao<IItemDao>();
             try
-            {
+            {/*
                 if (GlobalData.Instance.data.IsSQLite())
                 {
                     idao.ResetItemIdNumber_SQLite();
@@ -647,7 +647,7 @@ namespace kaede2nd
                 else
                 {
                     idao.ResetItemIdNumber_MySQL();
-                }
+                }*/
             }
             catch (Exception e2)
             {

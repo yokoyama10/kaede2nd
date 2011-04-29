@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+
+<components>
+
+  <!--(MSSQL)-->
+  <component name="SqlClient" class="Seasar.Extension.ADO.DataProvider">
+    <property name="ConnectionType">"System.Data.SqlClient.SqlConnection"</property>
+    <property name="CommandType">"System.Data.SqlClient.SqlCommand"</property>
+    <property name="ParameterType">"System.Data.SqlClient.SqlParameter"</property>
+    <property name="DataAdapterType">"System.Data.SqlClient.SqlDataAdapter"</property>
+  </component>
+
+  <!-- TransactoinContext（データソースで使用する） -->
+  <component name="TransactionContext"
+             class="Seasar.Extension.Tx.Impl.TransactionContext">
+    <property name="IsolationLevel">
+      System.Data.IsolationLevel.ReadCommitted
+    </property>
+  </component>
+
+  <!-- トランザクション用のDataSource -->
+  <component name="SqlDataSource" 
+              class="Seasar.Extension.Tx.Impl.TxDataSource">
+    <property name="DataProvider">SqlClient</property>
+    <property name="ConnectionString">"str"</property>
+  </component>
+
+  <!-- S2Dao.NETのDaoInterceptorとそれに必要なコンポーネント -->
+  <component class="Seasar.Extension.ADO.Impl.BasicDataReaderFactory" />
+  <component class="Seasar.Extension.ADO.Impl.BasicCommandFactory" />
+  <component class="Seasar.Dao.Impl.DaoMetaDataFactoryImpl" />
+  <component name="DaoInterceptor"
+             class="Seasar.Dao.Interceptors.S2DaoInterceptor"/>
+
+
+  <component class="kaede2nd.Dao.IReceiptDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IOperatorDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IItemDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="kaede2nd.Dao.IConfigDao">
+    <aspect>DaoInterceptor</aspect>
+  </component>
+
+  <component class="Seasar.Dao.Impl.FieldAnnotationReaderFactory" />
+
+
+</components>
