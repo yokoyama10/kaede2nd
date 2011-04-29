@@ -639,15 +639,22 @@ namespace kaede2nd
 
             var idao = GlobalData.getIDao<IItemDao>();
             try
-            {/*
-                if (GlobalData.Instance.data.IsSQLite())
+            {
+                switch (GlobalData.Instance.data.db_type)
                 {
-                    idao.ResetItemIdNumber_SQLite();
+                    case SQLType.MySQL:
+                        idao.ResetItemIdNumber_MySQL();
+                        break;
+                    case SQLType.MSSQL:
+                        idao.ResetItemIdNumber_MSSQL_1();
+                        idao.ResetItemIdNumber_MSSQL_2();
+                        break;
+                    case SQLType.SQLite:
+                        idao.ResetItemIdNumber_SQLite();
+                        break;
+
                 }
-                else
-                {
-                    idao.ResetItemIdNumber_MySQL();
-                }*/
+
             }
             catch (Exception e2)
             {

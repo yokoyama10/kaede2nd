@@ -41,6 +41,12 @@ namespace kaede2nd.Dao
         [Sql("ALTER TABLE item AUTO_INCREMENT=1")]
         void ResetItemIdNumber_MySQL();
 
+        /** http://msdn.microsoft.com/ja-jp/library/ms176057.aspx **/
+        [Sql("DBCC CHECKIDENT ('item', RESEED, 0)")]
+        void ResetItemIdNumber_MSSQL_1();
+        [Sql("DBCC CHECKIDENT ('item', RESEED)")]
+        void ResetItemIdNumber_MSSQL_2();
+
         [Sql("UPDATE sqlite_sequence SET seq=1 WHERE name='item'")]
         void ResetItemIdNumber_SQLite();
 

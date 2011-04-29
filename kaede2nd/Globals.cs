@@ -504,6 +504,8 @@ namespace kaede2nd
 
         public DatabaseAccess(string host, string port, string user, string pass, string dbname, SQLType dbtype)
         {
+            this.db_type = dbtype;
+
             if (dbtype == SQLType.SQLite)
             {
                 string con = "Data Source=\"" + dbname
@@ -513,7 +515,6 @@ namespace kaede2nd
                 this.db_user = null;
                 this.db_pass = null;
                 this.db_dbname = dbname;
-                this.db_type = dbtype;
 
                 this.container = Seasar.Framework.Container.Factory.S2ContainerFactory.Create("kaede2nd/Dao_sqlite.dicon");
 
