@@ -16,6 +16,9 @@ namespace kaede2nd.Dao
         //DELETE
         int Delete(Item item);
 
+        [Sql("DELETE FROM item")]
+        void DeleteAll();
+
         /**取得**/
 
         List<Item> GetAll();

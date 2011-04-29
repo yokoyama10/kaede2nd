@@ -16,5 +16,8 @@ namespace kaede2nd.Dao
         //UPDATE
         int Update(ConfigEntity cfg);
 
+        [Sql("DELETE FROM config")]
+        void DeleteAll();
+
     }
 }

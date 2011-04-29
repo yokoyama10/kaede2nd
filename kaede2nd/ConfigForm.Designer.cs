@@ -52,6 +52,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -249,7 +250,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 372);
+            this.label10.Location = new System.Drawing.Point(12, 363);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(206, 12);
             this.label10.TabIndex = 18;
@@ -285,12 +286,22 @@
             this.label13.TabIndex = 21;
             this.label13.Text = "この画面は、登録「受付票」 (Receipt) 数が0の場合には自動表示されます。\r\n設定が完了している場合は [キャンセル] で閉じてください。";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 379);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(163, 12);
+            this.label14.TabIndex = 22;
+            this.label14.Text = "[キャンセル]でこのフォームを閉じる";
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_cancel;
             this.ClientSize = new System.Drawing.Size(428, 404);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -356,5 +367,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }

@@ -16,6 +16,9 @@ namespace kaede2nd.Dao
         //DELETE
         int Delete(Operator receipt);
 
+        [Sql("DELETE FROM operator")]
+        void DeleteAll();
+
         /**取得**/
 
         List<Operator> GetAll();

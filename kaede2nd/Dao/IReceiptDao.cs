@@ -16,6 +16,9 @@ namespace kaede2nd.Dao
         //DELETE
         int Delete(Receipt receipt);
 
+        [Sql("DELETE FROM receipt")]
+        void DeleteAll();
+
         /**取得**/
 
         List<Receipt> GetAll();

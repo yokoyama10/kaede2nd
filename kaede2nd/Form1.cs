@@ -819,29 +819,46 @@ namespace kaede2nd
 
             if (da == null) { return; }
 
+            DialogResult dres = MessageBox.Show("コピー先データベースの内容を全て削除しますか？\n" +
+                "削除しない場合、既に存在するデータとID等が被るとコピーが失敗します。\n" +
+                "（選択によらず設定は上書きされます）", "データベースのコピー",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button3);
+            if (dres == DialogResult.Cancel) { return; }
+
+            var tooDao = da.getIDao<IOperatorDao>();
+            var torDao = da.getIDao<IReceiptDao>();
+            var toiDao = da.getIDao<IItemDao>();
+            if (dres == DialogResult.Yes)
+            {
+                toiDao.DeleteAll();
+                torDao.DeleteAll();
+                tooDao.DeleteAll();
+            }
+
+            //Configはどちらにせよ削除
             var tocDao = da.getIDao<IConfigDao>();
+            tocDao.DeleteAll();
             foreach (ConfigEntity c in GlobalData.getIDao<IConfigDao>().GetAll())
             {
                 tocDao.Insert(c);
             }
-
-            var tooDao = da.getIDao<IOperatorDao>();
+            
             foreach (Operator o in GlobalData.getIDao<IOperatorDao>().GetAll())
             {
                 tooDao.Insert(o);
             }
-
-            var torDao = da.getIDao<IReceiptDao>();
+            
             foreach (Receipt r in GlobalData.getIDao<IReceiptDao>().GetAll())
             {
                 torDao.Insert(r);
             }
-
-            var toiDao = da.getIDao<IItemDao>();
+            
             foreach (Item i in GlobalData.getIDao<IItemDao>().GetAll())
             {
                 toiDao.Insert(i);
             }
+
+            MessageBox.Show("完了しました。", "データベースのコピー");
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
